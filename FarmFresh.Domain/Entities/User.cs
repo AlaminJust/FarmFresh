@@ -1,0 +1,34 @@
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FarmFresh.Domain.Entities
+{
+    [Table("User", Schema = "dbo")]
+    public partial class User
+    {
+        [Key]
+        [Column("Id")]
+        public int Id { get; set; }
+        [Column("FirstName")]
+        [StringLength(50)]
+        [Unicode(false)]
+        public string? FirstName { get; set; }
+        [Column("LastName")]
+        [StringLength(50)]
+        [Unicode(false)]
+        public string? LastName { get; set; }
+        [Column("Email")]
+        [StringLength(50)]
+        [Unicode(false)]
+        public string? Email { get; set; }
+        [Column("Password")]
+        [StringLength(20)]
+        public string? Password { get; set; }
+    }
+}

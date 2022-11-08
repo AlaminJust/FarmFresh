@@ -1,4 +1,20 @@
+using FarmFresh.Application.Configuration;
+using FarmFresh.Infrastructure.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+#region Settings
+
+builder.Services.Configure<DbSettings>(builder.Configuration.GetSection(nameof(DbSettings)));
+var dbSettings = new DbSettings();
+builder.Configuration.Bind("DbSettings", dbSettings);
+builder.Services.AddSingleton(dbSettings);
+
+#endregion Setting
+
+#region Dependency Injection for entity framework core implementation (Infrastructure)
+builder.Services.AddPersistence(dbSettings.DbConnectionString);
+#endregion
 
 // Add services to the container.
 
