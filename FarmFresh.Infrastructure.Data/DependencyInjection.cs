@@ -1,5 +1,5 @@
 ﻿using FarmFresh.Domain.Contexts;
-using FarmFresh.Domain.Repo;
+using FarmFresh.Domain.RepoInterfaces;
 using FarmFresh.Infrastructure.Data.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

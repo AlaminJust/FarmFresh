@@ -1,5 +1,6 @@
 ﻿using FarmFresh.Domain.Contexts;
-using FarmFresh.Domain.Entities;
+using FarmFresh.Domain.Entities.Products;
+using FarmFresh.Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FarmFresh.Domain.Entities
+namespace FarmFresh.Domain.Entities.Users
 {
     [Table("User", Schema = "dbo")]
-    public partial class User
+    public partial class User : BaseEntity
     {
         [Key]
         [Column("Id")]

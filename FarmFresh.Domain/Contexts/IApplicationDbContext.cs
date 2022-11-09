@@ -1,4 +1,5 @@
-﻿using FarmFresh.Domain.Entities;
+﻿using FarmFresh.Domain.Entities.Products;
+using FarmFresh.Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Infrastructure;

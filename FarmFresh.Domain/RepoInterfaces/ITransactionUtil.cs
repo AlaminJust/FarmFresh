@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FarmFresh.Domain.Repo
+namespace FarmFresh.Domain.RepoInterfaces
 {
     public interface ITransactionUtil : IDisposable
     {

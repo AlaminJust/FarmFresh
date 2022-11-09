@@ -2,10 +2,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FarmFresh.Domain.Entities
+namespace FarmFresh.Domain.Entities.Products
 {
     [Table("ProductCategory", Schema = "dbo")]
-    public partial class ProductCategory
+    public partial class ProductCategory: BaseEntity
     {
         [Key]
         [Column("Id")]
