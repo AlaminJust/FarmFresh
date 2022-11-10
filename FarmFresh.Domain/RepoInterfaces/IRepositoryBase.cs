@@ -12,7 +12,7 @@ namespace FarmFresh.Domain.RepoInterfaces
         #region Get
         Task<T> GetByIdAsync(int id);
         Task<IQueryable<T>> GetAllAsync();
-        public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
+        public IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression);
 
         #endregion Get
         

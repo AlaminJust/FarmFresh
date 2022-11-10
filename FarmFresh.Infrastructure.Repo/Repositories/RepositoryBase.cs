@@ -29,7 +29,7 @@ namespace FarmFresh.Infrastructure.Repo.Repositories
             return _context.Set<T>().FindAsync(id).AsTask();
         }
 
-        public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)
+        public IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression)
         {
             return _context.Set<T>().Where(expression).AsNoTracking();
         }
