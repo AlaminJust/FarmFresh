@@ -15,8 +15,13 @@ namespace FarmFresh.Domain.Entities.Users
         [Key]
         [Column("Id")]
         public int Id { get; set; }
+        [Column("UserName")]
+        [StringLength(20)]
+        [Required]
+        public string UserName { get; set; } = null!;
         [Column("FirstName")]
         [StringLength(50)]
+        [Required]
         [Unicode(false)]
         public string? FirstName { get; set; }
         [Column("LastName")]
@@ -25,10 +30,12 @@ namespace FarmFresh.Domain.Entities.Users
         public string? LastName { get; set; }
         [Column("Email")]
         [StringLength(50)]
+        [Required]
         [Unicode(false)]
         public string? Email { get; set; }
         [Column("Password")]
         [StringLength(20)]
+        [Required]
         public string? Password { get; set; }
     }
 }

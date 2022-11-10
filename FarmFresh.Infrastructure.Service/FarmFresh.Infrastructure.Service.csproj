@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FarmFresh.Application\FarmFresh.Application.csproj" />
+    <ProjectReference Include="..\FarmFresh.Domain\FarmFresh.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

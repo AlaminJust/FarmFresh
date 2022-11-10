@@ -1,5 +1,9 @@
 using FarmFresh.Application.Configuration;
+using FarmFresh.Application.Interfaces.Services.Users;
+using FarmFresh.Domain.RepoInterfaces.Users;
 using FarmFresh.Infrastructure.Data;
+using FarmFresh.Infrastructure.Repo.Repositories.Users;
+using FarmFresh.Infrastructure.Service.Services.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +26,14 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+#region Dependency Injection for repository
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+#endregion Dependency Injection for repository
+
+#region Dependency Injection for service
+builder.Services.AddScoped<IUserService, UserService>();
+#endregion Dependency Injection for service
 
 var app = builder.Build();
 
