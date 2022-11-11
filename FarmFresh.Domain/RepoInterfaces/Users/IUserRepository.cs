@@ -9,5 +9,8 @@ namespace FarmFresh.Domain.RepoInterfaces.Users
 {
     public interface IUserRepository : IRepositoryBase<User>
     {
+        #region Get
+        Task<User> GetByUserNameAsync(string userName);
+        #endregion Get
     }
 }

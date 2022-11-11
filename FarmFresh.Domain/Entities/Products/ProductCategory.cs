@@ -7,6 +7,11 @@ namespace FarmFresh.Domain.Entities.Products
     [Table("ProductCategory", Schema = "dbo")]
     public partial class ProductCategory: BaseEntity
     {
+        public ProductCategory()
+        {
+            Products = new HashSet<Product>();
+        }
+        
         [Key]
         [Column("Id")]
         public int Id { get; set; }
@@ -18,6 +23,6 @@ namespace FarmFresh.Domain.Entities.Products
         [StringLength(100)]
         [Unicode(false)]
         public string? CategoryDescription { get; set; }
-        public virtual ICollection<Product>? Products { get; set; }
+        public virtual ICollection<Product> Products { get; set; } = null!;
     }
 }

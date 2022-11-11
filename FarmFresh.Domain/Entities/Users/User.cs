@@ -14,6 +14,11 @@ namespace FarmFresh.Domain.Entities.Users
     [Index(nameof(UserName), Name = "IX_User_Username", IsUnique = true)]
     public partial class User : BaseEntity
     {
+        public User()
+        {
+            UserRoles = new HashSet<UserRole>();
+        }
+        
         [Key]
         [Column("Id")]
         public int Id { get; set; }
@@ -39,5 +44,6 @@ namespace FarmFresh.Domain.Entities.Users
         [StringLength(128)]
         [Required]
         public string? Password { get; set; }
+        public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FarmFresh.Application.Dto.Request.Users;
+using FarmFresh.Application.Dto.Response.Users;
 using FarmFresh.Domain.Entities.Users;
 
 namespace FarmFresh.Application.Automapper
@@ -10,6 +11,7 @@ namespace FarmFresh.Application.Automapper
         {
             #region Users
             CreateMap<UserRequest, User>();
+            CreateMap<User, LoginResponse>();
             #endregion Users
         }
     }

@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32611.2
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmFresh", "FarmFresh\FarmFresh.csproj", "{1371EC97-A1F6-406A-B71E-02D3DF14CB90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FarmFresh", "FarmFresh\FarmFresh.csproj", "{1371EC97-A1F6-406A-B71E-02D3DF14CB90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmFresh.Application", "FarmFresh.Application\FarmFresh.Application.csproj", "{F7E55A80-064E-44AE-A000-9E0FD1695B1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FarmFresh.Application", "FarmFresh.Application\FarmFresh.Application.csproj", "{F7E55A80-064E-44AE-A000-9E0FD1695B1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmFresh.Domain", "FarmFresh.Domain\FarmFresh.Domain.csproj", "{FFB5CA60-9701-4F64-8BF4-FE2DCC674062}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FarmFresh.Domain", "FarmFresh.Domain\FarmFresh.Domain.csproj", "{FFB5CA60-9701-4F64-8BF4-FE2DCC674062}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmFresh.Infrastructure.Data", "FarmFresh.Infrastructure.Data\FarmFresh.Infrastructure.Data.csproj", "{D5F88598-8330-4405-A624-268EEB898762}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FarmFresh.Infrastructure.Data", "FarmFresh.Infrastructure.Data\FarmFresh.Infrastructure.Data.csproj", "{D5F88598-8330-4405-A624-268EEB898762}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmFresh.Infrastructure.Repo", "FarmFresh.Infrastructure.Repo\FarmFresh.Infrastructure.Repo.csproj", "{D7B80868-3BE7-44CF-A282-5C780328A050}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FarmFresh.Infrastructure.Repo", "FarmFresh.Infrastructure.Repo\FarmFresh.Infrastructure.Repo.csproj", "{D7B80868-3BE7-44CF-A282-5C780328A050}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmFresh.Infrastructure.Service", "FarmFresh.Infrastructure.Service\FarmFresh.Infrastructure.Service.csproj", "{7410D254-9396-45B7-91A8-5DC50044D621}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FarmFresh.Infrastructure.Service", "FarmFresh.Infrastructure.Service\FarmFresh.Infrastructure.Service.csproj", "{7410D254-9396-45B7-91A8-5DC50044D621}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmFresh.Core", "FarmFresh.Core\FarmFresh.Core.csproj", "{92048FAB-0C18-412A-AEE5-A62FA11298A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{7410D254-9396-45B7-91A8-5DC50044D621}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7410D254-9396-45B7-91A8-5DC50044D621}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7410D254-9396-45B7-91A8-5DC50044D621}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92048FAB-0C18-412A-AEE5-A62FA11298A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92048FAB-0C18-412A-AEE5-A62FA11298A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92048FAB-0C18-412A-AEE5-A62FA11298A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92048FAB-0C18-412A-AEE5-A62FA11298A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
