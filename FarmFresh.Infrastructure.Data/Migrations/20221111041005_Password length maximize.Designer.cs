@@ -4,6 +4,7 @@ using FarmFresh.Infrastructure.Data.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FarmFresh.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(EFDbContext))]
-    partial class EFDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221111041005_Password length maximize")]
+    partial class Passwordlengthmaximize
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,12 +157,6 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                         .HasColumnName("UserName");
 
                     b.HasKey("Id");
-
-                    b.HasIndex(new[] { "Email" }, "IX_User_Email")
-                        .IsUnique();
-
-                    b.HasIndex(new[] { "UserName" }, "IX_User_Username")
-                        .IsUnique();
 
                     b.ToTable("User", "dbo");
                 });

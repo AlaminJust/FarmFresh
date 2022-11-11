@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 namespace FarmFresh.Domain.Entities.Users
 {
     [Table("User", Schema = "dbo")]
+    [Index(nameof(Email), Name = "IX_User_Email", IsUnique = true)]
+    [Index(nameof(UserName), Name = "IX_User_Username", IsUnique = true)]
     public partial class User : BaseEntity
     {
         [Key]
@@ -34,7 +36,7 @@ namespace FarmFresh.Domain.Entities.Users
         [Unicode(false)]
         public string? Email { get; set; }
         [Column("Password")]
-        [StringLength(20)]
+        [StringLength(128)]
         [Required]
         public string? Password { get; set; }
     }
