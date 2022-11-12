@@ -1,9 +1,13 @@
 using FarmFresh.Application.Automapper;
 using FarmFresh.Application.Configuration;
+using FarmFresh.Application.Interfaces.Services.Products;
 using FarmFresh.Application.Interfaces.Services.Users;
+using FarmFresh.Domain.RepoInterfaces.Products;
 using FarmFresh.Domain.RepoInterfaces.Users;
 using FarmFresh.Infrastructure.Data;
+using FarmFresh.Infrastructure.Repo.Repositories.Products;
 using FarmFresh.Infrastructure.Repo.Repositories.Users;
+using FarmFresh.Infrastructure.Service.Services.Products;
 using FarmFresh.Infrastructure.Service.Services.Users;
 using Microsoft.OpenApi.Models;
 
@@ -68,11 +72,15 @@ builder.Services.AddSwaggerGen(opt =>
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
 #endregion Dependency Injection for repository
 
 #region Dependency Injection for service
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
 #endregion Dependency Injection for service
 
 #region Automapper

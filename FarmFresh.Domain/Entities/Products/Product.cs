@@ -27,6 +27,7 @@ namespace FarmFresh.Domain.Entities.Products
         [Column("OldPrice", TypeName = "decimal(18, 2)")]
         public decimal? OldPrice { get; set; }
         [Column("Price", TypeName = "decimal(18, 2)")]
+        [Range(0, Double.MaxValue)]
         public decimal Price { get; set; }
         [Column("Image")]
         [AllowNull]
@@ -34,6 +35,9 @@ namespace FarmFresh.Domain.Entities.Products
         [Column("CategoryId")]
         [ForeignKey("ProductCategory")]
         public int CategoryId { get; set; }
+        
+        [Column("Quantity")]
+        public int Quantity { get; set; }
         public virtual ProductCategory? ProductCategory { get; set; }
     }
 }
