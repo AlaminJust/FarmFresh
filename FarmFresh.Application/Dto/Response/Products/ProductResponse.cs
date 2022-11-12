@@ -5,23 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FarmFresh.Application.Dto.Request.Products
+namespace FarmFresh.Application.Dto.Response.Products
 {
-    public class ProductRequest
+    public class ProductResponse
     {
-        [Required]
-        [StringLength(50)]
+        public int Id { get; set; }
         public string Name { get; set; } = null!;
-        [StringLength(100)]
         public string? Description { get; set; }
         public string? ImageUrl { get; set; }
-        [Range(0, Double.MaxValue)]
         public decimal OldPrice { get; set; }
-        [Required]
-        [Range(0, Double.MaxValue)]
         public decimal Price { get; set; }
         public int Quantity { get; set; }
-        [Required]
         public int CategoryId { get; set; }
     }
 }
