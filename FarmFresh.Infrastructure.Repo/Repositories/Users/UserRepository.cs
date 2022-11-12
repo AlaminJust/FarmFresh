@@ -7,12 +7,16 @@ namespace FarmFresh.Infrastructure.Repo.Repositories.Users
 {
     public class UserRepository : BaseRepository<User>, IUserRepository
     {
+        #region Properties
         private readonly EFDbContext _context;
+        #endregion Properties
 
+        #region Constructor
         public UserRepository(EFDbContext context) : base(context)
         {
             _context = context;
         }
+        #endregion Constructor
 
         #region Get
         public async Task<User> GetByUserNameAsync(string userName)

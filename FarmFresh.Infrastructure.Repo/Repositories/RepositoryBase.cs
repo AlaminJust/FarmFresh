@@ -13,8 +13,11 @@ namespace FarmFresh.Infrastructure.Repo.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
+        #region Properties
         private readonly EFDbContext _context;
-
+        #endregion Properties
+        
+        #region Constructor
         public BaseRepository
             (
                 EFDbContext context
@@ -22,6 +25,8 @@ namespace FarmFresh.Infrastructure.Repo.Repositories
         {
             _context = context;
         }
+        #endregion Constructor
+        
         #region Get
 
         public Task<T> GetByIdAsync(int id)

@@ -8,12 +8,17 @@ namespace FarmFresh.Infrastructure.Repo.Repositories.Users
 {
     public class RoleRepository : BaseRepository<Role>, IRoleRepository
     {
+        #region Properties
         private readonly EFDbContext _context;
-
+        #endregion Properties
+        
+        #region Constructor
         public RoleRepository(EFDbContext context) : base(context)
         {
             _context = context;
         }
+        #endregion Constructor
+        
         #region Get
         public async Task<Role> GetByTypeAsync(RoleType roleType)
         {

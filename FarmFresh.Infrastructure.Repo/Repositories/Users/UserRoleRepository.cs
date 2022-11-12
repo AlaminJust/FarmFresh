@@ -11,8 +11,10 @@ namespace FarmFresh.Infrastructure.Repo.Repositories.Users
 {
     public class UserRoleRepository : BaseRepository<UserRole>, IUserRoleRepository
     {
+        #region Contructore
         public UserRoleRepository(EFDbContext context) : base(context)
         {
         }
+        #endregion Contructore
     }
 }
