@@ -16,20 +16,27 @@ namespace FarmFresh.Controllers.Users
     [ApiController]
     public class UserController : ControllerBase
     {
+        #region Properties
         private readonly IUserService _userService;
         private readonly IConfiguration _configuration;
+        private readonly IRoleService _roleService;
+        #endregion Properties
 
+        #region Constructor
         public UserController(
                 IUserService userService,
-                IConfiguration configuration
+                IConfiguration configuration,
+                IRoleService roleService
             )
         {
             _userService = userService;
             _configuration = configuration;
+            _roleService = roleService;
         }
+        #endregion Constructor
 
-        #region Properties
-        private Task<Claim[]> GetValidClaims(LoginResponse loginResponse)
+        #region Private method
+        private async Task<Claim[]> GetValidClaims(LoginResponse loginResponse)
         {
             var claims = new List<Claim>
             {
@@ -39,12 +46,17 @@ namespace FarmFresh.Controllers.Users
                 new Claim(ClaimTypes.Name, loginResponse.UserName),
                 new Claim("UserId", loginResponse.Id.ToString()),
                 new Claim(ClaimTypes.Email, loginResponse.Email),
-                new Claim(ClaimTypes.Role, "User")
             };
-
-            return Task.FromResult(claims.ToArray());
+            
+            var roles = await _roleService.GetRoleNamesByUserIdAsync(loginResponse.Id);
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+            
+            return claims.ToArray();
         }
-        #endregion Properties
+        #endregion Private method
 
         #region Get
         [HttpGet("login")]

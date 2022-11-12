@@ -72,6 +72,7 @@ builder.Services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 
 #region Dependency Injection for service
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
 #endregion Dependency Injection for service
 
 #region Automapper

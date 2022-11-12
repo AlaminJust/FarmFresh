@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32611.2
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FarmFresh", "FarmFresh\FarmFresh.csproj", "{1371EC97-A1F6-406A-B71E-02D3DF14CB90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FarmFresh.Api", "FarmFresh\FarmFresh.Api.csproj", "{1371EC97-A1F6-406A-B71E-02D3DF14CB90}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FarmFresh.Application", "FarmFresh.Application\FarmFresh.Application.csproj", "{F7E55A80-064E-44AE-A000-9E0FD1695B1E}"
 EndProject
@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FarmFresh.Infrastructure.Re
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FarmFresh.Infrastructure.Service", "FarmFresh.Infrastructure.Service\FarmFresh.Infrastructure.Service.csproj", "{7410D254-9396-45B7-91A8-5DC50044D621}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmFresh.Core", "FarmFresh.Core\FarmFresh.Core.csproj", "{92048FAB-0C18-412A-AEE5-A62FA11298A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FarmFresh.Core", "FarmFresh.Core\FarmFresh.Core.csproj", "{92048FAB-0C18-412A-AEE5-A62FA11298A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

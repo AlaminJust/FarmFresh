@@ -12,12 +12,15 @@ namespace FarmFresh.Infrastructure.Service.Services.Users
 {
     public class UserService : IUserService
     {
+        #region Properties
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IUserRoleRepository _userRoleRepository;
         private readonly IRoleRepository _roleRepository;
         private readonly ITransactionUtil _transaction;
+        #endregion Properties
 
+        #region Constructor
         public UserService(
                 IUserRepository userRepository,
                 IMapper mapper,
@@ -32,6 +35,8 @@ namespace FarmFresh.Infrastructure.Service.Services.Users
             _roleRepository = roleRepository;
             _transaction = transaction;
         }
+
+        #endregion Constructor
 
         #region Get
         public async Task<LoginResponse> LoginAsync(LoginRequest loginRequest)
@@ -52,7 +57,6 @@ namespace FarmFresh.Infrastructure.Service.Services.Users
         }
 
         #endregion Get
-
 
         #region Save
         public async Task AddAsync(UserRequest userRequest)
