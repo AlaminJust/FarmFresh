@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace FarmFresh.Infrastructure.Repo.Repositories
 {
-    public class RepositoryBase<T> : IRepositoryBase<T> where T : BaseEntity
+    public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
         private readonly EFDbContext _context;
 
-        public RepositoryBase
+        public BaseRepository
             (
                 EFDbContext context
             )

@@ -7,10 +7,7 @@ using System.Threading.Tasks;
 
 namespace FarmFresh.Domain.RepoInterfaces.Users
 {
-    public interface IUserRepository : IBaseRepository<User>
+    public interface IUserRoleRepository: IBaseRepository<UserRole>
     {
-        #region Get
-        Task<User> GetByUserNameAsync(string userName);
-        #endregion Get
     }
 }

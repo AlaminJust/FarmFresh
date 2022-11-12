@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FarmFresh.Domain.RepoInterfaces
 {
-    public interface IRepositoryBase<T>
+    public interface IBaseRepository<T>
     {
         #region Get
         Task<T> GetByIdAsync(int id);

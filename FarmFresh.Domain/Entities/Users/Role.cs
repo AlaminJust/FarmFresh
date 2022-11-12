@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FarmFresh.Core.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FarmFresh.Domain.Entities.Users
 {
@@ -14,11 +11,15 @@ namespace FarmFresh.Domain.Entities.Users
         public Role()
         {
             UserRoles = new HashSet<UserRole>();
+            RoleType = RoleType.Customer;
         }
         
         [Key]
         [Column("Id")]
         public int Id { get; set; }
+        [Column("RoleType")]
+        [Required]
+        public RoleType RoleType { get; set; }
         [Column("Name")]
         [StringLength(20)]
         [Required]

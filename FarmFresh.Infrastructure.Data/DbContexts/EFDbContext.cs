@@ -1,6 +1,7 @@
 ﻿using FarmFresh.Domain.Contexts;
 using FarmFresh.Domain.Entities.Products;
 using FarmFresh.Domain.Entities.Users;
+using FarmFresh.Infrastructure.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace FarmFresh.Infrastructure.Data.DbContexts
 {
     public partial class EFDbContext : DbContext, IApplicationDbContext
     {
+        #region Constructor
         public EFDbContext()
         {
 
@@ -21,6 +23,7 @@ namespace FarmFresh.Infrastructure.Data.DbContexts
         {
 
         }
+        #endregion Constructor
 
         #region DbSet
         public DbSet<ProductCategory> ProductCategories { get; set; } = null!;
@@ -29,5 +32,12 @@ namespace FarmFresh.Infrastructure.Data.DbContexts
         public DbSet<Role> Roles { get; set; } = null!;
         public DbSet<UserRole> UserRoles { get; set; } = null!;
         #endregion DbSet
+
+        #region Model builder
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            ModelBuilderExtension.SeedData(modelBuilder);
+        }
+        #endregion Model builder
     }
 }

@@ -43,7 +43,7 @@ namespace FarmFresh.Domain.Entities.Users
         [Column("Password")]
         [StringLength(128)]
         [Required]
-        public string? Password { get; set; }
+        public string Password { get; set; } = null!;
         public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }

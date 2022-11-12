@@ -4,6 +4,7 @@ using FarmFresh.Infrastructure.Data.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FarmFresh.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(EFDbContext))]
-    partial class EFDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221112030620_allownull")]
+    partial class allownull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,7 +121,6 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                         .HasColumnName("CreatedOn");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("Name");
@@ -140,7 +141,7 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2022, 11, 12, 9, 11, 10, 562, DateTimeKind.Local).AddTicks(8061),
+                            CreatedOn = new DateTime(2022, 11, 12, 9, 6, 20, 139, DateTimeKind.Local).AddTicks(4899),
                             Name = "Admin",
                             RoleType = (byte)1,
                             UpdatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -148,7 +149,7 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2022, 11, 12, 9, 11, 10, 562, DateTimeKind.Local).AddTicks(8137),
+                            CreatedOn = new DateTime(2022, 11, 12, 9, 6, 20, 139, DateTimeKind.Local).AddTicks(4980),
                             Name = "Customer",
                             RoleType = (byte)2,
                             UpdatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)

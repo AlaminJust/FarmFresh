@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FarmFresh.Infrastructure.Repo.Repositories.Users
 {
-    public class UserRepository : RepositoryBase<User>, IUserRepository
+    public class UserRepository : BaseRepository<User>, IUserRepository
     {
         private readonly EFDbContext _context;
 

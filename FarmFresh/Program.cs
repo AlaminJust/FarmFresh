@@ -6,7 +6,6 @@ using FarmFresh.Infrastructure.Data;
 using FarmFresh.Infrastructure.Repo.Repositories.Users;
 using FarmFresh.Infrastructure.Service.Services.Users;
 using Microsoft.OpenApi.Models;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,7 +28,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-#endregion Add services to the container.
+#endregion Add services to the container
 
 #region Swagger configuration
 
@@ -67,6 +66,8 @@ builder.Services.AddSwaggerGen(opt =>
 
 #region Dependency Injection for repository
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 #endregion Dependency Injection for repository
 
 #region Dependency Injection for service
@@ -79,7 +80,8 @@ builder.Services.AddAutoMapper(typeof(DefaultProfile), typeof(UserMapperProfile)
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+#region Middleware pipeline
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -93,3 +95,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+#endregion Middleware pipeline

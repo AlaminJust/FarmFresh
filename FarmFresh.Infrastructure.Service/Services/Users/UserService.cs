@@ -2,7 +2,9 @@
 using FarmFresh.Application.Dto.Request.Users;
 using FarmFresh.Application.Dto.Response.Users;
 using FarmFresh.Application.Interfaces.Services.Users;
+using FarmFresh.Core.Enums;
 using FarmFresh.Domain.Entities.Users;
+using FarmFresh.Domain.RepoInterfaces;
 using FarmFresh.Domain.RepoInterfaces.Users;
 using BC = BCrypt.Net.BCrypt;
 
@@ -12,14 +14,23 @@ namespace FarmFresh.Infrastructure.Service.Services.Users
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly IUserRoleRepository _userRoleRepository;
+        private readonly IRoleRepository _roleRepository;
+        private readonly ITransactionUtil _transaction;
 
         public UserService(
                 IUserRepository userRepository,
-                IMapper mapper
+                IMapper mapper,
+                IUserRoleRepository userRoleRepository,
+                IRoleRepository roleRepository,
+                ITransactionUtil transaction
             )
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _userRoleRepository = userRoleRepository;
+            _roleRepository = roleRepository;
+            _transaction = transaction;
         }
 
         #region Get
@@ -46,9 +57,30 @@ namespace FarmFresh.Infrastructure.Service.Services.Users
         #region Save
         public async Task AddAsync(UserRequest userRequest)
         {
-            var user = _mapper.Map<User>(userRequest);
-            await _userRepository.AddAsync(user);
-            await _userRepository.SaveChangesAsync();
+            await _transaction.BeginAsync();
+            try
+            {
+                var role = await _roleRepository.GetByTypeAsync(RoleType.Customer);
+                var user = _mapper.Map<User>(userRequest);
+
+                await _userRepository.AddAsync(user);
+                await _userRepository.SaveChangesAsync();
+
+                await _userRoleRepository.AddAsync(new UserRole
+                {
+                    UserId = user.Id,
+                    RoleId = role.Id,
+                    IsActive = true
+                });
+                
+                await _userRoleRepository.SaveChangesAsync();
+                await _transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                await _transaction.RollBackAsync();
+                throw;
+            }
         }
         #endregion Save
 

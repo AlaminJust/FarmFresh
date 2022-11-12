@@ -4,6 +4,7 @@ using FarmFresh.Infrastructure.Data.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FarmFresh.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(EFDbContext))]
-    partial class EFDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221112014305_Change the role type to enum")]
+    partial class Changetheroletypetoenum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,15 +120,10 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                         .HasColumnType("date")
                         .HasColumnName("CreatedOn");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
+                    b.Property<int>("Roles")
                         .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
+                        .HasColumnType("int")
                         .HasColumnName("Name");
-
-                    b.Property<byte>("RoleType")
-                        .HasColumnType("tinyint")
-                        .HasColumnName("RoleType");
 
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("date")
@@ -135,24 +132,6 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Role", "dbo");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedOn = new DateTime(2022, 11, 12, 9, 11, 10, 562, DateTimeKind.Local).AddTicks(8061),
-                            Name = "Admin",
-                            RoleType = (byte)1,
-                            UpdatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedOn = new DateTime(2022, 11, 12, 9, 11, 10, 562, DateTimeKind.Local).AddTicks(8137),
-                            Name = "Customer",
-                            RoleType = (byte)2,
-                            UpdatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("FarmFresh.Domain.Entities.Users.User", b =>
