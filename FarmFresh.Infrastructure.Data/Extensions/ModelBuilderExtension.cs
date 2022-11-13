@@ -1,4 +1,5 @@
 ﻿using FarmFresh.Core.Enums;
+using FarmFresh.Domain.Entities.Products;
 using FarmFresh.Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -33,6 +34,34 @@ namespace FarmFresh.Infrastructure.Data.Extensions
                     }
                 });
             #endregion Role_Data
+
+            #region Brand_Data
+            modelBuilder.Entity<ProductBrand>().HasData(
+                new[]
+                {
+                    new ProductBrand
+                    {
+                        Id = 1,
+                        CreatedOn = new DateTime(2022, 11, 13, 8, 38, 30, 656, DateTimeKind.Local).AddTicks(3059),
+                        Name = "Apple",
+                        Description = "Apple Brand"
+                    },
+                    new ProductBrand
+                    {
+                        Id = 2,
+                        CreatedOn = new DateTime(2022, 11, 13, 8, 38, 30, 656, DateTimeKind.Local).AddTicks(3059),
+                        Name = "Samsung",
+                        Description = "Samsung Brand"
+                    },
+                    new ProductBrand
+                    {
+                        Id = 3,
+                        CreatedOn = new DateTime(2022, 11, 13, 8, 38, 30, 656, DateTimeKind.Local).AddTicks(3059),
+                        Name = "Huawei",
+                        Description = "Huawei Brand"
+                    }
+                });
+            #endregion Brand_Data
         }
     }
 }

@@ -21,6 +21,7 @@ namespace FarmFresh.Domain.Contexts
         DbSet<User> Users { get; set; }
         DbSet<Role> Roles { get; set; }
         DbSet<UserRole> UserRoles { get; set; }
+        DbSet<ProductBrand> Brands { get; set; }
 
         #endregion DbSets
 

@@ -16,28 +16,41 @@ namespace FarmFresh.Domain.Entities.Products
         [Key]
         [Column("Id")]
         public int Id { get; set; }
+        
         [Column("Name")]
         [StringLength(50)]
         [Unicode(false)]
         public string Name { get; set; } = null!;
+        
         [Column("Description")]
         [StringLength(100)]
         [Unicode(false)]
         public string? Description { get; set; }
+        
         [Column("OldPrice", TypeName = "decimal(18, 2)")]
         public decimal? OldPrice { get; set; }
+        
         [Column("Price", TypeName = "decimal(18, 2)")]
         [Range(0, Double.MaxValue)]
         public decimal Price { get; set; }
+        
         [Column("Image")]
         [AllowNull]
         public string? Image { get; set; }
+        
         [Column("CategoryId")]
         [ForeignKey("ProductCategory")]
         public int CategoryId { get; set; }
         
         [Column("Quantity")]
         public int Quantity { get; set; }
+        
+        [Column("BrandId")]
+        [ForeignKey("ProductBrand")]
+        public int BrandId { get; set; }
+        
+        public virtual ICollection<ProductBrand> ProductBrands { get; set; } = null!;
         public virtual ProductCategory? ProductCategory { get; set; }
+
     }
 }

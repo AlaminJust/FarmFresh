@@ -32,8 +32,8 @@ namespace FarmFresh.Api.Controllers.Products
         [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> AddProduct([FromBody] ProductRequest productRequest)
         {
-            await _productService.AddAsync(productRequest);
-            return Ok();
+            var response = await _productService.AddAsync(productRequest);
+            return Ok(response);
         }
         #endregion Save
     }

@@ -17,5 +17,13 @@ namespace FarmFresh.Application.Dto.Response.Products
         public decimal Price { get; set; }
         public int Quantity { get; set; }
         public int CategoryId { get; set; }
+        public Int32 Discount
+        {
+            get
+            {
+                Int32 discount = (Int32)((OldPrice - Price) / OldPrice * 100);
+                return discount;
+            }
+        }
     }
 }
