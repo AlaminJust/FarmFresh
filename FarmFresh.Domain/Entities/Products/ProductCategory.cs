@@ -17,12 +17,15 @@ namespace FarmFresh.Domain.Entities.Products
         public int Id { get; set; }
         [Column("CategoryName")]
         [StringLength(50)]
+        [Required]
         [Unicode(false)]
         public string? CategoryName { get; set; }
         [Column("CategoryDescription")]
         [StringLength(100)]
         [Unicode(false)]
         public string? CategoryDescription { get; set; }
+        [Column("ParentCategoryId")]
+        public int ParentCategoryId { get; set; }
         public virtual ICollection<Product> Products { get; set; } = null!;
     }
 }

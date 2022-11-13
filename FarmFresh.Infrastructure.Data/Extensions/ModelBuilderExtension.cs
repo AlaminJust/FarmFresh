@@ -20,14 +20,14 @@ namespace FarmFresh.Infrastructure.Data.Extensions
                     new Role
                     {
                         Id = 1,
-                        CreatedOn = DateTime.Now,
+                        CreatedOn = new DateTime(2022, 11, 13, 8, 38, 30, 656, DateTimeKind.Local).AddTicks(3059),
                         Name = RoleType.Admin.ToString(),
                         RoleType = RoleType.Admin
                     },
                     new Role
                     {
                         Id = 2,
-                        CreatedOn = DateTime.Now,
+                        CreatedOn = new DateTime(2022, 11, 13, 8, 38, 30, 656, DateTimeKind.Local).AddTicks(3059),
                         Name = RoleType.Customer.ToString(),
                         RoleType = RoleType.Customer
                     }

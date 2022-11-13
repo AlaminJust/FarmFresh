@@ -9,8 +9,12 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
 {
     public class ProductService : IProductService
     {
+        #region Properties
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
+        #endregion Properties
+
+        #region Constructor
 
         public ProductService(
                 IProductRepository productRepository,
@@ -20,6 +24,9 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             _productRepository = productRepository;
             _mapper = mapper;
         }
+        #endregion Constructor
+
+        #region Save
         public async Task<ProductResponse> AddAsync(ProductRequest productRequest)
         {
             var product = _mapper.Map<Product>(productRequest);
@@ -31,5 +38,6 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             
             return _mapper.Map<ProductResponse>(product);
         }
+        #endregion Save
     }
 }
