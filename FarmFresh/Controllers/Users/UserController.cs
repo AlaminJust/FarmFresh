@@ -88,7 +88,7 @@ namespace FarmFresh.Controllers.Users
         #endregion Get
 
         #region Save
-        [HttpPost("create")]
+        [HttpPost("signup")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> CreateAsync([FromBody] UserRequest userRequest)
         {

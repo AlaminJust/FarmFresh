@@ -9,9 +9,27 @@ using FarmFresh.Infrastructure.Repo.Repositories.Products;
 using FarmFresh.Infrastructure.Repo.Repositories.Users;
 using FarmFresh.Infrastructure.Service.Services.Products;
 using FarmFresh.Infrastructure.Service.Services.Users;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
+using System.Text;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+#region Add controller
+
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
+        options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+    });
+
+#endregion Add controller
 
 #region Settings
 
@@ -21,6 +39,26 @@ builder.Configuration.Bind("DbSettings", dbSettings);
 builder.Services.AddSingleton(dbSettings);
 
 #endregion Setting
+
+#region JWT Authentication
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]))
+        };
+    });
+
+#endregion
 
 #region Dependency Injection for entity framework core implementation (Infrastructure)
 builder.Services.AddPersistence(dbSettings.DbConnectionString);
@@ -62,8 +100,8 @@ builder.Services.AddSwaggerGen(opt =>
             new string[]{}
         }
     });
-    //var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    //opt.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    opt.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
 
 #endregion Swagger configuration
@@ -98,6 +136,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+#region SPA
+app.UseStaticFiles();
+app.MapFallbackToFile("index.html");
+#endregion SPA
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

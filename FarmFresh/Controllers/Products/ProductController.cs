@@ -3,6 +3,7 @@ using FarmFresh.Application.Dto.Response.Products;
 using FarmFresh.Application.Interfaces.Services.Products;
 using FarmFresh.Application.Models.Paginations;
 using FarmFresh.Application.Models.Paginations.Products;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,6 +37,7 @@ namespace FarmFresh.Api.Controllers.Products
         #endregion Get
 
         #region Save
+        [Authorize(Roles = "Admin")]
         [HttpPost("product")]
         [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> AddProduct([FromBody] ProductRequest productRequest)
