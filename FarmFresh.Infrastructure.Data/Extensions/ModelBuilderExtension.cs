@@ -88,6 +88,37 @@ namespace FarmFresh.Infrastructure.Data.Extensions
                     }
                 });
             #endregion Category_Data
+
+            #region Admin User
+            modelBuilder.Entity<User>().HasData(
+                new[]
+                {
+                    new User
+                    {
+                        Id = 100100,
+                        UserName = "admin",
+                        FirstName = "AL AMIN",
+                        LastName = "Hossain",
+                        Email = "alamin.cse.justian@gmail.com",
+                        Password = "$2a$11$XGAcbYizmCGaZ7X.OZLxpOTZPT453GhZ59xqnBIjsczYqYB.cIAuO",
+                        CreatedOn = new DateTime(2022, 11, 14, 8, 38, 30, 656, DateTimeKind.Local).AddTicks(3059),
+                    }
+                });
+
+            modelBuilder.Entity<UserRole>().HasData(
+                    new[]
+                    {
+                        new UserRole
+                        {
+                            Id = 100100,
+                            UserId = 100100,
+                            RoleId = 1,
+                            CreatedOn = new DateTime(2022, 11, 14, 8, 38, 30, 656, DateTimeKind.Local).AddTicks(3059),
+                            IsActive = true,
+                            IsDeleted = false
+                        }
+                    });
+            #endregion Admin User
         }
     }
 }

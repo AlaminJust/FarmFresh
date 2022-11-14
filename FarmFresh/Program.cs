@@ -100,8 +100,8 @@ builder.Services.AddSwaggerGen(opt =>
             new string[]{}
         }
     });
-    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    opt.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+    //var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    //opt.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
 
 #endregion Swagger configuration
