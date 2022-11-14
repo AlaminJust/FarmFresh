@@ -32,6 +32,7 @@ namespace FarmFresh.Infrastructure.Data.DbContexts
         public DbSet<Role> Roles { get; set; } = null!;
         public DbSet<UserRole> UserRoles { get; set; } = null!;
         public DbSet<ProductBrand> Brands { get; set; } = null!;
+        public DbSet<Vendor> Vendors { get; set; }
         #endregion DbSet
 
         #region Model builder

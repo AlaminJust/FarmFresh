@@ -22,9 +22,9 @@ namespace FarmFresh.Domain.Contexts
         DbSet<Role> Roles { get; set; }
         DbSet<UserRole> UserRoles { get; set; }
         DbSet<ProductBrand> Brands { get; set; }
-
+        DbSet<Vendor> Vendors { get; set; }
+        
         #endregion DbSets
-
 
         #region Methods
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);

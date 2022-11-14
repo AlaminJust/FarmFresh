@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FarmFresh.Domain.Entities.Products;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,6 +18,8 @@ namespace FarmFresh.Domain.Entities.Users
         public User()
         {
             UserRoles = new HashSet<UserRole>();
+            ProductsCreated = new HashSet<Product>();
+            ProductsUpdated = new HashSet<Product>();
         }
         
         [Key]
@@ -45,5 +48,10 @@ namespace FarmFresh.Domain.Entities.Users
         [Required]
         public string Password { get; set; } = null!;
         public virtual ICollection<UserRole> UserRoles { get; set; }
+        
+        [InverseProperty("UserCreatedBy")]
+        public virtual ICollection<Product> ProductsCreated { get; set; }
+        [InverseProperty("UserUpdatedBy")]
+        public virtual ICollection<Product> ProductsUpdated { get; set; }
     }
 }

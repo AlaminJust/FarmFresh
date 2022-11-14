@@ -4,6 +4,7 @@ using FarmFresh.Infrastructure.Data.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FarmFresh.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(EFDbContext))]
-    partial class EFDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221114155909_VendorAdded")]
+    partial class VendorAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,10 +40,6 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int")
                         .HasColumnName("CategoryId");
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int")
-                        .HasColumnName("CreatedBy");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("date")
@@ -80,19 +78,9 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Quantity");
 
-                    b.Property<int>("UpdatedBy")
-                        .HasColumnType("int")
-                        .HasColumnName("UpdatedBy");
-
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("date")
                         .HasColumnName("UpdatedOn");
-
-                    b.Property<int?>("UserCreatedById")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserUpdatedById")
-                        .HasColumnType("int");
 
                     b.Property<int>("VendorId")
                         .HasColumnType("int")
@@ -103,10 +91,6 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                     b.HasIndex("BrandId");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("UserCreatedById");
-
-                    b.HasIndex("UserUpdatedById");
 
                     b.HasIndex("VendorId");
 
@@ -530,14 +514,6 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FarmFresh.Domain.Entities.Users.User", "UserCreatedBy")
-                        .WithMany("ProductsCreated")
-                        .HasForeignKey("UserCreatedById");
-
-                    b.HasOne("FarmFresh.Domain.Entities.Users.User", "UserUpdatedBy")
-                        .WithMany("ProductsUpdated")
-                        .HasForeignKey("UserUpdatedById");
-
                     b.HasOne("FarmFresh.Domain.Entities.Products.Vendor", "Vendor")
                         .WithMany("Products")
                         .HasForeignKey("VendorId")
@@ -547,10 +523,6 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                     b.Navigation("ProductBrand");
 
                     b.Navigation("ProductCategory");
-
-                    b.Navigation("UserCreatedBy");
-
-                    b.Navigation("UserUpdatedBy");
 
                     b.Navigation("Vendor");
                 });
@@ -596,10 +568,6 @@ namespace FarmFresh.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("FarmFresh.Domain.Entities.Users.User", b =>
                 {
-                    b.Navigation("ProductsCreated");
-
-                    b.Navigation("ProductsUpdated");
-
                     b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618

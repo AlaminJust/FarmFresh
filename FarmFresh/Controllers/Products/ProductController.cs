@@ -34,6 +34,14 @@ namespace FarmFresh.Api.Controllers.Products
             var response = await _productService.GetPaginatedProductsAsync(productPaginationRequest);
             return Ok(response);
         }
+
+        [HttpGet("product/{Id}")]
+        [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetProductById([FromRoute] int Id)
+        {
+            //var response = await _productService.GetProductByIdAsync(Id);
+            return Ok();
+        }
         #endregion Get
 
         #region Save

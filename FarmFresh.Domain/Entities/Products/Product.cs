@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FarmFresh.Domain.Entities.Users;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -48,9 +49,26 @@ namespace FarmFresh.Domain.Entities.Products
         [Column("BrandId")]
         [ForeignKey("ProductBrand")]
         public int BrandId { get; set; }
-        
-        public virtual ICollection<ProductBrand> ProductBrands { get; set; } = null!;
-        public virtual ProductCategory? ProductCategory { get; set; }
 
+        [Column("VendorId")]
+        [ForeignKey("Vendor")]
+        public int VendorId { get; set; }
+
+        [Column("CreatedBy")]
+        [ForeignKey("User")]
+        public int CreatedBy { get; set; }
+
+        [Column("UpdatedBy")]
+        [ForeignKey("User")]
+        public int UpdatedBy { get; set; }
+        
+        [InverseProperty("ProductsCreated")]
+        public virtual User? UserCreatedBy { get; set; }
+        
+        [InverseProperty("ProductsUpdated")]
+        public virtual User? UserUpdatedBy { get; set; }
+        public virtual ProductBrand? ProductBrand { get; set; }
+        public virtual ProductCategory? ProductCategory { get; set; }
+        public virtual Vendor? Vendor { get; set; }
     }
 }

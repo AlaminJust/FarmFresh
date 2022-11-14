@@ -89,7 +89,38 @@ namespace FarmFresh.Infrastructure.Data.Extensions
                 });
             #endregion Category_Data
 
-            #region Admin User
+            #region Vendor_Data
+            modelBuilder.Entity<Vendor>().HasData(
+                new[]
+                {
+                    new Vendor
+                    {
+                        Id = 1,
+                        CreatedOn = new DateTime(2022, 11, 14, 8, 38, 30, 656, DateTimeKind.Local).AddTicks(3059),
+                        Name = "Vendor 1",
+                        PhoneNumber = "1234567890",
+                        IsDeleted = false
+                    },
+                    new Vendor
+                    {
+                        Id = 2,
+                        CreatedOn = new DateTime(2022, 11, 14, 8, 38, 30, 656, DateTimeKind.Local).AddTicks(3059),
+                        Name = "Vendor 2",
+                        PhoneNumber = "1234567890",
+                        IsDeleted = false
+                    },
+                    new Vendor
+                    {
+                        Id = 3,
+                        CreatedOn = new DateTime(2022, 11, 14, 8, 38, 30, 656, DateTimeKind.Local).AddTicks(3059),
+                        Name = "Vendor 3",
+                        PhoneNumber = "1234567890",
+                        IsDeleted = false
+                    }
+                });
+            #endregion Vendor_Data
+
+            #region Admin_User
             modelBuilder.Entity<User>().HasData(
                 new[]
                 {
@@ -118,7 +149,7 @@ namespace FarmFresh.Infrastructure.Data.Extensions
                             IsDeleted = false
                         }
                     });
-            #endregion Admin User
+            #endregion Admin_User
         }
     }
 }
