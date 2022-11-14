@@ -1,4 +1,4 @@
-﻿using FarmFresh.Core.Enums;
+﻿using FarmFresh.Application.Enums;
 using FarmFresh.Domain.Entities.Users;
 using FarmFresh.Domain.RepoInterfaces.Users;
 using FarmFresh.Infrastructure.Data.DbContexts;

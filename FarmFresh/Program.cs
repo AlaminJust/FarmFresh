@@ -1,4 +1,4 @@
-using FarmFresh.Application.Automapper;
+using FarmFresh.Api.Automapper;
 using FarmFresh.Application.Configuration;
 using FarmFresh.Application.Interfaces.Services.Products;
 using FarmFresh.Application.Interfaces.Services.Users;

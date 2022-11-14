@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FarmFresh.Application.Dto.Response.Products
+﻿namespace FarmFresh.Application.Dto.Response.Products
 {
     public class ProductResponse
     {
@@ -17,6 +10,7 @@ namespace FarmFresh.Application.Dto.Response.Products
         public decimal Price { get; set; }
         public int Quantity { get; set; }
         public int CategoryId { get; set; }
+        public int BrandId { get; set; }
         public Int32 Discount
         {
             get

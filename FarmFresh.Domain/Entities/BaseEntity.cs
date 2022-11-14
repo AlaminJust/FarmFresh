@@ -14,5 +14,8 @@ namespace FarmFresh.Domain.Entities
 
         [Column("UpdatedOn", TypeName = "date")]
         public DateTime UpdatedOn { get; set; }
+
+        [Column("IsDeleted")]
+        public bool IsDeleted { get; set; }
     }
 }

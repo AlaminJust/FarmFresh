@@ -1,6 +1,8 @@
 ﻿using FarmFresh.Application.Dto.Request.Products;
 using FarmFresh.Application.Dto.Response.Products;
 using FarmFresh.Application.Interfaces.Services.Products;
+using FarmFresh.Application.Models.Paginations;
+using FarmFresh.Application.Models.Paginations.Products;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +26,13 @@ namespace FarmFresh.Api.Controllers.Products
         #endregion Constructor
 
         #region Get 
-
+        [HttpGet("products")]
+        [ProducesResponseType(typeof(PaginationResponse<ProductResponse>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetPaginatedProducts([FromQuery]ProductPaginationRequest productPaginationRequest)
+        {
+            var response = await _productService.GetPaginatedProductsAsync(productPaginationRequest);
+            return Ok(response);
+        }
         #endregion Get
 
         #region Save

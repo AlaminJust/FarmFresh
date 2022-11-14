@@ -1,10 +1,8 @@
 ﻿using FarmFresh.Application.Dto.Request.Users;
 using FarmFresh.Application.Dto.Response.Users;
 using FarmFresh.Application.Interfaces.Services.Users;
-using FarmFresh.Domain.Entities.Users;
-using Microsoft.AspNetCore.Http;
+using FarmFresh.Domain.Dto.Request.Users;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

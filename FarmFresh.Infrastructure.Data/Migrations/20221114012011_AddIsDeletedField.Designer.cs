@@ -4,6 +4,7 @@ using FarmFresh.Infrastructure.Data.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FarmFresh.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(EFDbContext))]
-    partial class EFDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221114012011_AddIsDeletedField")]
+    partial class AddIsDeletedField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -202,38 +204,6 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductCategory", "dbo");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryDescription = "Mobile Category",
-                            CategoryName = "Mobile",
-                            CreatedOn = new DateTime(2022, 11, 14, 8, 38, 30, 656, DateTimeKind.Local).AddTicks(3059),
-                            IsDeleted = false,
-                            ParentCategoryId = 0,
-                            UpdatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryDescription = "Laptop Category",
-                            CategoryName = "Laptop",
-                            CreatedOn = new DateTime(2022, 11, 14, 8, 38, 30, 656, DateTimeKind.Local).AddTicks(3059),
-                            IsDeleted = false,
-                            ParentCategoryId = 0,
-                            UpdatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryDescription = "Tablet Category",
-                            CategoryName = "Tablet",
-                            CreatedOn = new DateTime(2022, 11, 14, 8, 38, 30, 656, DateTimeKind.Local).AddTicks(3059),
-                            IsDeleted = false,
-                            ParentCategoryId = 0,
-                            UpdatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("FarmFresh.Domain.Entities.Users.Role", b =>

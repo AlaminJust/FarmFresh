@@ -23,5 +23,7 @@ namespace FarmFresh.Application.Dto.Request.Products
         public int Quantity { get; set; }
         [Required]
         public int CategoryId { get; set; }
+        [Required]
+        public int BrandId { get; set; }
     }
 }

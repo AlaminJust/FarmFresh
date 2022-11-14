@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FarmFresh.Domain.Entities.Users
+namespace FarmFresh.Domain.Dto.Request.Users
 {
     public class LoginRequest
     {

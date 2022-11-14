@@ -1,7 +1,6 @@
-﻿using FarmFresh.Core.Enums;
+﻿using FarmFresh.Application.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
 
 namespace FarmFresh.Domain.Entities.Users
 {

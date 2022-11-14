@@ -1,11 +1,6 @@
 ﻿using FarmFresh.Application.Dto.Request.Users;
 using FarmFresh.Application.Dto.Response.Users;
-using FarmFresh.Domain.Entities.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using FarmFresh.Domain.Dto.Request.Users;
 
 namespace FarmFresh.Application.Interfaces.Services.Users
 {

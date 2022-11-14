@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FarmFresh.Core\FarmFresh.Core.csproj" />
+    <ProjectReference Include="..\FarmFresh.Application\FarmFresh.Application.csproj" />
   </ItemGroup>
 
 </Project>

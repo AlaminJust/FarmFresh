@@ -3,7 +3,7 @@ using FarmFresh.Application.Dto.Request.Users;
 using FarmFresh.Application.Dto.Response.Users;
 using FarmFresh.Domain.Entities.Users;
 
-namespace FarmFresh.Application.Automapper
+namespace FarmFresh.Api.Automapper
 {
     public class UserMapperProfile: Profile
     {

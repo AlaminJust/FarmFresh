@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using FarmFresh.Application.Dto.Request.Users;
 using FarmFresh.Application.Dto.Response.Users;
+using FarmFresh.Application.Enums;
 using FarmFresh.Application.Interfaces.Services.Users;
-using FarmFresh.Core.Enums;
+using FarmFresh.Domain.Dto.Request.Users;
 using FarmFresh.Domain.Entities.Users;
 using FarmFresh.Domain.RepoInterfaces;
 using FarmFresh.Domain.RepoInterfaces.Users;

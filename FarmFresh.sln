@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FarmFresh.Infrastructure.Re
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FarmFresh.Infrastructure.Service", "FarmFresh.Infrastructure.Service\FarmFresh.Infrastructure.Service.csproj", "{7410D254-9396-45B7-91A8-5DC50044D621}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FarmFresh.Core", "FarmFresh.Core\FarmFresh.Core.csproj", "{92048FAB-0C18-412A-AEE5-A62FA11298A9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,10 +45,6 @@ Global
 		{7410D254-9396-45B7-91A8-5DC50044D621}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7410D254-9396-45B7-91A8-5DC50044D621}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7410D254-9396-45B7-91A8-5DC50044D621}.Release|Any CPU.Build.0 = Release|Any CPU
-		{92048FAB-0C18-412A-AEE5-A62FA11298A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{92048FAB-0C18-412A-AEE5-A62FA11298A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{92048FAB-0C18-412A-AEE5-A62FA11298A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{92048FAB-0C18-412A-AEE5-A62FA11298A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

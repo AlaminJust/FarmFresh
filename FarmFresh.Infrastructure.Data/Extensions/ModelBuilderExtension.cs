@@ -1,12 +1,7 @@
-﻿using FarmFresh.Core.Enums;
+﻿using FarmFresh.Application.Enums;
 using FarmFresh.Domain.Entities.Products;
 using FarmFresh.Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FarmFresh.Infrastructure.Data.Extensions
 {
@@ -62,6 +57,37 @@ namespace FarmFresh.Infrastructure.Data.Extensions
                     }
                 });
             #endregion Brand_Data
+
+            #region Category_Data
+            modelBuilder.Entity<ProductCategory>().HasData(
+                new[]
+                {
+                    new ProductCategory
+                    {
+                        Id = 1,
+                        CreatedOn = new DateTime(2022, 11, 14, 8, 38, 30, 656, DateTimeKind.Local).AddTicks(3059),
+                        CategoryName = "Mobile",
+                        CategoryDescription = "Mobile Category",
+                        IsDeleted = false
+                    },
+                    new ProductCategory
+                    {
+                        Id = 2,
+                        CreatedOn = new DateTime(2022, 11, 14, 8, 38, 30, 656, DateTimeKind.Local).AddTicks(3059),
+                        CategoryName = "Laptop",
+                        CategoryDescription = "Laptop Category",
+                        IsDeleted = false
+                    },
+                    new ProductCategory
+                    {
+                        Id = 3,
+                        CreatedOn = new DateTime(2022, 11, 14, 8, 38, 30, 656, DateTimeKind.Local).AddTicks(3059),
+                        CategoryName = "Tablet",
+                        CategoryDescription = "Tablet Category",
+                        IsDeleted = false
+                    }
+                });
+            #endregion Category_Data
         }
     }
 }

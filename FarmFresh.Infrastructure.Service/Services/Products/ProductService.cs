@@ -2,6 +2,8 @@
 using FarmFresh.Application.Dto.Request.Products;
 using FarmFresh.Application.Dto.Response.Products;
 using FarmFresh.Application.Interfaces.Services.Products;
+using FarmFresh.Application.Models.Paginations;
+using FarmFresh.Application.Models.Paginations.Products;
 using FarmFresh.Domain.Entities.Products;
 using FarmFresh.Domain.RepoInterfaces.Products;
 
@@ -26,6 +28,14 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
         }
         #endregion Constructor
 
+        #region Get
+        public async Task<PaginationResponse<ProductResponse>> GetPaginatedProductsAsync(ProductPaginationRequest productPaginationRequest)
+        {
+            var products = await _productRepository.GetPaginatedProductsAsync(productPaginationRequest);
+            return _mapper.Map<PaginationResponse<ProductResponse>>(products);
+        }
+        #endregion Get
+
         #region Save
         public async Task<ProductResponse> AddAsync(ProductRequest productRequest)
         {
@@ -38,6 +48,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             
             return _mapper.Map<ProductResponse>(product);
         }
+
         #endregion Save
     }
 }
