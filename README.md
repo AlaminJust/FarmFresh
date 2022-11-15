@@ -11,7 +11,7 @@
 • If you develop only API for backend, the endpoints should be testable by Postman.
 
 # FarmFresh
-  You will see all api information in swagger: https://localhost:yourport/swagger/index.html
+  See all api information in swagger: https://localhost:yourport/swagger/index.html
   
   Following N-Tier Architechture with Asp.Net 6
 
