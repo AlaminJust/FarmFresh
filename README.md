@@ -1,8 +1,10 @@
 # FarmFresh
+  You will see all api information in swagger: https://localhost:yourport/swagger/index.html
+  Following N-Tier Architechture
 
-# Following N-Tier Architechture
-
-# Run: update-database command in package console by selecting FarmFresh.Data project
+# Db Migration
+  Update connection string in appsetting.development.json file with your db 
+  Then run 'update-database' command in package console by selecting FarmFresh.Data project
 
 
             #region Role_Data
@@ -147,3 +149,24 @@
                     });
             #endregion Admin_User
             
+
+# Default admin user
+            username: admin
+            password: 123456
+            
+Need admin permission for adding product to db
+
+# Add product sample
+Logged in swagger with jwt token then try it
+
+{
+  "name": "Iphone",
+  "description": "Iphone is the good product",
+  "imageUrls": "",
+  "oldPrice": 400,
+  "price": 300,
+  "quantity": 10,
+  "categoryId": 1,
+  "brandId": 1,
+  "vendorId": 1
+}
