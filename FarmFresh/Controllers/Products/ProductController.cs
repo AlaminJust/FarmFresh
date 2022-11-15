@@ -11,7 +11,7 @@ namespace FarmFresh.Api.Controllers.Products
 {
     [Route("api/product-management")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductController : ApiControllerBase
     {
         #region Properties
         private readonly IProductService _productService;
@@ -35,12 +35,12 @@ namespace FarmFresh.Api.Controllers.Products
             return Ok(response);
         }
 
-        [HttpGet("product/{Id}")]
+        [HttpGet("product/details/{Id}")]
         [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetProductById([FromRoute] int Id)
+        public async Task<IActionResult> GetProductDetailsById([FromRoute] int Id)
         {
-            //var response = await _productService.GetProductByIdAsync(Id);
-            return Ok();
+            var response = await _productService.GetProductDetailsByIdAsync(Id);
+            return Ok(response);
         }
         #endregion Get
 
@@ -50,7 +50,7 @@ namespace FarmFresh.Api.Controllers.Products
         [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> AddProduct([FromBody] ProductRequest productRequest)
         {
-            var response = await _productService.AddAsync(productRequest);
+            var response = await _productService.AddAsync(productRequest, UserId);
             return Ok(response);
         }
         #endregion Save

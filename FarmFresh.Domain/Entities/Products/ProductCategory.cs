@@ -19,7 +19,7 @@ namespace FarmFresh.Domain.Entities.Products
         [StringLength(50)]
         [Required]
         [Unicode(false)]
-        public string? CategoryName { get; set; }
+        public string CategoryName { get; set; } = null!;
         [Column("CategoryDescription")]
         [StringLength(100)]
         [Unicode(false)]

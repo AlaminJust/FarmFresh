@@ -1,6 +1,7 @@
 ﻿using FarmFresh.Application.Models.Paginations;
 using FarmFresh.Application.Models.Paginations.Products;
 using FarmFresh.Domain.Entities.Products;
+using FarmFresh.Domain.ResponseEntities.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,9 @@ namespace FarmFresh.Domain.RepoInterfaces.Products
 {
     public interface IProductRepository : IBaseRepository<Product>
     {
+        #region Get
         Task<PaginationResponse<Product>> GetPaginatedProductsAsync(ProductPaginationRequest productPaginationRequest);
+        Task<ProductDetails> GetProductDetailsByIdAsync(int id);
+        #endregion Get
     }
 }

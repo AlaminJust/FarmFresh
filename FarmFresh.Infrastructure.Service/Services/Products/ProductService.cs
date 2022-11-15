@@ -29,6 +29,12 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
         #endregion Constructor
 
         #region Get
+        public async Task<ProductDetailsResponse> GetProductDetailsByIdAsync(int id)
+        {
+            var productDetails = await _productRepository.GetProductDetailsByIdAsync(id);
+            return _mapper.Map<ProductDetailsResponse>(productDetails);
+        }
+
         public async Task<PaginationResponse<ProductResponse>> GetPaginatedProductsAsync(ProductPaginationRequest productPaginationRequest)
         {
             var products = await _productRepository.GetPaginatedProductsAsync(productPaginationRequest);
@@ -37,12 +43,15 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
         #endregion Get
 
         #region Save
-        public async Task<ProductResponse> AddAsync(ProductRequest productRequest)
+        public async Task<ProductResponse> AddAsync(ProductRequest productRequest, int userId)
         {
             var product = _mapper.Map<Product>(productRequest);
             
             product.CreatedOn = DateTime.UtcNow;
-            
+            product.CreatedBy = userId;
+            product.UpdatedBy = userId;
+            product.UpdatedOn = DateTime.UtcNow;
+
             await _productRepository.AddAsync(product);
             await _productRepository.SaveChangesAsync();
             

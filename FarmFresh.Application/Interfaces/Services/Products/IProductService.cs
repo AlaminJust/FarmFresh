@@ -12,7 +12,8 @@ namespace FarmFresh.Application.Interfaces.Services.Products
         #endregion Get
 
         #region Save
-        Task<ProductResponse> AddAsync(ProductRequest productRequest);
+        Task<ProductResponse> AddAsync(ProductRequest productRequest, int userId);
+        Task<ProductDetailsResponse> GetProductDetailsByIdAsync(int id);
         #endregion Save
     }
 }

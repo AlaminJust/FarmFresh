@@ -35,9 +35,9 @@ namespace FarmFresh.Domain.Entities.Products
         [Range(0, Double.MaxValue)]
         public decimal Price { get; set; }
         
-        [Column("Image")]
+        [Column("ImageUrls")]
         [AllowNull]
-        public string? Image { get; set; }
+        public string? ImageUrls { get; set; }
         
         [Column("CategoryId")]
         [ForeignKey("ProductCategory")]
