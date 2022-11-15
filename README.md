@@ -9,6 +9,8 @@
   Then run 'update-database' command in package console by selecting FarmFresh.Data project
 
 
+# Seed data
+
             #region Role_Data
             modelBuilder.Entity<Role>().HasData(
                 new[]
