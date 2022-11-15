@@ -1,7 +1,7 @@
 # FarmFresh
   You will see all api information in swagger: https://localhost:yourport/swagger/index.html
   
-  Following N-Tier Architechture
+  Following N-Tier Architechture with Asp.Net 6
 
 # Db Migration
   Update connection string in appsetting.development.json file with your db 
