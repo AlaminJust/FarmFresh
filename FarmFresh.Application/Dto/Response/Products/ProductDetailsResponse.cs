@@ -13,7 +13,7 @@ namespace FarmFresh.Application.Dto.Response.Products
         public string? ImageUrl { get; set; }
         public decimal OldPrice { get; set; }
         public decimal Price { get; set; }
-        public Int32 discount
+        public Int32 Discount
         {
             get
             {
