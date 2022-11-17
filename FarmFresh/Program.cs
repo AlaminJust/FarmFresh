@@ -12,13 +12,20 @@ using FarmFresh.Infrastructure.Service.Services.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Reflection;
 using System.Text;
-using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+#region SeriLogger
+
+builder.Host.UseSerilog((context, logger) => logger
+        .WriteTo.Console()
+        .WriteTo.File("../Logs/FarmFreshV1_Log_.txt", rollingInterval: RollingInterval.Day,
+                    outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} ({MachineName},{ThreadId},{EnvironmentUserName}) {Message} {Exception} {NewLine}")
+        .Enrich.WithThreadId());
+#endregion SeriLogger
 
 #region Add controller
 
