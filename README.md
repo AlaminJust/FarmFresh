@@ -10,7 +10,7 @@
 
 • API is testable using swagger & postman
 
-• Serilogger integrated for logger information
+• Serilogger integrated for logging information
 
 # Upcoming feature 
 
