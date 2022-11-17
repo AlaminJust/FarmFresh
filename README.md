@@ -16,6 +16,8 @@
 
 # Upcoming feature 
 
+• Action filter
+
 • Unit test project
 
 • Globalization & Localization
