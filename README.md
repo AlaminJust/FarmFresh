@@ -12,6 +12,8 @@
 
 • Serilogger integrated for logging information
 
+• Seeding default data into database
+
 # Upcoming feature 
 
 • Unit test project
