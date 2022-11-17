@@ -1,14 +1,22 @@
 # Feature
-• Recommend to use N-tier architecture.
+• Following N-tier architecture.
 
-• It will be a plus if you use Entity Framework (Code First) with generic repository
+• Using Entity Framework (Code First) with generic repository
   pattern for data access layer.
   
-• It will be a plus if you implement the authentication.
+• Authentication & Authorization are done using JWT Authentication
 
-• It will be a plus if you implement server-side pagination.
+• Implemented Server-side pagination
 
-• If you develop only API for backend, the endpoints should be testable by Postman.
+• API is testable using swagger & postman
+
+• Serilogger integrated for logger information
+
+# Upcoming feature 
+
+• Unit test project
+
+• Globalization & Localization
 
 # FarmFresh
   See all api information in swagger: https://localhost:yourport/swagger/index.html

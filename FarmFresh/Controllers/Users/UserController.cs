@@ -18,18 +18,21 @@ namespace FarmFresh.Controllers.Users
         private readonly IUserService _userService;
         private readonly IConfiguration _configuration;
         private readonly IRoleService _roleService;
+        private readonly ILogger<UserController> _logger;
         #endregion Properties
 
         #region Constructor
         public UserController(
                 IUserService userService,
                 IConfiguration configuration,
-                IRoleService roleService
+                IRoleService roleService,
+                ILogger<UserController> logger
             )
         {
             _userService = userService;
             _configuration = configuration;
             _roleService = roleService;
+            _logger = logger;
         }
         #endregion Constructor
 
@@ -82,6 +85,7 @@ namespace FarmFresh.Controllers.Users
             }
             else
             {
+                _logger.LogInformation("Invalid login attempt for user: {0}", loginRequest.UserName);
                 return BadRequest("Invalid username or password");
             }
         }
