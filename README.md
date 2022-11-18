@@ -14,6 +14,8 @@
 
 • Seeding default data into database
 
+• Custom Extension
+
 # Upcoming feature 
 
 • Action filter
