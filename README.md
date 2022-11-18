@@ -1,4 +1,6 @@
 # Feature
+• ASP.Net 6
+
 • Following N-tier architecture.
 
 • Using Entity Framework (Code First) with generic repository
