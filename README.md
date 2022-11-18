@@ -1,4 +1,6 @@
 # Feature
+• ASP.Net 6
+
 • Following N-tier architecture.
 
 • Using Entity Framework (Code First) with generic repository
@@ -10,9 +12,15 @@
 
 • API is testable using swagger & postman
 
-• Serilogger integrated for logger information
+• Serilogger integrated for logging information
+
+• Seeding default data into database
+
+• Custom Extension
 
 # Upcoming feature 
+
+• Action filter
 
 • Unit test project
 
