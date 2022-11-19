@@ -6,7 +6,7 @@
 • Using mapper.
 
 • Using Entity Framework (Code First) with generic repository
-  pattern for data access layer.
+  pattern for accessing data layer.
   
 • Authentication & Authorization are done using JWT Authentication
 
