@@ -3,6 +3,8 @@
 
 • Following N-tier architecture.
 
+• Using mapper.
+
 • Using Entity Framework (Code First) with generic repository
   pattern for data access layer.
   
