@@ -20,11 +20,11 @@
 
 • Custom Extension
 
+• Unit test project
+
 # Upcoming feature 
 
 • Action filter
-
-• Unit test project
 
 • Globalization & Localization
 
