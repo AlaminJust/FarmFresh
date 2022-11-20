@@ -3,8 +3,10 @@
 
 • Following N-tier architecture.
 
+• Using mapper.
+
 • Using Entity Framework (Code First) with generic repository
-  pattern for data access layer.
+  pattern for accessing data layer.
   
 • Authentication & Authorization are done using JWT Authentication
 
@@ -18,11 +20,11 @@
 
 • Custom Extension
 
+• Unit test project
+
 # Upcoming feature 
 
 • Action filter
-
-• Unit test project
 
 • Globalization & Localization
 
