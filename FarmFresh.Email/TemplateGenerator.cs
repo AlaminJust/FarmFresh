@@ -16,18 +16,18 @@ namespace Taap.Email
             _emailService = emailService;
         }
 
-        private string GetTemplateFromData(string Template, BaseTemplate Data)
+        private string GetTemplateFromData(string template, BaseTemplate data)
         {
-            var templateObject = Handlebars.Compile(Template);
-            return templateObject(Data);
+            var templateObject = Handlebars.Compile(template);
+            return templateObject(data);
         }
 
-        public async Task<string> PrepareHtmlBodyAsync(string Filename, BaseTemplate Data)
+        public async Task<string> PrepareHtmlBodyAsync(string filename, BaseTemplate Data)
         {
-            if (Directory.Exists("/wwwroot/email-templates") && File.Exists($"/wwwroot/email-templates/{Filename}.html"))
+            if (Directory.Exists("/wwwroot/email-templates") && File.Exists($"/wwwroot/email-templates/{filename}.html"))
             {
                 FileProvider provider = new FileProvider("\\wwwroot\\email-templates");
-                var template = await provider.ReadFileToEndAsync(Filename);
+                var template = await provider.ReadFileToEndAsync(filename);
                 return GetTemplateFromData(template, Data);
             }
             else
@@ -36,10 +36,10 @@ namespace Taap.Email
             }
         }
 
-        public async Task SendEmailAsync(string Email, string Subject, string Body)
+        public async Task SendEmailAsync(string email, string subject, string body)
         {
-            FarmFresh.Email.Models.Email email = new FarmFresh.Email.Models.Email(Email, Subject, Body);
-            await _emailService.SendEmail(email);
+            FarmFresh.Email.Models.Email mail = new FarmFresh.Email.Models.Email(email, subject, body);
+            await _emailService.SendEmail(mail);
         }
     }
 }

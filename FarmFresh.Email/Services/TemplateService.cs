@@ -13,10 +13,10 @@ namespace Taap.Email.Services
         {
             _templateGenerator = templateGenerator;
         }
-        public async Task SendEmail(string Email, TemplatesDetails TempalteNames, BaseTemplate Data)
+        public async Task SendEmail(string email, TemplatesDetails TempalteNames, BaseTemplate data)
         {
-            var Body = await _templateGenerator.PrepareHtmlBodyAsync(TempalteNames.Name, Data);
-            await _templateGenerator.SendEmailAsync(Email, TempalteNames.Subject, Body);
+            var body = await _templateGenerator.PrepareHtmlBodyAsync(TempalteNames.Name, data);
+            await _templateGenerator.SendEmailAsync(email, TempalteNames.Subject, body);
         }
     }
 }
