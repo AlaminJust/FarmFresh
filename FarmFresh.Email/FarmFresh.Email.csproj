@@ -15,10 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Templates\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\FarmFresh.Application\FarmFresh.Application.csproj" />
   </ItemGroup>
 

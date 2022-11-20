@@ -22,6 +22,9 @@ using FarmFresh.Email.Interfaces;
 using FarmFresh.Email.Services;
 using Taap.Email.Services;
 using Taap.Email;
+using Hangfire;
+using Hangfire.SqlServer;
+using HangfireBasicAuthenticationFilter;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,6 +61,24 @@ builder.Configuration.Bind("MailSettings", mailSettings);
 builder.Services.AddSingleton(mailSettings);
 
 #endregion Setting
+
+#region Hangfire Configuration
+
+builder.Services.AddHangfire(configuration => configuration
+    .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseRecommendedSerializerSettings()
+    .UseSqlServerStorage(dbSettings.DbConnectionString, new SqlServerStorageOptions
+    {
+        CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+        SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+        QueuePollInterval = TimeSpan.Zero,
+        UseRecommendedIsolationLevel = true,
+        UsePageLocksOnDequeue = true,
+        DisableGlobalLocks = true
+    }));
+
+#endregion Hangfire Configuration
 
 #region JWT Authentication
 
@@ -180,11 +201,40 @@ app.UseStaticFiles();
 app.MapFallbackToFile("index.html");
 #endregion SPA
 
+#region Hangfire Dashboard
+
+app.UseHangfireDashboard("/jobs", new DashboardOptions
+{
+    AppPath = "farmfresh.com",
+    DashboardTitle = "Farm fresh",
+    Authorization = new[]
+    {
+        new HangfireCustomBasicAuthenticationFilter{
+            User = app.Configuration.GetSection("HangfireSettings:UserName").Value,
+            Pass = app.Configuration.GetSection("HangfireSettings:Password").Value
+        }
+    }
+
+});
+
+#endregion Hangfire Dashboard
+
+app.UseRouting();
+
 app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+#region Hangfire endpoints
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHangfireDashboard();
+});
+
+#endregion Hangfire endpoints
 
 app.Run();
 
