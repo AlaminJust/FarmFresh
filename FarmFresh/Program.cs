@@ -15,6 +15,13 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using Newtonsoft.Json;
 using Serilog;
+using FarmFresh.Domain.Unity;
+using TAAP.Domain.Unity;
+using FarmFresh.Email.Models;
+using FarmFresh.Email.Interfaces;
+using FarmFresh.Email.Services;
+using Taap.Email.Services;
+using Taap.Email;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +52,11 @@ var dbSettings = new DbSettings();
 builder.Configuration.Bind("DbSettings", dbSettings);
 builder.Services.AddSingleton(dbSettings);
 
+
+var mailSettings = new MailSettings();
+builder.Configuration.Bind("MailSettings", mailSettings);
+builder.Services.AddSingleton(mailSettings);
+
 #endregion Setting
 
 #region JWT Authentication
@@ -66,6 +78,25 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 #endregion
+
+#region Email Services
+
+builder.Services.AddSingleton<IEnviroment, Enviroment>();
+
+if (mailSettings.EnableMailService || builder.Environment.IsProduction())
+{
+    builder.Services.AddScoped<IEmailService, EmailService>();
+}
+else
+{
+    builder.Services.AddScoped<IEmailService, FileEmailService>();
+}
+
+builder.Services.AddScoped<TemplateGenerator>();
+builder.Services.AddScoped<ITemplateService, TemplateService>();
+
+
+#endregion Email Services
 
 #region Dependency Injection for entity framework core implementation (Infrastructure)
 builder.Services.AddPersistence(dbSettings.DbConnectionString);

@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FarmFresh.Application\FarmFresh.Application.csproj" />
+    <ProjectReference Include="..\FarmFresh.Email\FarmFresh.Email.csproj" />
     <ProjectReference Include="..\FarmFresh.Infrastructure.Data\FarmFresh.Infrastructure.Data.csproj" />
     <ProjectReference Include="..\FarmFresh.Infrastructure.Repo\FarmFresh.Infrastructure.Repo.csproj" />
     <ProjectReference Include="..\FarmFresh.Infrastructure.Service\FarmFresh.Infrastructure.Service.csproj" />
