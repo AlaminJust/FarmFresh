@@ -4,11 +4,6 @@ using FarmFresh.Application.Dto.Response.Products;
 using FarmFresh.Application.Interfaces.Services.Products;
 using FarmFresh.Domain.Entities.Products;
 using FarmFresh.Domain.RepoInterfaces.Products;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FarmFresh.Infrastructure.Service.Services.Products
 {
