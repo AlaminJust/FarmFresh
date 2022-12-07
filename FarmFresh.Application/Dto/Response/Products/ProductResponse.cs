@@ -11,6 +11,7 @@
         public int Quantity { get; set; }
         public int CategoryId { get; set; }
         public int BrandId { get; set; }
+        public int? DiscountId { get; set; }
         public Int32 Discount
         {
             get

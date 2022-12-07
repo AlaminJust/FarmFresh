@@ -33,5 +33,6 @@ namespace FarmFresh.Application.Dto.Request.Products
         
         [Required]
         public int VendorId { get; set; }
+        public int? DiscountId { get; set; }
     }
 }
