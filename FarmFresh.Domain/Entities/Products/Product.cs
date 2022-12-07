@@ -50,6 +50,10 @@ namespace FarmFresh.Domain.Entities.Products
         [ForeignKey("ProductBrand")]
         public int BrandId { get; set; }
 
+        [Column("DiscountId")]
+        [ForeignKey("Discount")]
+        public int? DiscountId { get; set; }
+
         [Column("VendorId")]
         [ForeignKey("Vendor")]
         public int VendorId { get; set; }
@@ -70,5 +74,6 @@ namespace FarmFresh.Domain.Entities.Products
         public virtual ProductBrand? ProductBrand { get; set; }
         public virtual ProductCategory? ProductCategory { get; set; }
         public virtual Vendor? Vendor { get; set; }
+        public virtual Discount? Discount { get; set; }
     }
 }
