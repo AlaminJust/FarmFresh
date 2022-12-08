@@ -18,6 +18,8 @@ namespace FarmFresh.Api.Automapper
             CreateMap<ProductDetails, ProductDetailsResponse>();
             CreateMap<Discount, DiscountResponse>();
             CreateMap<DiscountRequest, Discount>();
+            CreateMap<CartItem, CartItemResponse>();
+            CreateMap<CartItemRequest, CartItem>();
             #endregion Products
         }
     }
