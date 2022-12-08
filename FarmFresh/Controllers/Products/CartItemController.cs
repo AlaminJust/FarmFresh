@@ -1,7 +1,6 @@
 ﻿using FarmFresh.Application.Dto.Request.Products;
 using FarmFresh.Application.Interfaces.Services.Products;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FarmFresh.Api.Controllers.Products
