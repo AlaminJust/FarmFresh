@@ -24,7 +24,9 @@ namespace FarmFresh.Domain.Contexts
         DbSet<ProductBrand> Brands { get; set; }
         DbSet<Vendor> Vendors { get; set; }
         DbSet<Discount> Discounts { get; set; }
-        
+
+        DbSet<CartItem> CartItems { get; set; }
+
         #endregion DbSets
 
         #region Methods
