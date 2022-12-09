@@ -21,6 +21,7 @@ namespace FarmFresh.Domain.Entities.Users
             ProductsCreated = new HashSet<Product>();
             ProductsUpdated = new HashSet<Product>();
             CartItems = new HashSet<CartItem>();
+            Vouchers = new HashSet<Voucher>();
         }
         
         [Key]
@@ -55,5 +56,6 @@ namespace FarmFresh.Domain.Entities.Users
         [InverseProperty("UserUpdatedBy")]
         public virtual ICollection<Product> ProductsUpdated { get; set; }
         public virtual ICollection<CartItem> CartItems { get; set; }
+        public virtual ICollection<Voucher> Vouchers { get; set; }
     }
 }
