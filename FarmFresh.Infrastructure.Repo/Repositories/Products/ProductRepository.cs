@@ -22,12 +22,18 @@ namespace FarmFresh.Infrastructure.Repo.Repositories.Products
 
         #endregion Constructor
 
+        #region Private method
+        private IQueryable<Product> GetProducts()
+        {
+            return _context.Products.Where(x => x.IsDeleted == false);
+        }
+        #endregion Private Method
+
+
         #region Get
         public async Task<PaginationResponse<Product>> GetPaginatedProductsAsync(ProductPaginationRequest productPaginationRequest)
         {
-            var products = _context.Products
-                .Where(x => x.IsDeleted == false)
-                .AsQueryable();
+            var products = GetProducts();
 
             if (!string.IsNullOrEmpty(productPaginationRequest.Search))
             {
@@ -97,6 +103,18 @@ namespace FarmFresh.Infrastructure.Repo.Repositories.Products
 
             return await productDetails;
 
+        }
+
+        public async Task<bool> IsAvailableInStockAsync(int productId, int quantity)
+        {
+            var product = await GetProducts().FirstOrDefaultAsync(x => x.Id == productId);
+
+            if (product is null)
+            {
+                return false;
+            }
+
+            return product.Quantity >= quantity;
         }
 
         #endregion Get

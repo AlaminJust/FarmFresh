@@ -15,6 +15,7 @@ namespace FarmFresh.Domain.RepoInterfaces.Products
         #region Get
         Task<PaginationResponse<Product>> GetPaginatedProductsAsync(ProductPaginationRequest productPaginationRequest);
         Task<ProductDetails> GetProductDetailsByIdAsync(int id);
+        Task<bool> IsAvailableInStockAsync(int productId, int quantity);
         #endregion Get
     }
 }

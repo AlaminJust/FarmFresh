@@ -17,22 +17,30 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
         #region Properties
         private readonly ICartItemRepository _cartItemRepository;
         private readonly IMapper _mapper;
+        private readonly IProductService _productService;
         #endregion Properties
 
         #region Constructor
         public CartItemService(
                 ICartItemRepository cartItemRepository,
-                IMapper mapper
+                IMapper mapper,
+                IProductService productService
             )
         {
             _cartItemRepository = cartItemRepository;
             _mapper = mapper;
+            _productService = productService;
         }
         #endregion Constructor
 
         #region Save
         public async Task<CartItemResponse> AddAsync(CartItemRequest cartItem, int userId)
         {
+            if (!await _productService.IsAvailableInStockAsync(cartItem.ProductId, cartItem.Quantity))
+            {
+                throw new Exception("Product is not available in stock");
+            }
+            
             CartItem cart = _mapper.Map<CartItem>(cartItem);
 
             cart.UserId = userId;

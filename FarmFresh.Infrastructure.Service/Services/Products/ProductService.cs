@@ -40,6 +40,12 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             var products = await _productRepository.GetPaginatedProductsAsync(productPaginationRequest);
             return _mapper.Map<PaginationResponse<ProductResponse>>(products);
         }
+
+        public Task<bool> IsAvailableInStockAsync(int productId, int quantity)
+        {
+            return _productRepository.IsAvailableInStockAsync(productId, quantity);
+        }
+
         #endregion Get
 
         #region Save
@@ -57,7 +63,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             
             return _mapper.Map<ProductResponse>(product);
         }
-
+        
         #endregion Save
     }
 }
