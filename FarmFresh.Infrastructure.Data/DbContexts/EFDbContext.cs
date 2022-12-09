@@ -35,7 +35,8 @@ namespace FarmFresh.Infrastructure.Data.DbContexts
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<Discount> Discounts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
-        
+        public DbSet<Voucher> Vouchers { get; set; }
+
         #endregion DbSet
 
         #region Model builder
