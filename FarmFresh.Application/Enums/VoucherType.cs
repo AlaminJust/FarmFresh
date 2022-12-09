@@ -2,7 +2,7 @@
 
 namespace FarmFresh.Application.Enums
 {
-    public enum VoucherType
+    public enum VoucherType: byte
     {
         [Description("Percentage")]
         Percentage = 1,

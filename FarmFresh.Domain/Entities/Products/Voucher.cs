@@ -8,6 +8,11 @@ namespace FarmFresh.Domain.Entities.Products
 {
     public class Voucher: BaseEntity
     {
+        public Voucher()
+        {
+            Orders = new HashSet<Order>();
+        }
+        
         [Key]
         [Column("Id")]
         public int Id { get; set; }
@@ -69,5 +74,6 @@ namespace FarmFresh.Domain.Entities.Products
         [Description("User who created this voucher")]
         public int CreatedBy { get; set; }
         public virtual User User { get; set; } = null!;
+        public virtual ICollection<Order> Orders { get; set; } = null!;
     }
 }
