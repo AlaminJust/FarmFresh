@@ -23,7 +23,10 @@ namespace FarmFresh.Domain.Contexts
         DbSet<UserRole> UserRoles { get; set; }
         DbSet<ProductBrand> Brands { get; set; }
         DbSet<Vendor> Vendors { get; set; }
-        
+        DbSet<Discount> Discounts { get; set; }
+        DbSet<CartItem> CartItems { get; set; }
+        DbSet<Voucher> Vouchers { get; set; }
+
         #endregion DbSets
 
         #region Methods

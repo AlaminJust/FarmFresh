@@ -9,6 +9,7 @@ namespace FarmFresh.Application.Interfaces.Services.Products
     {
         #region Get
         Task<PaginationResponse<ProductResponse>> GetPaginatedProductsAsync(ProductPaginationRequest productPaginationRequest);
+        Task<Boolean> IsAvailableInStockAsync(int productId, int quantity);
         #endregion Get
 
         #region Save

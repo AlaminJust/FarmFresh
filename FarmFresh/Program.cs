@@ -15,6 +15,16 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using Newtonsoft.Json;
 using Serilog;
+using FarmFresh.Domain.Unity;
+using TAAP.Domain.Unity;
+using FarmFresh.Email.Models;
+using FarmFresh.Email.Interfaces;
+using FarmFresh.Email.Services;
+using Taap.Email.Services;
+using Taap.Email;
+using Hangfire;
+using Hangfire.SqlServer;
+using HangfireBasicAuthenticationFilter;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,7 +55,30 @@ var dbSettings = new DbSettings();
 builder.Configuration.Bind("DbSettings", dbSettings);
 builder.Services.AddSingleton(dbSettings);
 
+
+var mailSettings = new MailSettings();
+builder.Configuration.Bind("MailSettings", mailSettings);
+builder.Services.AddSingleton(mailSettings);
+
 #endregion Setting
+
+#region Hangfire Configuration
+
+builder.Services.AddHangfire(configuration => configuration
+    .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseRecommendedSerializerSettings()
+    .UseSqlServerStorage(dbSettings.DbConnectionString, new SqlServerStorageOptions
+    {
+        CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+        SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+        QueuePollInterval = TimeSpan.Zero,
+        UseRecommendedIsolationLevel = true,
+        UsePageLocksOnDequeue = true,
+        DisableGlobalLocks = true
+    }));
+
+#endregion Hangfire Configuration
 
 #region JWT Authentication
 
@@ -66,6 +99,25 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 #endregion
+
+#region Email Services
+
+builder.Services.AddSingleton<IEnviroment, Enviroment>();
+
+if (mailSettings.EnableMailService || builder.Environment.IsProduction())
+{
+    builder.Services.AddScoped<IEmailService, EmailService>();
+}
+else
+{
+    builder.Services.AddScoped<IEmailService, FileEmailService>();
+}
+
+builder.Services.AddScoped<TemplateGenerator>();
+builder.Services.AddScoped<ITemplateService, TemplateService>();
+
+
+#endregion Email Services
 
 #region Dependency Injection for entity framework core implementation (Infrastructure)
 builder.Services.AddPersistence(dbSettings.DbConnectionString);
@@ -119,6 +171,9 @@ builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IUserRoleRepository, UserRoleRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
+builder.Services.AddScoped<IDiscountRepository, DiscountRepository>();
+builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
+builder.Services.AddScoped<IVoucherRepository, VoucherRepository>();
 #endregion Dependency Injection for repository
 
 #region Dependency Injection for service
@@ -126,6 +181,9 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
+builder.Services.AddScoped<IDiscountService, DiscountService>();
+builder.Services.AddScoped<ICartItemService, CartItemService>();
+builder.Services.AddScoped<IVoucherService, VoucherService>();
 #endregion Dependency Injection for service
 
 #region Automapper
@@ -149,11 +207,40 @@ app.UseStaticFiles();
 app.MapFallbackToFile("index.html");
 #endregion SPA
 
+#region Hangfire Dashboard
+
+app.UseHangfireDashboard("/jobs", new DashboardOptions
+{
+    AppPath = "farmfresh.com",
+    DashboardTitle = "Farm fresh",
+    Authorization = new[]
+    {
+        new HangfireCustomBasicAuthenticationFilter{
+            User = app.Configuration.GetSection("HangfireSettings:UserName").Value,
+            Pass = app.Configuration.GetSection("HangfireSettings:Password").Value
+        }
+    }
+
+});
+
+#endregion Hangfire Dashboard
+
+app.UseRouting();
+
 app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+#region Hangfire endpoints
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHangfireDashboard();
+});
+
+#endregion Hangfire endpoints
 
 app.Run();
 

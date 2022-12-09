@@ -22,6 +22,91 @@ namespace FarmFresh.Infrastructure.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("FarmFresh.Domain.Entities.Products.CartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("date")
+                        .HasColumnName("CreatedOn");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int")
+                        .HasColumnName("ProductId");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int")
+                        .HasColumnName("Quantity");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("date")
+                        .HasColumnName("UpdatedOn");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CartItem", "dbo");
+                });
+
+            modelBuilder.Entity("FarmFresh.Domain.Entities.Products.Discount", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("date")
+                        .HasColumnName("CreatedOn");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("Description");
+
+                    b.Property<decimal?>("DiscountParcent")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("DiscountParcent");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("Name");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("date")
+                        .HasColumnName("UpdatedOn");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Discount", "dbo");
+                });
+
             modelBuilder.Entity("FarmFresh.Domain.Entities.Products.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -52,6 +137,10 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(100)")
                         .HasColumnName("Description");
+
+                    b.Property<int?>("DiscountId")
+                        .HasColumnType("int")
+                        .HasColumnName("DiscountId");
 
                     b.Property<string>("ImageUrls")
                         .HasColumnType("nvarchar(max)")
@@ -103,6 +192,8 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                     b.HasIndex("BrandId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("DiscountId");
 
                     b.HasIndex("UserCreatedById");
 
@@ -328,6 +419,80 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("FarmFresh.Domain.Entities.Products.Voucher", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int")
+                        .HasColumnName("CreatedBy");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("date")
+                        .HasColumnName("CreatedOn");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("Discount");
+
+                    b.Property<DateTime>("ExpiryDate")
+                        .HasColumnType("date")
+                        .HasColumnName("ExpiryDate");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsActive");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<int>("MaximumAmount")
+                        .HasColumnType("int")
+                        .HasColumnName("MaximumAmount");
+
+                    b.Property<int>("MinimumAmount")
+                        .HasColumnType("int")
+                        .HasColumnName("MinimumAmount");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("date")
+                        .HasColumnName("StartDate");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("date")
+                        .HasColumnName("UpdatedOn");
+
+                    b.Property<int>("UsageCount")
+                        .HasColumnType("int")
+                        .HasColumnName("UsageCount");
+
+                    b.Property<int>("UsageLimit")
+                        .HasColumnType("int")
+                        .HasColumnName("UsageLimit");
+
+                    b.Property<string>("VoucherCode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("VoucherCode");
+
+                    b.Property<int>("VoucherType")
+                        .HasColumnType("int")
+                        .HasColumnName("VoucherType");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.ToTable("Vouchers");
+                });
+
             modelBuilder.Entity("FarmFresh.Domain.Entities.Users.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -516,6 +681,25 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("FarmFresh.Domain.Entities.Products.CartItem", b =>
+                {
+                    b.HasOne("FarmFresh.Domain.Entities.Products.Product", "Product")
+                        .WithMany("CartItems")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FarmFresh.Domain.Entities.Users.User", "User")
+                        .WithMany("CartItems")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("FarmFresh.Domain.Entities.Products.Product", b =>
                 {
                     b.HasOne("FarmFresh.Domain.Entities.Products.ProductBrand", "ProductBrand")
@@ -529,6 +713,10 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("FarmFresh.Domain.Entities.Products.Discount", "Discount")
+                        .WithMany("Products")
+                        .HasForeignKey("DiscountId");
 
                     b.HasOne("FarmFresh.Domain.Entities.Users.User", "UserCreatedBy")
                         .WithMany("ProductsCreated")
@@ -544,6 +732,8 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Discount");
+
                     b.Navigation("ProductBrand");
 
                     b.Navigation("ProductCategory");
@@ -553,6 +743,17 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                     b.Navigation("UserUpdatedBy");
 
                     b.Navigation("Vendor");
+                });
+
+            modelBuilder.Entity("FarmFresh.Domain.Entities.Products.Voucher", b =>
+                {
+                    b.HasOne("FarmFresh.Domain.Entities.Users.User", "User")
+                        .WithMany("Vouchers")
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FarmFresh.Domain.Entities.Users.UserRole", b =>
@@ -572,6 +773,16 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("FarmFresh.Domain.Entities.Products.Discount", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("FarmFresh.Domain.Entities.Products.Product", b =>
+                {
+                    b.Navigation("CartItems");
                 });
 
             modelBuilder.Entity("FarmFresh.Domain.Entities.Products.ProductBrand", b =>
@@ -596,11 +807,15 @@ namespace FarmFresh.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("FarmFresh.Domain.Entities.Users.User", b =>
                 {
+                    b.Navigation("CartItems");
+
                     b.Navigation("ProductsCreated");
 
                     b.Navigation("ProductsUpdated");
 
                     b.Navigation("UserRoles");
+
+                    b.Navigation("Vouchers");
                 });
 #pragma warning restore 612, 618
         }

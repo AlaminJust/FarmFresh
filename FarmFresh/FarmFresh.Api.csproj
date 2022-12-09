@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.7.31" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.11">
@@ -26,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FarmFresh.Application\FarmFresh.Application.csproj" />
+    <ProjectReference Include="..\FarmFresh.Email\FarmFresh.Email.csproj" />
     <ProjectReference Include="..\FarmFresh.Infrastructure.Data\FarmFresh.Infrastructure.Data.csproj" />
     <ProjectReference Include="..\FarmFresh.Infrastructure.Repo\FarmFresh.Infrastructure.Repo.csproj" />
     <ProjectReference Include="..\FarmFresh.Infrastructure.Service\FarmFresh.Infrastructure.Service.csproj" />
