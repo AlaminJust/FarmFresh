@@ -4,6 +4,7 @@ using FarmFresh.Infrastructure.Data.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FarmFresh.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(EFDbContext))]
-    partial class EFDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221210052652_AddOrderAndPaymentTable")]
+    partial class AddOrderAndPaymentTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,40 +23,6 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("FarmFresh.Domain.Entities.Products.Cart", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("date")
-                        .HasColumnName("CreatedOn");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("TotalPrice");
-
-                    b.Property<DateTime>("UpdatedOn")
-                        .HasColumnType("date")
-                        .HasColumnName("UpdatedOn");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnName("UserId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Cart", "dbo");
-                });
 
             modelBuilder.Entity("FarmFresh.Domain.Entities.Products.CartItem", b =>
                 {
@@ -64,10 +32,6 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                         .HasColumnName("Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CartId")
-                        .HasColumnType("int")
-                        .HasColumnName("CartId");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("date")
@@ -94,8 +58,6 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                         .HasColumnName("UserId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CartId");
 
                     b.HasIndex("ProductId");
 
@@ -202,61 +164,7 @@ namespace FarmFresh.Infrastructure.Data.Migrations
 
                     b.HasIndex("VoucherId");
 
-                    b.ToTable("Order", "dbo");
-                });
-
-            modelBuilder.Entity("FarmFresh.Domain.Entities.Products.OrderItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("date")
-                        .HasColumnName("CreatedOn");
-
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("Discount");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int")
-                        .HasColumnName("OrderId");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("Price");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int")
-                        .HasColumnName("ProductId");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int")
-                        .HasColumnName("Quantity");
-
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("Total");
-
-                    b.Property<DateTime>("UpdatedOn")
-                        .HasColumnType("date")
-                        .HasColumnName("UpdatedOn");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrderItem", "dbo");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("FarmFresh.Domain.Entities.Products.PaymentDetail", b =>
@@ -309,7 +217,7 @@ namespace FarmFresh.Infrastructure.Data.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("PaymentDetail", "dbo");
+                    b.ToTable("PaymentDetails");
                 });
 
             modelBuilder.Entity("FarmFresh.Domain.Entities.Products.Product", b =>
@@ -695,7 +603,7 @@ namespace FarmFresh.Infrastructure.Data.Migrations
 
                     b.HasIndex("CreatedBy");
 
-                    b.ToTable("Voucher", "dbo");
+                    b.ToTable("Vouchers");
                 });
 
             modelBuilder.Entity("FarmFresh.Domain.Entities.Users.Role", b =>
@@ -888,12 +796,6 @@ namespace FarmFresh.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("FarmFresh.Domain.Entities.Products.CartItem", b =>
                 {
-                    b.HasOne("FarmFresh.Domain.Entities.Products.Cart", "Cart")
-                        .WithMany("CartItems")
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("FarmFresh.Domain.Entities.Products.Product", "Product")
                         .WithMany("CartItems")
                         .HasForeignKey("ProductId")
@@ -905,8 +807,6 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Cart");
 
                     b.Navigation("Product");
 
@@ -928,25 +828,6 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                     b.Navigation("User");
 
                     b.Navigation("Voucher");
-                });
-
-            modelBuilder.Entity("FarmFresh.Domain.Entities.Products.OrderItem", b =>
-                {
-                    b.HasOne("FarmFresh.Domain.Entities.Products.Order", "Order")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FarmFresh.Domain.Entities.Products.Product", "Product")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("FarmFresh.Domain.Entities.Products.PaymentDetail", b =>
@@ -1035,11 +916,6 @@ namespace FarmFresh.Infrastructure.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FarmFresh.Domain.Entities.Products.Cart", b =>
-                {
-                    b.Navigation("CartItems");
-                });
-
             modelBuilder.Entity("FarmFresh.Domain.Entities.Products.Discount", b =>
                 {
                     b.Navigation("Products");
@@ -1047,16 +923,12 @@ namespace FarmFresh.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("FarmFresh.Domain.Entities.Products.Order", b =>
                 {
-                    b.Navigation("OrderItems");
-
                     b.Navigation("PaymentDetails");
                 });
 
             modelBuilder.Entity("FarmFresh.Domain.Entities.Products.Product", b =>
                 {
                     b.Navigation("CartItems");
-
-                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("FarmFresh.Domain.Entities.Products.ProductBrand", b =>
