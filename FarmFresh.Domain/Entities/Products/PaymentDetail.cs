@@ -1,15 +1,11 @@
 ﻿using FarmFresh.Application.Enums;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FarmFresh.Domain.Entities.Products
 {
+    [Table("PaymentDetail", Schema = "dbo")]
     public class PaymentDetail: BaseEntity
     {
         [Key, Required]

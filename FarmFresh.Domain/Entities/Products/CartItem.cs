@@ -1,4 +1,5 @@
 ﻿using FarmFresh.Domain.Entities.Users;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -19,10 +20,15 @@ namespace FarmFresh.Domain.Entities.Products
         [ForeignKey("Product")]
         public int ProductId { get; set; }
 
+        [Column("CartId")]
+        [ForeignKey("Cart")]
+        public int CartId { get; set; }
+
         [Column("Quantity")]
         [Required]
         public int Quantity { get; set; }
         public virtual Product Product { get; set; } = null!;
         public virtual User User { get; set; } = null!;
+        public virtual Cart Cart { get; set; } = null!;
     }
 }

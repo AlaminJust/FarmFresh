@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FarmFresh.Domain.Entities.Products
 {
+    [Table("Voucher", Schema = "dbo")]
     public class Voucher: BaseEntity
     {
         public Voucher()

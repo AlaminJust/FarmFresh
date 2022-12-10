@@ -5,11 +5,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FarmFresh.Domain.Entities.Products
 {
+    [Table("Order", Schema = "dbo")]
     public class Order: BaseEntity
     {
         public Order()
         {
             PaymentDetails = new HashSet<PaymentDetail>();
+            OrderItems = new HashSet<OrderItem>();
         }
         
         [Key]
@@ -41,5 +43,6 @@ namespace FarmFresh.Domain.Entities.Products
         public virtual User User { get; set; } = null!;
         public virtual Voucher? Voucher { get; set; }
         public virtual ICollection<PaymentDetail> PaymentDetails { get; set; } = null!;
+        public virtual ICollection<OrderItem> OrderItems { get; set; } = null!;
     }
 }

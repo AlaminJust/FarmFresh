@@ -3,11 +3,6 @@ using FarmFresh.Domain.Entities.Products;
 using FarmFresh.Domain.Entities.Users;
 using FarmFresh.Infrastructure.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FarmFresh.Infrastructure.Data.DbContexts
 {
@@ -38,7 +33,9 @@ namespace FarmFresh.Infrastructure.Data.DbContexts
         public DbSet<Voucher> Vouchers { get; set; }
         public DbSet<Order> Orders { get; set; } 
         public DbSet<PaymentDetail> PaymentDetails { get; set; }
-
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        
         #endregion DbSet
 
         #region Model builder
