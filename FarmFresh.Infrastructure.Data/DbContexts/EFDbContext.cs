@@ -36,6 +36,8 @@ namespace FarmFresh.Infrastructure.Data.DbContexts
         public DbSet<Discount> Discounts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Voucher> Vouchers { get; set; }
+        public DbSet<Order> Orders { get; set; } 
+        public DbSet<PaymentDetail> PaymentDetails { get; set; }
 
         #endregion DbSet
 

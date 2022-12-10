@@ -22,7 +22,7 @@ namespace FarmFresh.Domain.Entities.Products
 
         [Column("VoucherId")]
         [ForeignKey("Voucher")]
-        public int VoucherId { get; set; }
+        public int? VoucherId { get; set; }
 
         [Column("TotalAmount")]
         public decimal TotalAmount { get; set; }
@@ -39,7 +39,7 @@ namespace FarmFresh.Domain.Entities.Products
         [Column("OrderDate", TypeName = "date")]
         public DateTime OrderDate { get; set; }
         public virtual User User { get; set; } = null!;
-        public virtual Voucher Voucher { get; set; } = null!;
+        public virtual Voucher? Voucher { get; set; }
         public virtual ICollection<PaymentDetail> PaymentDetails { get; set; } = null!;
     }
 }
