@@ -11,7 +11,7 @@ namespace FarmFresh.Domain.Entities.Products
     {
         public Voucher()
         {
-            Orders = new HashSet<Order>();
+            Carts = new HashSet<Cart>();
         }
         
         [Key]
@@ -25,9 +25,9 @@ namespace FarmFresh.Domain.Entities.Products
         public string VoucherCode { get; set; } = null!;
 
         [Required]
-        [Column("Discount")]
-        [Description("Discount in percentage or fixed amount")]
-        public decimal Discount { get; set; }
+        [Column("VoucherValue")]
+        [Description("Voucher value in percentage or fixed amount")]
+        public decimal VoucherValue { get; set; }
 
         [Required]
         [Column("ExpiryDate", TypeName = "date")]
@@ -75,6 +75,6 @@ namespace FarmFresh.Domain.Entities.Products
         [Description("User who created this voucher")]
         public int CreatedBy { get; set; }
         public virtual User User { get; set; } = null!;
-        public virtual ICollection<Order> Orders { get; set; } = null!;
+        public virtual ICollection<Cart> Carts { get; set; } = null!;
     }
 }

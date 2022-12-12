@@ -1,12 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using FarmFresh.Application.Enums;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FarmFresh.Domain.Entities.Products
 {
@@ -32,9 +27,11 @@ namespace FarmFresh.Domain.Entities.Products
         [Unicode(false)]
         public string? Description { get; set; }
 
-        [Column("DiscountParcent")]
-        [Range(0, 100)]
-        public decimal? DiscountParcent { get; set; }
+        [Column("DiscountValue")]
+        public decimal DiscountValue { get; set; }
+
+        [Column("DiscountType")]
+        public DiscountType DiscountType { get; set; }
 
         public virtual ICollection<Product> Products { get; set; } = null!;
     }

@@ -2,15 +2,14 @@
 
 namespace FarmFresh.Domain.RepoInterfaces.Products
 {
-    public interface ICartItemRepository: IBaseRepository<CartItem>
+    public interface ICartRepository : IBaseRepository<Cart>
     {
         #region Get
-        Task<IList<CartItem>> GetCartItemsByCartIdAsync(int cartId);
+        Task<Cart> GetCartByUserIdAsync(int userId);
         #endregion Get
 
         #region Save
-        Task<CartItem> AddCartItemAsync(CartItem cartItem);
+        Task<Cart> CreateCartAsync(int userId);
         #endregion Save
-
     }
 }

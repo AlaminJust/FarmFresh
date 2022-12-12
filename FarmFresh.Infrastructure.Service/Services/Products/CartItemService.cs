@@ -43,8 +43,6 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             
             CartItem cart = _mapper.Map<CartItem>(cartItem);
 
-            cart.UserId = userId;
-            cart.CreatedOn = DateTime.Now;
 
             await _cartItemRepository.AddAsync(cart);
             await _cartItemRepository.SaveChangesAsync();
