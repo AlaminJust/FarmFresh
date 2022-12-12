@@ -7,12 +7,21 @@ namespace FarmFresh.Infrastructure.Repo.Repositories.Products
 {
     public class CartItemRepository : BaseRepository<CartItem>, ICartItemRepository
     {
+        #region Properties
         private readonly EFDbContext _context;
+        private readonly IProductRepository _productRepository;
+        #endregion Properties
 
-        public CartItemRepository(EFDbContext context) : base(context)
+        #region Constructor
+        public CartItemRepository(
+                EFDbContext context,
+                IProductRepository productRepository
+            ) : base(context)
         {
             _context = context;
+            _productRepository = productRepository;
         }
+        #endregion Constructor
 
         #region Private Method
         private IQueryable<CartItem> CartItems()
@@ -36,9 +45,15 @@ namespace FarmFresh.Infrastructure.Repo.Repositories.Products
             
             if (existingCartItem is not null)
             {
+                if(!await _productRepository.IsAvailableInStockAsync(cartItem.ProductId, existingCartItem.Quantity + cartItem.Quantity))
+                {
+                    throw new Exception("Product is not available in stock");
+                }
+
                 existingCartItem.Quantity += cartItem.Quantity;
                 await UpdateAsync(existingCartItem);
                 await SaveChangesAsync();
+
                 return existingCartItem;
             }
             else

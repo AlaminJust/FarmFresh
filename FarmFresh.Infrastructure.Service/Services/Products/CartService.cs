@@ -91,7 +91,8 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
 
             cart.TotalPrice = totalPrice;
             cart.DiscountPrice = (discountPrice + voucherDiscount);
-
+            cart.UpdatedOn = DateTime.Now;
+            
             await _cartRepository.UpdateAsync(cart);
             await _cartItemRepository.SaveChangesAsync();
         }
