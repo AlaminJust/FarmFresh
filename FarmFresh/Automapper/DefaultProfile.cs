@@ -22,6 +22,7 @@ namespace FarmFresh.Api.Automapper
             CreateMap<CartItemRequest, CartItem>();
             CreateMap<Voucher, VoucherResponse>();
             CreateMap<VoucherResponse, Voucher>();
+            CreateMap<Cart, CartResponse>();
             #endregion Products
         }
     }

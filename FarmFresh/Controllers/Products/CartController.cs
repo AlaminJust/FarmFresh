@@ -1,24 +1,25 @@
 ﻿using FarmFresh.Application.Dto.Request.Products;
+using FarmFresh.Application.Dto.Response.Products;
 using FarmFresh.Application.Interfaces.Services.Products;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FarmFresh.Api.Controllers.Products
 {
-    [Route("api/cart-item-management")]
+    [Route("api/cart-management")]
     [ApiController]
-    public class CartItemController : ApiControllerBase
+    public class CartController : ApiControllerBase
     {
         #region Properties
-        private readonly ICartItemService _cartItemService;
+        private readonly ICartService _cartService;
         #endregion Properties
 
         #region Constructor
-        public CartItemController(
-                ICartItemService cartItemService
+        public CartController(
+                ICartService cartService
             )
         {
-            _cartItemService = cartItemService;
+            _cartService = cartService;
         }
         #endregion Constructor
 
@@ -26,10 +27,11 @@ namespace FarmFresh.Api.Controllers.Products
         [HttpPost]
         [Route("cart-item")]
         [Authorize]
+        [ProducesResponseType(typeof(CartResponse), 200)]
         public async Task<IActionResult> AddAsync([FromBody] CartItemRequest cartItemRequest)
         {
-            var cartItemResponse = await _cartItemService.AddAsync(cartItemRequest, UserId);
-            return Ok(cartItemResponse);
+            CartResponse response = await _cartService.AddToCartAsync(cartItemRequest, UserId);
+            return Ok(response);
         }
         #endregion Save
     }

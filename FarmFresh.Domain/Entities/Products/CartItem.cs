@@ -12,10 +12,6 @@ namespace FarmFresh.Domain.Entities.Products
         [Column("Id")]
         public int Id { get; set; }
 
-        [Column("UserId")]
-        [ForeignKey("User")]
-        public int UserId { get; set; }
-
         [Column("ProductId")]
         [ForeignKey("Product")]
         public int ProductId { get; set; }
@@ -28,7 +24,6 @@ namespace FarmFresh.Domain.Entities.Products
         [Required]
         public int Quantity { get; set; }
         public virtual Product Product { get; set; } = null!;
-        public virtual User User { get; set; } = null!;
         public virtual Cart Cart { get; set; } = null!;
     }
 }

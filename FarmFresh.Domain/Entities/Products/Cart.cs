@@ -21,6 +21,15 @@ namespace FarmFresh.Domain.Entities.Products
 
         [Column("TotalPrice")]
         public decimal TotalPrice { get; set; }
+
+        [Column("DiscountPrice")]
+        public decimal DiscountPrice { get; set; }
+
+        [Column("VoucherId")]
+        [ForeignKey("Voucher")]
+        public int? VoucherId { get; set; }
         public virtual ICollection<CartItem> CartItems { get; set; } = null!;
+        public virtual Voucher? Voucher { get; set; }
+
     }
 }
