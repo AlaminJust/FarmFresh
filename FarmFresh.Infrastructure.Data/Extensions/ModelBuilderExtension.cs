@@ -150,6 +150,31 @@ namespace FarmFresh.Infrastructure.Data.Extensions
                         }
                     });
             #endregion Admin_User
+
+            #region Discount
+            modelBuilder.Entity<Discount>().HasData(
+                    new[]
+                    {
+                        new Discount
+                        {
+                            Id = 1,
+                            Name = "Fixed price",
+                            DiscountType = DiscountType.Fixed,
+                            Description = "Only allow for a fixed price",
+                            CreatedOn = new DateTime(2023, 01, 31, 8, 38, 30, 656, DateTimeKind.Local).AddTicks(3059),
+                            DiscountValue = 100,
+                        },
+                        new Discount
+                        {
+                            Id = 2,
+                            Name = "Fixed price",
+                            DiscountType = DiscountType.Percentage,
+                            Description = "Discount by percentage for a special product",
+                            CreatedOn = new DateTime(2023, 01, 31, 8, 38, 30, 656, DateTimeKind.Local).AddTicks(3059),
+                            DiscountValue = 10,
+                        }
+                    });
+            #endregion Discount
         }
     }
 }
