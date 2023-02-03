@@ -14,7 +14,7 @@
         {
             get
             {
-                return (TotalPrice - DiscountPrice);
+                return Math.Max(0,TotalPrice - DiscountPrice);
             }
         }
         public int TotalItem

@@ -32,7 +32,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((context, logger) => logger
         .WriteTo.Console()
-        .WriteTo.File("../Logs/FarmFreshV1_Log_.txt", rollingInterval: RollingInterval.Day,
+        .WriteTo.File("wwwroot/Logs/FarmFreshV1_Log_.txt", rollingInterval: RollingInterval.Day,
                     outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} ({MachineName},{ThreadId},{EnvironmentUserName}) {Message} {Exception} {NewLine}")
         .Enrich.WithThreadId());
 #endregion SeriLogger
@@ -131,6 +131,17 @@ builder.Services.AddEndpointsApiExplorer();
 
 #endregion Add services to the container
 
+#region CORS POLICY
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy",
+        builder => builder.WithOrigins("http://localhost:8042/", "https://localhost:8042/")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .WithExposedHeaders("X-Pagination"));
+});
+#endregion
+
 #region Swagger configuration
 
 builder.Services.AddSwaggerGen(opt =>
@@ -191,18 +202,29 @@ builder.Services.AddScoped<ICartService, CartService>();
 #region Automapper
 builder.Services.AddAutoMapper(typeof(DefaultProfile), typeof(UserMapperProfile));
 #endregion Automapper
+/*
+builder.Services.AddHttpsRedirection(options =>
+{
+    options.RedirectStatusCode = (int)HttpStatusCode.PermanentRedirect;
+    options.HttpsPort = 443;
+});*/
 
 var app = builder.Build();
 
 #region Middleware pipeline
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+/*app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});*/
+
+//app.UseHttpsRedirection();
 
 #region SPA
 app.UseStaticFiles();
@@ -228,6 +250,8 @@ app.UseHangfireDashboard("/jobs", new DashboardOptions
 #endregion Hangfire Dashboard
 
 app.UseRouting();
+
+app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 

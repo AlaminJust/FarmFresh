@@ -165,9 +165,14 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             return await GetCartByIdAsync(cart.Id);
 
         }
-
-
-
         #endregion Save
+
+        #region Get
+        public async Task<CartResponse> GetCartByUserIdAsync(int userId)
+        {
+            var cart = await _cartRepository.GetCartByUserIdAsync(userId);
+            return await GetCartByIdAsync(cart.Id);
+        }
+        #endregion Get
     }
 }

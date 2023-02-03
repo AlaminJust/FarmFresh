@@ -23,6 +23,8 @@ namespace FarmFresh.Api.Controllers.Products
         }
         #endregion Constructor
 
+        
+
         #region Save
         [HttpPost]
         [Route("cart-item")]
@@ -34,5 +36,17 @@ namespace FarmFresh.Api.Controllers.Products
             return Ok(response);
         }
         #endregion Save
+
+        #region Get
+        [HttpGet]
+        [Route("cart-item")]
+        [Authorize]
+        [ProducesResponseType(typeof(CartResponse), 200)]
+        public async Task<IActionResult> GetAsync()
+        {
+            CartResponse response = await _cartService.GetCartByUserIdAsync(UserId);
+            return Ok(response);
+        }
+        #endregion Get
     }
 }

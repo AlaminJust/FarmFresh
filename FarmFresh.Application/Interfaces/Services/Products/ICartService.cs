@@ -6,7 +6,8 @@ namespace FarmFresh.Application.Interfaces.Services.Products
     public interface ICartService
     {
         #region Get
-        Task<CartResponse> GetCartByIdAsync(int userId);
+        Task<CartResponse> GetCartByIdAsync(int cartId);
+        Task<CartResponse> GetCartByUserIdAsync(int userId);
         #endregion Get
 
         #region Save

@@ -162,7 +162,7 @@ namespace FarmFresh.Infrastructure.Data.Extensions
                             DiscountType = DiscountType.Fixed,
                             Description = "Only allow for a fixed price",
                             CreatedOn = new DateTime(2023, 01, 31, 8, 38, 30, 656, DateTimeKind.Local).AddTicks(3059),
-                            DiscountValue = 100,
+                            DiscountValue = 2,
                         },
                         new Discount
                         {
