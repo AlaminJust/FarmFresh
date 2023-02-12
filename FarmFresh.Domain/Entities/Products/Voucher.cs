@@ -12,6 +12,7 @@ namespace FarmFresh.Domain.Entities.Products
         public Voucher()
         {
             Carts = new HashSet<Cart>();
+            PaymentDetails = new HashSet<PaymentDetail>();
         }
         
         [Key]
@@ -76,5 +77,6 @@ namespace FarmFresh.Domain.Entities.Products
         public int CreatedBy { get; set; }
         public virtual User User { get; set; } = null!;
         public virtual ICollection<Cart> Carts { get; set; } = null!;
+        public virtual ICollection<PaymentDetail> PaymentDetails { get; set; } = null!;
     }
 }

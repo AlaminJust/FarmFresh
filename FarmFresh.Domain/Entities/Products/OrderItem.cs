@@ -38,7 +38,6 @@ namespace FarmFresh.Domain.Entities.Products
         [Column("Total")]
         [Description("Total of the Product in the OrderItem")]
         public decimal Total { get; set; }
-
         public virtual Order Order { get; set; } = null!;
         public virtual Product Product { get; set; } = null!;
     }

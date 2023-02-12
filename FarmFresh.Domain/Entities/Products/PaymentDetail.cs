@@ -28,14 +28,12 @@ namespace FarmFresh.Domain.Entities.Products
         [Column("TransactionId")]
         [Required]
         [Description("Transaction Id")]
-        public string TransactionId { get; set; } = null!;
-        
+        public string? TransactionId { get; set; }
+        public int? VoucherId { get; set; }
+        public virtual Voucher? Voucher { get; set; }
+
         [Column("Date", TypeName = "date")]
         public DateTime PaymentDate { get; set; }
-
-        [Column("PaymentStatus")]
-        [Description("Payment Status")]
-        public PaymentStatus PaymentStatus { get; set; }
         public virtual Order Order { get; set; } = null!;
     }
 }

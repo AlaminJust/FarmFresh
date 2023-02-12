@@ -18,4 +18,18 @@ namespace FarmFresh.Application.Enums
         [Description("Refunded")]
         Refunded = 4
     }
+
+    public enum OrderStatus : byte
+    {
+        [Description("Pending")]
+        Pending = 1,
+        [Description("Processing")]
+        Processing = 2,
+        [Description("Shipped")]
+        Shipped = 3,
+        [Description("Delivered")]
+        Delivered = 4,
+        [Description("Cancelled")]
+        Cancelled = 5
+    }
 }

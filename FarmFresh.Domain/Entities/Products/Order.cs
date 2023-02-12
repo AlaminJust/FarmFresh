@@ -34,6 +34,9 @@ namespace FarmFresh.Domain.Entities.Products
         [Column("PaymentStatus")]
         public PaymentStatus PaymentStatus { get; set; }
 
+        [Column("OrderStatus")]
+        public OrderStatus OrderStatus { get; set; }
+
         [Column("OrderDate", TypeName = "date")]
         public DateTime OrderDate { get; set; }
         public virtual User User { get; set; } = null!;
