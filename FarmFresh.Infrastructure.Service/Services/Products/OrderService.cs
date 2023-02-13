@@ -1,9 +1,9 @@
 ﻿using FarmFresh.Application.Dto.Request.Products;
+using FarmFresh.Application.Extensions;
 using FarmFresh.Application.Interfaces.Services.Products;
 using FarmFresh.Domain.Entities.Products;
 using FarmFresh.Domain.RepoInterfaces;
 using FarmFresh.Domain.RepoInterfaces.Products;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace FarmFresh.Infrastructure.Service.Services.Products
 {
@@ -13,25 +13,29 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
         private readonly ITransactionUtil _transactionUtil;
         private readonly IOrderRepository _orderRepository;
         private readonly IPaymentRepository _paymentRepository;
-        private readonly IDiscountRepository _discountRepository;
+        private readonly IDiscountService _discountService;
+        private readonly IOrderItemRepository _orderItemRepository;
 
         public OrderService(
                 ICartService cartService,
                 ITransactionUtil transactionUtil,
                 IOrderRepository orderRepository,
                 IPaymentRepository paymentRepository,
-                IDiscountRepository discountRepository
+                IDiscountService discountService,
+                IOrderItemRepository orderItemRepository
             )
         {
             _cartService = cartService;
             _transactionUtil = transactionUtil;
             _orderRepository = orderRepository;
             _paymentRepository = paymentRepository;
-            _discountRepository = discountRepository;
+            _discountService = discountService;
+            _orderItemRepository = orderItemRepository;
         }
-        public async Task OrderAsync(OrderRequest orderRequest)
+        public async Task<Int32> OrderAsync(OrderRequest orderRequest)
         {
             var cart = await _cartService.GetCartByUserIdAsync(orderRequest.userId);
+            
             await _transactionUtil.BeginAsync();
 
             try
@@ -48,6 +52,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                 };
 
                 await _orderRepository.AddAsync(order);
+                await _orderRepository.SaveChangesAsync();
 
                 var paymentDetails = new PaymentDetail
                 {
@@ -56,14 +61,16 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                     PaymentMethod = orderRequest.paymentMethod,
                     PaymentDate = DateTime.Now,
                     Amount = orderRequest.Amount,
-                    VoucherId = cart.Voucher?.Id
+                    VoucherId = cart.Voucher?.Id,
+                    VoucherDiscount = cart.Voucher?.Discount
                 };
 
                 await _paymentRepository.AddAsync(paymentDetails);
+                await _paymentRepository.SaveChangesAsync();
 
                 foreach(var item in cart.CartItems)
                 {
-                    Discount? discount = await _discountRepository.GetByIdAsync(item.productResponse.DiscountId ?? 0);
+                    var discount = await _discountService.GetDiscountByIdAsync(item.productResponse.DiscountId ?? 0);
 
                     var orderItem = new OrderItem
                     {
@@ -73,12 +80,16 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                         Discount = item.productResponse.Discount,
                         Quantity = item.Quantity,
                         CreatedOn = DateTime.Now,
-                        Total = ( item.productResponse.Price - discount?.DiscountValue ) * item.Quantity 
+                        Total = item.productResponse.CalculatePriceWithDiscount(discount) 
                     };
-                    
-                    
-                }
 
+                    await _orderItemRepository.AddAsync(orderItem);
+                    await _orderItemRepository.SaveChangesAsync();
+                }
+                
+                await _transactionUtil.CommitAsync();
+
+                return order.Id;
             }
             catch (Exception)
             {

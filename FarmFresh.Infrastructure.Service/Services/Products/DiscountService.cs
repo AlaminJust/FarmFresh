@@ -35,6 +35,16 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             
             return _mapper.Map<DiscountResponse>(discount);
         }
+
         #endregion Save
+
+        #region Get
+        public async Task<DiscountResponse> GetDiscountByIdAsync(int id)
+        {
+            var discount = await _discountRepository.GetByIdAsync(id);
+            return _mapper.Map<DiscountResponse>(discount);
+        }
+
+        #endregion Get
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FarmFresh.Application.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace FarmFresh.Application.Dto.Request.Products
 {
@@ -11,6 +12,7 @@ namespace FarmFresh.Application.Dto.Request.Products
         public string? Description { get; set; }
 
         [Range(0, 100)]
-        public decimal? DiscountParcent { get; set; }
+        public decimal? DiscountValue { get; set; }
+        public DiscountType DiscountType { get; set; }
     }
 }

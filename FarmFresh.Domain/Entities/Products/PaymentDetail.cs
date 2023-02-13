@@ -35,5 +35,6 @@ namespace FarmFresh.Domain.Entities.Products
         [Column("Date", TypeName = "date")]
         public DateTime PaymentDate { get; set; }
         public virtual Order Order { get; set; } = null!;
+        public decimal? VoucherDiscount { get; set; }
     }
 }

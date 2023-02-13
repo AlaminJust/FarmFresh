@@ -29,12 +29,12 @@ namespace FarmFresh.Api.Controllers.Products
         #region Save
         [HttpPost]
         [Route("order")]
-        [ProducesResponseType(typeof(String), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Int32), StatusCodes.Status200OK)]
         public async Task<IActionResult> Save([FromBody] OrderRequest request)
         {
             try
             {
-                var order = await _orderService.SaveAsync(request);
+                var order = await _orderService.OrderAsync(request);
                 return Ok(order);
             }
             catch (Exception ex)
