@@ -5,6 +5,6 @@ namespace FarmFresh.Application.Interfaces.Services.Products
 {
     public interface IOrderService
     {
-        Task<Int32> OrderAsync(OrderRequest orderRequest);
+        Task<Int32> OrderAsync(OrderRequest orderRequest, int userId);
     }
 }

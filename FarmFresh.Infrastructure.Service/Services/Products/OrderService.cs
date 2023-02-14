@@ -32,9 +32,9 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             _discountService = discountService;
             _orderItemRepository = orderItemRepository;
         }
-        public async Task<Int32> OrderAsync(OrderRequest orderRequest)
+        public async Task<Int32> OrderAsync(OrderRequest orderRequest, int userId)
         {
-            var cart = await _cartService.GetCartByUserIdAsync(orderRequest.userId);
+            var cart = await _cartService.GetCartByUserIdAsync(userId);
             
             await _transactionUtil.BeginAsync();
 
@@ -42,7 +42,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             {
                 var order = new Order
                 {
-                    UserId = orderRequest.userId,
+                    UserId = userId,
                     OrderDate = DateTime.Now,
                     TotalAmount = cart.TotalPrice,
                     DiscountAmount = cart.DiscountPrice,

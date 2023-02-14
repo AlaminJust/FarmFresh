@@ -9,7 +9,7 @@ namespace FarmFresh.Api.Controllers.Products
     [Route("api/order-management")]
     [ApiController]
     [Authorize]
-    public class OrderController : ControllerBase
+    public class OrderController : ApiControllerBase
     {
         #region Fields
         private readonly IOrderService _orderService;
@@ -34,7 +34,7 @@ namespace FarmFresh.Api.Controllers.Products
         {
             try
             {
-                var order = await _orderService.OrderAsync(request);
+                var order = await _orderService.OrderAsync(request, UserId);
                 return Ok(order);
             }
             catch (Exception ex)

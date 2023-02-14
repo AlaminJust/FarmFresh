@@ -6,7 +6,10 @@ namespace FarmFresh.Application.Extensions
     {
         public static decimal CalculatePriceWithDiscount(this ProductResponse product, DiscountResponse discount)
         {
-            if(discount.DiscountType == Enums.DiscountType.Fixed)
+            if(discount is null)
+                return product.Price;
+
+            else if(discount.DiscountType == Enums.DiscountType.Fixed)
             {
                 return product.Price - discount.DiscountValue;
             }
