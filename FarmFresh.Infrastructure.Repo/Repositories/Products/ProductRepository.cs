@@ -117,6 +117,30 @@ namespace FarmFresh.Infrastructure.Repo.Repositories.Products
             return product.Quantity >= quantity;
         }
 
+
         #endregion Get
+
+        #region Update
+        public async Task UpdateProductStockAsync(int productId, int quantity)
+        {
+            var product = GetProducts().FirstOrDefault(x => x.Id == productId);
+
+            if (product is not null)
+            {
+                if (product.Quantity + quantity < 0)
+                {
+                    product.Quantity = 0;
+                }
+                else
+                {
+                    product.Quantity = product.Quantity + quantity;
+                }
+                
+                _context.Products.Update(product);
+            }
+
+            await _context.SaveChangesAsync();
+        }
+        #endregion Update
     }
 }

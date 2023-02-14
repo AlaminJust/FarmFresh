@@ -41,26 +41,42 @@ namespace FarmFresh.Infrastructure.Repo.Repositories.Products
         #region Save
         public async Task<CartItem> AddCartItemAsync(CartItem cartItem)
         {
-            var existingCartItem = await CartItems().Where(x => x.CartId == cartItem.CartId && x.ProductId == cartItem.ProductId).FirstOrDefaultAsync();
+            var currentCartItem = await CartItems().Where(x => x.CartId == cartItem.CartId && x.ProductId == cartItem.ProductId).FirstOrDefaultAsync();
             
-            if (existingCartItem is not null)
+            if (currentCartItem is not null)
             {
-                if(!await _productRepository.IsAvailableInStockAsync(cartItem.ProductId, existingCartItem.Quantity + cartItem.Quantity))
+                if(!await _productRepository.IsAvailableInStockAsync(cartItem.ProductId, currentCartItem.Quantity + cartItem.Quantity))
                 {
                     throw new Exception("Product is not available in stock");
                 }
 
-                existingCartItem.Quantity += cartItem.Quantity;
-                await UpdateAsync(existingCartItem);
+                currentCartItem.Quantity += cartItem.Quantity;
+                
+                if(currentCartItem.Quantity <= 0)
+                {
+                    await this.DeleteAsync(currentCartItem);
+                }
+                else
+                {
+                    await UpdateAsync(currentCartItem);
+                }
+                
                 await SaveChangesAsync();
 
-                return existingCartItem;
+                return currentCartItem;
             }
             else
             {
-                await AddAsync(cartItem);
-                await SaveChangesAsync();
-                return cartItem;
+                if(cartItem.Quantity > 0)
+                {
+                    await AddAsync(cartItem);
+                    await SaveChangesAsync();
+                    return cartItem;
+                }
+                else
+                {
+                    throw new Exception("Quantity can't be negative.");
+                }
             }
         }
         #endregion Save

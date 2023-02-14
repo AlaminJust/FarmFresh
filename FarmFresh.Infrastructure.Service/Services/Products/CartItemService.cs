@@ -53,7 +53,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
         #endregion Save
 
         #region Delete
-        public async Task DeleteCartItemAsync(int id)
+        public async Task RemoveCartItemAsync(int id)
         {
             var cartItem = await _cartItemRepository.GetByIdAsync(id);
             await _cartItemRepository.DeleteAsync(cartItem);

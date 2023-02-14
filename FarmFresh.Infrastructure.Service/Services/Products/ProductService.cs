@@ -63,7 +63,14 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             
             return _mapper.Map<ProductResponse>(product);
         }
-        
         #endregion Save
+
+        #region Update
+        public async Task UpdateProductStockAsync(int productId, int quantity)
+        {
+            await _productRepository.UpdateProductStockAsync(productId, quantity);
+        }
+
+        #endregion Update
     }
 }

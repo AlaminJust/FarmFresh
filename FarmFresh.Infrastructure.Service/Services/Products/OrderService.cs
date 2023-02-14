@@ -1,4 +1,5 @@
 ﻿using FarmFresh.Application.Dto.Request.Products;
+using FarmFresh.Application.Dto.Response.Products;
 using FarmFresh.Application.Extensions;
 using FarmFresh.Application.Interfaces.Services.Products;
 using FarmFresh.Domain.Entities.Products;
@@ -15,6 +16,8 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
         private readonly IPaymentRepository _paymentRepository;
         private readonly IDiscountService _discountService;
         private readonly IOrderItemRepository _orderItemRepository;
+        private readonly IProductService _productService;
+        private readonly ICartItemService _cartItemService;
 
         public OrderService(
                 ICartService cartService,
@@ -22,7 +25,9 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                 IOrderRepository orderRepository,
                 IPaymentRepository paymentRepository,
                 IDiscountService discountService,
-                IOrderItemRepository orderItemRepository
+                IOrderItemRepository orderItemRepository,
+                IProductService productService,
+                ICartItemService cartItemService
             )
         {
             _cartService = cartService;
@@ -31,10 +36,40 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             _paymentRepository = paymentRepository;
             _discountService = discountService;
             _orderItemRepository = orderItemRepository;
+            _productService = productService;
+            _cartItemService = cartItemService;
         }
+
+        private async Task<Boolean> ClearUnavailableCartItem(ICollection<CartItemResponse> cartItems)
+        {
+            bool isAllAvailable = true;
+            
+            foreach(var item in cartItems)
+            {
+                if (!await _productService.IsAvailableInStockAsync(item.ProductId, item.Quantity))
+                {
+                    await _cartItemService.RemoveCartItemAsync(item.Id);
+                    isAllAvailable = false;
+                }
+            }
+            
+            return isAllAvailable;
+        }
+
+
         public async Task<Int32> OrderAsync(OrderRequest orderRequest, int userId)
         {
             var cart = await _cartService.GetCartByUserIdAsync(userId);
+
+            if (cart is null)
+            {
+                throw new Exception("Your cart is empty!");
+            }
+
+            if (cart is not null && !await ClearUnavailableCartItem(cart.CartItems))
+            {
+                throw new Exception("The order failed becouse some of the item is not available now. We have cleared these item from your cart!");
+            }
             
             await _transactionUtil.BeginAsync();
 
@@ -64,14 +99,15 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                     VoucherId = cart.Voucher?.Id,
                     VoucherDiscount = cart.Voucher?.Discount
                 };
-
+                
                 await _paymentRepository.AddAsync(paymentDetails);
                 await _paymentRepository.SaveChangesAsync();
 
+                
                 foreach(var item in cart.CartItems)
                 {
                     var discount = await _discountService.GetDiscountByIdAsync(item.productResponse.DiscountId ?? 0);
-
+                    
                     var orderItem = new OrderItem
                     {
                         OrderId = order.Id,
@@ -82,9 +118,11 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                         CreatedOn = DateTime.Now,
                         Total = item.productResponse.CalculatePriceWithDiscount(discount) 
                     };
-
+                    
                     await _orderItemRepository.AddAsync(orderItem);
                     await _orderItemRepository.SaveChangesAsync();
+
+                    await _productService.UpdateProductStockAsync(item.ProductId, -item.Quantity);
                 }
 
                 await _cartService.ClearCartAsync(userId);

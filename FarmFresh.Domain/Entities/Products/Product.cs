@@ -50,6 +50,7 @@ namespace FarmFresh.Domain.Entities.Products
         public int CategoryId { get; set; }
         
         [Column("Quantity")]
+        [Range(0, Int32.MaxValue)]
         public int Quantity { get; set; }
         
         [Column("BrandId")]

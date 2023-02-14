@@ -16,5 +16,9 @@ namespace FarmFresh.Application.Interfaces.Services.Products
         Task<ProductResponse> AddAsync(ProductRequest productRequest, int userId);
         Task<ProductDetailsResponse> GetProductDetailsByIdAsync(int id);
         #endregion Save
+
+        #region Update
+        Task UpdateProductStockAsync(int productId, int quantity);
+        #endregion Update
     }
 }

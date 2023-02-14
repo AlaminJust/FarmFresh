@@ -17,5 +17,9 @@ namespace FarmFresh.Domain.RepoInterfaces.Products
         Task<ProductDetails> GetProductDetailsByIdAsync(int id);
         Task<bool> IsAvailableInStockAsync(int productId, int quantity);
         #endregion Get
+
+        #region Update
+        Task UpdateProductStockAsync(int productId, int quantity);
+        #endregion Update
     }
 }

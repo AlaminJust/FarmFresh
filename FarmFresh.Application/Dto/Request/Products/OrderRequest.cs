@@ -8,5 +8,6 @@ namespace FarmFresh.Application.Dto.Request.Products
         public string? transactionId { get; set; }
         public PaymentStatus paymentStatus { get; set; } = PaymentStatus.Pending;
         public decimal Amount { get; set; }
+        public bool IsForceFullyOrder { get; set; } = false;
     }
 }
