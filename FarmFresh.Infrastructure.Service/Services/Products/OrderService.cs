@@ -39,23 +39,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             _productService = productService;
             _cartItemService = cartItemService;
         }
-
-        private async Task<Boolean> ClearUnavailableCartItem(ICollection<CartItemResponse> cartItems)
-        {
-            bool isAllAvailable = true;
-            
-            foreach(var item in cartItems)
-            {
-                if (!await _productService.IsAvailableInStockAsync(item.ProductId, item.Quantity))
-                {
-                    await _cartItemService.RemoveCartItemAsync(item.Id);
-                    isAllAvailable = false;
-                }
-            }
-            
-            return isAllAvailable;
-        }
-
+    
 
         public async Task<Int32> OrderAsync(OrderRequest orderRequest, int userId)
         {
@@ -66,7 +50,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                 throw new Exception("Your cart is empty!");
             }
 
-            if (cart is not null && !await ClearUnavailableCartItem(cart.CartItems))
+            if (cart is not null && !await _cartItemService.ClearUnavailableCartItem(cart.CartItems))
             {
                 throw new Exception("The order failed becouse some of the item is not available now. We have cleared these item from your cart!");
             }

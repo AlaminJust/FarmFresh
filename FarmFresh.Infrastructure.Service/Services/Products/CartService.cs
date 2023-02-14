@@ -170,7 +170,17 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
         public async Task<CartResponse> GetCartByUserIdAsync(int userId)
         {
             var cart = await _cartRepository.GetCartByUserIdAsync(userId);
-            return await GetCartByIdAsync(cart.Id);
+
+            var response = await GetCartByIdAsync(cart.Id);
+
+            if (response is not null && !await _cartItemService.ClearUnavailableCartItem(response.CartItems))
+            {
+                cart = await _cartRepository.GetCartByUserIdAsync(userId);
+                response = await GetCartByIdAsync(cart.Id);
+                response.IsUnavailableItemDeleted = true;
+            }
+
+            return response;
         }
 
         #endregion Get

@@ -26,5 +26,6 @@
         }
         public ICollection<CartItemResponse> CartItems { get; set; } = null!;
         public VoucherResponse? Voucher { get; set; }
+        public bool IsUnavailableItemDeleted { get; set; } = false;
     }
 }

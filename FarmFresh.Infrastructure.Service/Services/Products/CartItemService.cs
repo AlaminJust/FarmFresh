@@ -4,11 +4,6 @@ using FarmFresh.Application.Dto.Response.Products;
 using FarmFresh.Application.Interfaces.Services.Products;
 using FarmFresh.Domain.Entities.Products;
 using FarmFresh.Domain.RepoInterfaces.Products;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FarmFresh.Infrastructure.Service.Services.Products
 {
@@ -58,6 +53,22 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             var cartItem = await _cartItemRepository.GetByIdAsync(id);
             await _cartItemRepository.DeleteAsync(cartItem);
             await _cartItemRepository.SaveChangesAsync();
+        }
+
+        public async Task<Boolean> ClearUnavailableCartItem(ICollection<CartItemResponse> cartItems)
+        {
+            bool isAllAvailable = true;
+
+            foreach (var item in cartItems)
+            {
+                if (!await _productService.IsAvailableInStockAsync(item.ProductId, item.Quantity))
+                {
+                    await this.RemoveCartItemAsync(item.Id);
+                    isAllAvailable = false;
+                }
+            }
+
+            return isAllAvailable;
         }
 
         #endregion Delete

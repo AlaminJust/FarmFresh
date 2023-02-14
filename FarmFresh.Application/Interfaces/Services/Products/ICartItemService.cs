@@ -11,6 +11,7 @@ namespace FarmFresh.Application.Interfaces.Services.Products
 
         #region Delete
         Task RemoveCartItemAsync(int id);
+        public Task<Boolean> ClearUnavailableCartItem(ICollection<CartItemResponse> cartItems);
         #endregion Delete
     }
 }
