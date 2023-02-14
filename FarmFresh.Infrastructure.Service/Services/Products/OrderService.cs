@@ -1,5 +1,4 @@
 ﻿using FarmFresh.Application.Dto.Request.Products;
-using FarmFresh.Application.Dto.Response.Products;
 using FarmFresh.Application.Extensions;
 using FarmFresh.Application.Interfaces.Services.Products;
 using FarmFresh.Domain.Entities.Products;
