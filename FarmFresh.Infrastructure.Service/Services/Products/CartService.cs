@@ -100,7 +100,6 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
         #endregion Private method
 
         #region Get
-
         public async Task<CartResponse> GetCartByIdAsync(int cartId)
         {
             var cart = await _cartRepository.GetByIdAsync(cartId);
@@ -180,10 +179,6 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
         public async Task ClearCartAsync(int userId)
         {
             var cart = await _cartRepository.GetCartByUserIdAsync(userId);
-            /* foreach (var item in cart.CartItems)
-            {
-                await _cartItemService.DeleteCartItemAsync(item.Id);
-            } */
             await _cartRepository.DeleteAsync(cart);
             await _cartRepository.SaveChangesAsync();
         }
