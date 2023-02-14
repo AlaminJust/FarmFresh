@@ -13,5 +13,9 @@ namespace FarmFresh.Application.Interfaces.Services.Products
         #region Save
         Task<CartResponse> AddToCartAsync(CartItemRequest cartItemRequest, int userId);
         #endregion Save
+
+        #region Delete
+        Task ClearCartAsync(int userId);
+        #endregion Delete
     }
 }

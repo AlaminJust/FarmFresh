@@ -49,6 +49,17 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             
             return _mapper.Map<CartItemResponse>(cart);
         }
+
         #endregion Save
+
+        #region Delete
+        public async Task DeleteCartItemAsync(int id)
+        {
+            var cartItem = await _cartItemRepository.GetByIdAsync(id);
+            await _cartItemRepository.DeleteAsync(cartItem);
+            await _cartItemRepository.SaveChangesAsync();
+        }
+
+        #endregion Delete
     }
 }

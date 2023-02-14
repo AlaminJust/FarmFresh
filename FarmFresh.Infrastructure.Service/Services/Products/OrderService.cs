@@ -86,6 +86,8 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                     await _orderItemRepository.AddAsync(orderItem);
                     await _orderItemRepository.SaveChangesAsync();
                 }
+
+                await _cartService.ClearCartAsync(userId);
                 
                 await _transactionUtil.CommitAsync();
 

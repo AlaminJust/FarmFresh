@@ -173,6 +173,20 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             var cart = await _cartRepository.GetCartByUserIdAsync(userId);
             return await GetCartByIdAsync(cart.Id);
         }
+
         #endregion Get
+
+        #region Delete
+        public async Task ClearCartAsync(int userId)
+        {
+            var cart = await _cartRepository.GetCartByUserIdAsync(userId);
+            /* foreach (var item in cart.CartItems)
+            {
+                await _cartItemService.DeleteCartItemAsync(item.Id);
+            } */
+            await _cartRepository.DeleteAsync(cart);
+            await _cartRepository.SaveChangesAsync();
+        }
+        #endregion Delete
     }
 }
