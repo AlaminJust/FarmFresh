@@ -1,12 +1,7 @@
 ﻿using FarmFresh.Domain.Entities.Products;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FarmFresh.Domain.Entities.Users
 {
@@ -46,6 +41,13 @@ namespace FarmFresh.Domain.Entities.Users
         [Required]
         [Unicode(false)]
         public string? Email { get; set; }
+
+        [Column("PhoneNumber")]
+        [StringLength(20)]
+        [Required]
+        [Unicode(false)]
+        public string? PhoneNumber { get; set; }
+
         [Column("Password")]
         [StringLength(128)]
         [Required]

@@ -130,6 +130,7 @@ namespace FarmFresh.Infrastructure.Data.Extensions
                         UserName = "admin",
                         FirstName = "AL AMIN",
                         LastName = "Hossain",
+                        PhoneNumber = "+8801315594186",
                         Email = "alamin.cse.justian@gmail.com",
                         Password = "$2a$11$XGAcbYizmCGaZ7X.OZLxpOTZPT453GhZ59xqnBIjsczYqYB.cIAuO",
                         CreatedOn = new DateTime(2022, 11, 14, 8, 38, 30, 656, DateTimeKind.Local).AddTicks(3059),
