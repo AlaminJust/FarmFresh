@@ -33,6 +33,8 @@ namespace FarmFresh.Domain.Entities.Products
 
         [Column("PaymentStatus")]
         public PaymentStatus PaymentStatus { get; set; }
+        [Column("Address")]
+        public string Address { get; set; } = null!;
 
         [Column("OrderStatus")]
         public OrderStatus OrderStatus { get; set; }

@@ -1,7 +1,7 @@
 ﻿using FarmFresh.Application.Dto.Request.Products;
+using FarmFresh.Application.Dto.Response.Products;
 using FarmFresh.Application.Interfaces.Services.Products;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FarmFresh.Api.Controllers.Products
@@ -44,6 +44,42 @@ namespace FarmFresh.Api.Controllers.Products
         }
 
         #endregion Save
+
+        #region Get
+
+        [HttpGet("orders")]
+
+        [ProducesResponseType(typeof(List<OrderResponse>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetOrders()
+        {
+            try
+            {
+                var orders = await _orderService.GetOrdersByUserIdAsync(UserId);
+                return Ok(orders);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("users-order")]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(List<OrderResponse>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetOrdersOfAllUsers()
+        {
+            try
+            {
+                var orders = await _orderService.GetOrdersOfAllUsersAsync();
+                return Ok(orders);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        #endregion
 
     }
 }

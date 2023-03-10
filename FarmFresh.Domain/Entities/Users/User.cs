@@ -46,7 +46,7 @@ namespace FarmFresh.Domain.Entities.Users
         [StringLength(20)]
         [Required]
         [Unicode(false)]
-        public string? PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; } = null!;
 
         [Column("Password")]
         [StringLength(128)]

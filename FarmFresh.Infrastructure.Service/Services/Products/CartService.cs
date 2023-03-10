@@ -103,6 +103,12 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
         public async Task<CartResponse> GetCartByIdAsync(int cartId)
         {
             var cart = await _cartRepository.GetByIdAsync(cartId);
+            
+            if(cart is null)
+            {
+                return null;
+            }
+            
             Dictionary<int, Product> storeProduct = new();
 
             if (cart is not null)
@@ -119,7 +125,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             }
 
             var response = _mapper.Map<CartResponse>(cart);
-
+            
             foreach (var item in response.CartItems)
             {
                 item.productResponse = _mapper.Map<ProductResponse>(storeProduct[item.ProductId]);
@@ -170,8 +176,8 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
         public async Task<CartResponse> GetCartByUserIdAsync(int userId)
         {
             var cart = await _cartRepository.GetCartByUserIdAsync(userId);
-
-            var response = await GetCartByIdAsync(cart.Id);
+            
+            var response = await GetCartByIdAsync(cart?.Id ?? 0);
 
             if (response is not null && !await _cartItemService.ClearUnavailableCartItem(response.CartItems))
             {

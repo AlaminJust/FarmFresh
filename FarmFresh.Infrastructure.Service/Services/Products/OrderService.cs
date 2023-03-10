@@ -1,4 +1,6 @@
-﻿using FarmFresh.Application.Dto.Request.Products;
+﻿using AutoMapper;
+using FarmFresh.Application.Dto.Request.Products;
+using FarmFresh.Application.Dto.Response.Products;
 using FarmFresh.Application.Extensions;
 using FarmFresh.Application.Interfaces.Services.Products;
 using FarmFresh.Domain.Entities.Products;
@@ -17,6 +19,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
         private readonly IOrderItemRepository _orderItemRepository;
         private readonly IProductService _productService;
         private readonly ICartItemService _cartItemService;
+        private readonly IMapper _mapper;
 
         public OrderService(
                 ICartService cartService,
@@ -26,7 +29,8 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                 IDiscountService discountService,
                 IOrderItemRepository orderItemRepository,
                 IProductService productService,
-                ICartItemService cartItemService
+                ICartItemService cartItemService,
+                IMapper mapper
             )
         {
             _cartService = cartService;
@@ -37,9 +41,9 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             _orderItemRepository = orderItemRepository;
             _productService = productService;
             _cartItemService = cartItemService;
+            _mapper = mapper;
         }
-    
-
+        #region Save
         public async Task<Int32> OrderAsync(OrderRequest orderRequest, int userId)
         {
             var cart = await _cartService.GetCartByUserIdAsync(userId);
@@ -65,6 +69,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                     TotalAmount = cart.TotalPrice,
                     DiscountAmount = cart.DiscountPrice,
                     NetAmount = cart.FinalPrice,
+                    Address = orderRequest.Address,
                     PaymentStatus = orderRequest.paymentStatus,
                     OrderStatus = Application.Enums.OrderStatus.Processing
                 };
@@ -78,7 +83,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                     TransactionId = orderRequest.transactionId,
                     PaymentMethod = orderRequest.paymentMethod,
                     PaymentDate = DateTime.Now,
-                    Amount = orderRequest.Amount,
+                    Amount = cart.FinalPrice,
                     VoucherId = cart.Voucher?.Id,
                     VoucherDiscount = cart.Voucher?.Discount
                 };
@@ -120,5 +125,20 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                 throw;
             }
         }
+        #endregion Save
+
+        #region Get
+        public async Task<List<OrderResponse>> GetOrdersByUserIdAsync(int userId)
+        {
+            var orderDetails = await _orderRepository.GetOrdersByUserIdAsync(userId);
+            return _mapper.Map<List<OrderResponse>>(orderDetails);
+        }
+
+        public async Task<List<OrderResponse>> GetOrdersOfAllUsersAsync()
+        {
+            var orderDetails = await _orderRepository.GetOrdersOfAllUsersAsync();
+            return _mapper.Map<List<OrderResponse>>(orderDetails);
+        }
+        #endregion Get
     }
 }
