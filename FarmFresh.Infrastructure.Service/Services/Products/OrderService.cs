@@ -3,6 +3,7 @@ using FarmFresh.Application.Dto.Request.Products;
 using FarmFresh.Application.Dto.Response.Products;
 using FarmFresh.Application.Extensions;
 using FarmFresh.Application.Interfaces.Services.Products;
+using FarmFresh.Application.Interfaces.Services.Users;
 using FarmFresh.Domain.Entities.Products;
 using FarmFresh.Domain.RepoInterfaces;
 using FarmFresh.Domain.RepoInterfaces.Products;
@@ -51,6 +52,11 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             if (cart is null)
             {
                 throw new Exception("Your cart is empty!");
+            }
+
+            if (cart.FinalPrice != orderRequest.Amount)
+            {
+                throw new Exception("The order failed becouse the total amount is not correct!");
             }
 
             if (cart is not null && !await _cartItemService.ClearUnavailableCartItem(cart.CartItems))

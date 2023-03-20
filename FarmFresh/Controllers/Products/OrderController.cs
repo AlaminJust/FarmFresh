@@ -1,6 +1,8 @@
 ﻿using FarmFresh.Application.Dto.Request.Products;
+using FarmFresh.Application.Dto.Request.Users;
 using FarmFresh.Application.Dto.Response.Products;
 using FarmFresh.Application.Interfaces.Services.Products;
+using FarmFresh.Application.Interfaces.Services.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,15 +15,18 @@ namespace FarmFresh.Api.Controllers.Products
     {
         #region Fields
         private readonly IOrderService _orderService;
+        private readonly IUserService _userService;
         #endregion Fields
 
         #region Constructor
 
         public OrderController(
-                IOrderService orderService
+                IOrderService orderService,
+                IUserService userService
             )
         {
             _orderService = orderService;
+            _userService = userService;
         }
 
         #endregion Constructor
@@ -35,6 +40,12 @@ namespace FarmFresh.Api.Controllers.Products
             try
             {
                 var order = await _orderService.OrderAsync(request, UserId);
+                
+                await _userService.UpdateAsync(UserId, new UserAddressRequest
+                {
+                    ShippingAddress = request.Address
+                });
+                
                 return Ok(order);
             }
             catch (Exception ex)

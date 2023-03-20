@@ -8,11 +8,15 @@ namespace FarmFresh.Application.Interfaces.Services.Users
     {
         #region Get
         Task<LoginResponse> LoginAsync(LoginRequest loginRequest);
-
+        Task<UserResponse> FindByIdAsync(int userId);
         #endregion Get
 
         #region Save
         Task AddAsync(UserRequest userRequest);
         #endregion Save
+
+        #region Update
+        Task UpdateAsync(int userId, UserAddressRequest userRequest);
+        #endregion Update
     }
 }

@@ -52,6 +52,14 @@ namespace FarmFresh.Domain.Entities.Users
         [StringLength(128)]
         [Required]
         public string Password { get; set; } = null!;
+
+        [Column("ShippingAddress")]
+        [StringLength(150)]
+        public string? ShippingAddress { get; set; }
+
+        [Column("BillingAddress")]
+        [StringLength(150)]
+        public string? BillingAddress { get; set; }
         public virtual ICollection<UserRole> UserRoles { get; set; }
         
         [InverseProperty("UserCreatedBy")]

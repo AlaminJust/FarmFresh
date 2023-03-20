@@ -23,4 +23,10 @@ namespace FarmFresh.Application.Dto.Request.Users
             }
         }
     }
+
+    public class UserAddressRequest : UserRequest
+    {
+        public string? BillingAddress { get; set; }
+        public string? ShippingAddress { get; set; }
+    }
 }

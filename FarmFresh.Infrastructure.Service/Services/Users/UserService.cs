@@ -56,6 +56,12 @@ namespace FarmFresh.Infrastructure.Service.Services.Users
             
             return loginResponse;
         }
+        
+        public async Task<UserResponse> FindByIdAsync(int userId)
+        {
+            var user = await _userRepository.GetByIdAsync(userId);
+            return _mapper.Map<UserResponse>(user);
+        }
 
         #endregion Get
 
@@ -87,6 +93,29 @@ namespace FarmFresh.Infrastructure.Service.Services.Users
                 throw;
             }
         }
+
         #endregion Save
+
+        #region Update
+        public async Task UpdateAsync(int userId, UserAddressRequest userRequest)
+        {
+            var user = await _userRepository.GetByIdAsync(userId);
+            if (user is null)
+            {
+                throw new Exception("User not found");
+            }
+
+            user.Email = userRequest.Email ?? user.Email;
+            user.FirstName = userRequest.FirstName ?? user.FirstName;
+            user.LastName = userRequest.LastName ?? user.LastName;
+            user.PhoneNumber = userRequest.PhoneNumber ?? user.PhoneNumber;
+            user.BillingAddress = userRequest.BillingAddress ?? user.BillingAddress;
+            user.ShippingAddress = userRequest.ShippingAddress ?? user.ShippingAddress;
+
+            await _userRepository.UpdateAsync(user);
+            await _userRepository.SaveChangesAsync();
+        }
+
+        #endregion Update
     }
 }
