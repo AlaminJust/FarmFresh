@@ -8,5 +8,9 @@ namespace FarmFresh.Application.Interfaces.Services.Products
         #region Save
         Task<ProductCategoryResponse> AddAsync(ProductCategoryRequest productCategoryRequest);
         #endregion Save
+
+        #region Get
+        Task<IEnumerable<ProductCategoryResponse>> GetCategoriesTree();
+        #endregion Get
     }
 }

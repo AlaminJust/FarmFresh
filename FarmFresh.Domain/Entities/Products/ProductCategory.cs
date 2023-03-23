@@ -10,6 +10,7 @@ namespace FarmFresh.Domain.Entities.Products
         public ProductCategory()
         {
             Products = new HashSet<Product>();
+            ChildCategories = new HashSet<ProductCategory>();
         }
         
         [Key]
@@ -18,14 +19,15 @@ namespace FarmFresh.Domain.Entities.Products
         [Column("CategoryName")]
         [StringLength(50)]
         [Required]
-        [Unicode(false)]
+        [Unicode(true)]
         public string CategoryName { get; set; } = null!;
         [Column("CategoryDescription")]
         [StringLength(100)]
-        [Unicode(false)]
+        [Unicode(true)]
         public string? CategoryDescription { get; set; }
         [Column("ParentCategoryId")]
         public int ParentCategoryId { get; set; }
         public virtual ICollection<Product> Products { get; set; } = null!;
+        public virtual ICollection<ProductCategory> ChildCategories { get; set; } = null!;
     }
 }

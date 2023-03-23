@@ -26,12 +26,12 @@ namespace FarmFresh.Domain.Entities.Products
         
         [Column("Name")]
         [StringLength(50)]
-        [Unicode(false)]
+        [Unicode(true)]
         public string Name { get; set; } = null!;
         
         [Column("Description")]
         [StringLength(100)]
-        [Unicode(false)]
+        [Unicode(true)]
         public string? Description { get; set; }
         
         [Column("OldPrice", TypeName = "decimal(18, 2)")]

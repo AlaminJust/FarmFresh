@@ -19,17 +19,17 @@ namespace FarmFresh.Domain.Entities.Products
         [Column("Name")]
         [StringLength(50)]
         [Required]
-        [Unicode(false)]
+        [Unicode(true)]
         public string Name { get; set; } = null!;
 
         [Column("Description")]
         [StringLength(100)]
-        [Unicode(false)]
+        [Unicode(true)]
         public string? Description { get; set; }
 
         [Column("ImageUrl")]
         [StringLength(100)]
-        [Unicode(false)]
+        [Unicode(true)]
         public string? ImageUrl { get; set; }
         public virtual ICollection<Product> Products { get; set; } = null!;
     }

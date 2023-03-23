@@ -30,22 +30,22 @@ namespace FarmFresh.Domain.Entities.Users
         [Column("FirstName")]
         [StringLength(50)]
         [Required]
-        [Unicode(false)]
+        [Unicode(true)]
         public string? FirstName { get; set; }
         [Column("LastName")]
         [StringLength(50)]
-        [Unicode(false)]
+        [Unicode(true)]
         public string? LastName { get; set; }
         [Column("Email")]
         [StringLength(50)]
         [Required]
-        [Unicode(false)]
+        [Unicode(true)]
         public string? Email { get; set; }
 
         [Column("PhoneNumber")]
         [StringLength(20)]
         [Required]
-        [Unicode(false)]
+        [Unicode(true)]
         public string PhoneNumber { get; set; } = null!;
 
         [Column("Password")]

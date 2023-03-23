@@ -33,5 +33,17 @@ namespace FarmFresh.Api.Controllers.Products
             return Ok(response);
         }
         #endregion Save
+
+        #region Get
+        [HttpGet("categories")]
+        [ProducesResponseType(typeof(IEnumerable<ProductCategoryResponse>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetProductCategories()
+        {
+            var response = await _productCategoryService.GetCategoriesTree();
+            return Ok(response);
+        }
+
+        #endregion Get
+
     }
 }

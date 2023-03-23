@@ -37,6 +37,16 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
 
             return _mapper.Map<ProductCategoryResponse>(productCategory);
         }
+
         #endregion Save
+
+        #region Get
+        public async Task<IEnumerable<ProductCategoryResponse>> GetCategoriesTree()
+        {
+            var productCategories = await _productCategoryRepository.GetCategoryList();
+
+            return _mapper.Map<IEnumerable<ProductCategoryResponse>>(productCategories);
+        }
+        #endregion Get
     }
 }
