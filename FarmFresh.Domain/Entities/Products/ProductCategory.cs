@@ -27,6 +27,10 @@ namespace FarmFresh.Domain.Entities.Products
         public string? CategoryDescription { get; set; }
         [Column("ParentCategoryId")]
         public int ParentCategoryId { get; set; }
+
+        [Column("Icon")]
+        [StringLength(100)]
+        public string? Icon { get; set; }
         public virtual ICollection<Product> Products { get; set; } = null!;
         public virtual ICollection<ProductCategory> ChildCategories { get; set; } = null!;
     }
