@@ -1,4 +1,4 @@
-﻿using FarmFresh.Application.Enums;
+﻿using FarmFresh.Domain.Entities.Products;
 
 namespace FarmFresh.Domain.ResponseEntities.Products
 {
@@ -15,5 +15,6 @@ namespace FarmFresh.Domain.ResponseEntities.Products
         public string Address { get; set; } = null!;
         public string OrderStatus { get; set; } = null!;
         public DateTime OrderDate { get; set; }
+        public List<OrderItem> OrderItemResponse { get; set; } = null!;
     }
 }

@@ -1,6 +1,4 @@
-﻿using FarmFresh.Application.Enums;
-
-namespace FarmFresh.Application.Dto.Response.Products
+﻿namespace FarmFresh.Application.Dto.Response.Products
 {
     public class OrderResponse
     {
@@ -15,5 +13,18 @@ namespace FarmFresh.Application.Dto.Response.Products
         public string Address { get; set; } = null!;
         public string OrderStatus { get; set; } = null!;
         public DateTime OrderDate { get; set; }
+        public List<OrderItemResponse> OrderItemResponse { get; set; } = null!;
+    }
+    
+    public class OrderItemResponse
+    {
+        public int Id { get; set; }
+        public int OrderId { get; set; }
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
+        public decimal Price { get; set; }
+        public decimal Discount { get; set; }
+        public decimal Total { get; set; }
+        public ProductResponse Product { get; set; } = null!;
     }
 }

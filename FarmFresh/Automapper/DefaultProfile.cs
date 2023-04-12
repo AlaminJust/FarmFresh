@@ -24,6 +24,9 @@ namespace FarmFresh.Api.Automapper
             CreateMap<VoucherResponse, Voucher>();
             CreateMap<Cart, CartResponse>();
             CreateMap<OrderDetails, OrderResponse>();
+            CreateMap<OrderItem, OrderItemResponse>();
+            CreateMap<OrderDetails, OrderResponse>()
+             .ForMember(dest => dest.OrderItemResponse, opt => opt.MapFrom(src => src.OrderItemResponse));
             CreateMap<ProductCategory, ProductCategoryResponse>();
             CreateMap<ProductCategoryRequest, ProductCategory>();
             #endregion Products
