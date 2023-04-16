@@ -25,11 +25,25 @@ namespace FarmFresh.Application.Enums
         Pending = 1,
         [Description("Processing")]
         Processing = 2,
+        [Description("Verified")]
+        Verified = 3,
         [Description("Shipped")]
-        Shipped = 3,
+        Shipped = 4,
         [Description("Delivered")]
-        Delivered = 4,
+        Delivered = 5,
         [Description("Cancelled")]
-        Cancelled = 5
+        Cancelled = 6,
+        [Description("Refunded")]
+        Refunded = 7,
+        [Description("Returned")]
+        Returned = 8,
+        [Description("Failed")]
+        Failed = 9,
+        [Description("Completed")]
+        Completed = 10,
+        [Description("On Hold")]
+        OnHold = 11,
+        [Description("Awaiting Payment")]
+        AwaitingPayment = 12,
     }
 }

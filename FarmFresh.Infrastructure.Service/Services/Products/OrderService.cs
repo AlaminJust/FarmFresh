@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using FarmFresh.Application.Dto.Request.Products;
 using FarmFresh.Application.Dto.Response.Products;
+using FarmFresh.Application.Enums;
 using FarmFresh.Application.Extensions;
 using FarmFresh.Application.Interfaces.Services.Products;
-using FarmFresh.Application.Interfaces.Services.Users;
 using FarmFresh.Domain.Entities.Products;
 using FarmFresh.Domain.RepoInterfaces;
 using FarmFresh.Domain.RepoInterfaces.Products;
@@ -144,6 +144,31 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                 throw;
             }
         }
+        public async Task SaveStatusAsync(int orderId, OrderStatus request)
+        {
+            var order = await _orderRepository.GetByIdAsync(orderId);
+            
+            if (order == null)
+            {
+                throw new Exception("Order not found!");
+            }
+
+            order.OrderStatus = request;
+            await _orderRepository.SaveChangesAsync();
+        }
+
+        public async Task SavePaymentStatusAsync(int orderId, PaymentStatus request)
+        {
+            var order = await _orderRepository.GetByIdAsync(orderId);
+
+            if (order == null)
+            {
+                throw new Exception("Order not found!");
+            }
+
+            order.PaymentStatus = request;
+            await _orderRepository.SaveChangesAsync();
+        }
 
         #endregion Save
 
@@ -159,6 +184,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             var orderDetails = await _orderRepository.GetOrdersOfAllUsersAsync();
             return _mapper.Map<List<OrderResponse>>(orderDetails);
         }
+
         #endregion Get
     }
 }

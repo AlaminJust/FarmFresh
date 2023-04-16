@@ -1,6 +1,7 @@
 ﻿using FarmFresh.Application.Dto.Request.Products;
 using FarmFresh.Application.Dto.Request.Users;
 using FarmFresh.Application.Dto.Response.Products;
+using FarmFresh.Application.Enums;
 using FarmFresh.Application.Interfaces.Services.Products;
 using FarmFresh.Application.Interfaces.Services.Users;
 using Microsoft.AspNetCore.Authorization;
@@ -54,6 +55,38 @@ namespace FarmFresh.Api.Controllers.Products
             }
         }
 
+
+        [HttpPost]
+        [Route("order/{orderId}/payment")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> SavePayment([FromRoute]int orderId, [FromBody] PaymentStatus request)
+        {
+            try
+            {
+                await _orderService.SavePaymentStatusAsync(orderId, request);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("order/{orderId}/status")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> SaveStatus([FromRoute]int orderId, [FromBody] OrderStatus request)
+        {
+            try
+            {
+                await _orderService.SaveStatusAsync(orderId, request);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         #endregion Save
 
         #region Get
