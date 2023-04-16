@@ -16,8 +16,7 @@
         {
             get
             {
-                Int32 discount = (Int32)((OldPrice - Price) / OldPrice * 100);
-                return discount;
+                return (OldPrice != 0) ? (Int32)((OldPrice - Price) * 100 / OldPrice) : 0;
             }
         }
     }

@@ -4,6 +4,7 @@ using FarmFresh.Domain.Entities.Users;
 using FarmFresh.Domain.RepoInterfaces.Products;
 using FarmFresh.Domain.ResponseEntities.Products;
 using FarmFresh.Infrastructure.Data.DbContexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace FarmFresh.Infrastructure.Repo.Repositories.Products
 {
@@ -18,8 +19,8 @@ namespace FarmFresh.Infrastructure.Repo.Repositories.Products
 
         public Task<List<OrderDetails>> GetOrdersByUserIdAsync(int userId)
         {
-            var orders = (from o in _context.Orders
-                          join u in _context.Users on o.UserId equals u.Id
+            var orders = (from o in _context.Orders.AsNoTracking()
+                          join u in _context.Users.AsNoTracking() on o.UserId equals u.Id
                           where (u.Id == userId)
                           select new OrderDetails
                           {
@@ -43,7 +44,7 @@ namespace FarmFresh.Infrastructure.Repo.Repositories.Products
                                   Price = oi.Price,
                                   Total = oi.Total,
                                   Discount = oi.Discount,
-                                  Product = _context.Products.Where(p => p.Id == oi.ProductId).FirstOrDefault()
+                                  Product = oi.Product
                               }).ToList()
                           }).OrderByDescending(x => x.OrderDate).ToList();
 

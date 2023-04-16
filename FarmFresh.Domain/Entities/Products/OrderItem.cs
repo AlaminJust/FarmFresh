@@ -7,6 +7,11 @@ namespace FarmFresh.Domain.Entities.Products
     [Table("OrderItem", Schema = "dbo")]
     public class OrderItem: BaseEntity
     {
+        public OrderItem()
+        {
+            Product = new();
+        }
+
         [Key]
         [Column("Id")]
         public int Id { get; set; }

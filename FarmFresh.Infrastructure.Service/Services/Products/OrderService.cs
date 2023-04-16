@@ -45,29 +45,32 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             _mapper = mapper;
         }
         #region Save
-        public async Task<Int32> OrderAsync(OrderRequest orderRequest, int userId)
+        public async Task<int> OrderAsync(OrderRequest orderRequest, int userId)
         {
+            // Retrieve the cart for the user
             var cart = await _cartService.GetCartByUserIdAsync(userId);
-
-            if (cart is null)
+            if (cart == null)
             {
                 throw new Exception("Your cart is empty!");
             }
 
+            // Check if the cart total matches the order amount
             if (cart.FinalPrice != orderRequest.Amount)
             {
-                throw new Exception("The order failed becouse the total amount is not correct!");
+                throw new Exception("The order failed because the total amount is not correct!");
             }
 
-            if (cart is not null && !await _cartItemService.ClearUnavailableCartItem(cart.CartItems))
+            // Clear any cart items that are unavailable
+            if (!await _cartItemService.ClearUnavailableCartItem(cart.CartItems))
             {
-                throw new Exception("The order failed becouse some of the item is not available now. We have cleared these item from your cart!");
+                throw new Exception("The order failed because some items are not available now. We have cleared these items from your cart!");
             }
             
             await _transactionUtil.BeginAsync();
 
             try
             {
+                // Create a new order object
                 var order = new Order
                 {
                     UserId = userId,
@@ -80,9 +83,11 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                     OrderStatus = Application.Enums.OrderStatus.Processing
                 };
 
+                // Add the order to the repository and save changes
                 await _orderRepository.AddAsync(order);
                 await _orderRepository.SaveChangesAsync();
 
+                // Create a new payment details object
                 var paymentDetails = new PaymentDetail
                 {
                     OrderId = order.Id,
@@ -93,15 +98,16 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                     VoucherId = cart.Voucher?.Id,
                     VoucherDiscount = cart.Voucher?.Discount
                 };
-                
+
+                // Add the payment details to the repository and save changes
                 await _paymentRepository.AddAsync(paymentDetails);
                 await _paymentRepository.SaveChangesAsync();
 
-                
-                foreach(var item in cart.CartItems)
+                // Create order items for each item in the cart
+                foreach (var item in cart.CartItems)
                 {
                     var discount = await _discountService.GetDiscountByIdAsync(item.productResponse.DiscountId ?? 0);
-                    
+
                     var orderItem = new OrderItem
                     {
                         OrderId = order.Id,
@@ -110,27 +116,35 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                         Discount = item.productResponse.Discount,
                         Quantity = item.Quantity,
                         CreatedOn = DateTime.Now,
-                        Total = item.productResponse.CalculatePriceWithDiscount(discount) 
+                        Product = null,
+                        Total = item.productResponse.CalculatePriceWithDiscount(discount)
                     };
-                    
+
+                    // Add the order item to the repository and save changes
                     await _orderItemRepository.AddAsync(orderItem);
                     await _orderItemRepository.SaveChangesAsync();
 
+                    // Update the product stock
                     await _productService.UpdateProductStockAsync(item.ProductId, -item.Quantity);
                 }
 
+                // Clear the user's cart
                 await _cartService.ClearCartAsync(userId);
-                
+
+                // Commit the transaction
                 await _transactionUtil.CommitAsync();
 
+                // Return the order ID
                 return order.Id;
             }
             catch (Exception)
             {
+                // Roll back the transaction and rethrow the exception
                 await _transactionUtil.RollBackAsync();
                 throw;
             }
         }
+
         #endregion Save
 
         #region Get
