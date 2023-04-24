@@ -25,6 +25,9 @@ using Taap.Email;
 using Hangfire;
 using Hangfire.SqlServer;
 using HangfireBasicAuthenticationFilter;
+using FarmFresh.Application.Interfaces.Services.Caches;
+using FarmFresh.Infrastructure.Service.Services.Caches;
+using FarmFresh.Application.Models.Caches;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +50,7 @@ builder.Services.AddControllers()
     });
 
 #endregion Add controller
+
 
 #region Settings
 
@@ -130,6 +134,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 #endregion Add services to the container
+
+#region Distributed memory cache
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddScoped<ICacheService, CacheService>();
+builder.Services.AddSingleton<CacheKeysService>();
+#endregion Distributed memory cache
 
 #region CORS POLICY
 builder.Services.AddCors(options =>

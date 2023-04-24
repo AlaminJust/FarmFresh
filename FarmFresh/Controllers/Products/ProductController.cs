@@ -1,5 +1,6 @@
 ﻿using FarmFresh.Application.Dto.Request.Products;
 using FarmFresh.Application.Dto.Response.Products;
+using FarmFresh.Application.Interfaces.Services.Caches;
 using FarmFresh.Application.Interfaces.Services.Products;
 using FarmFresh.Application.Models.Paginations;
 using FarmFresh.Application.Models.Paginations.Products;
@@ -15,14 +16,17 @@ namespace FarmFresh.Api.Controllers.Products
     {
         #region Properties
         private readonly IProductService _productService;
+        private readonly ICacheService _cacheService;
         #endregion Properties
 
         #region Constructor
         public ProductController(
-                IProductService productService
+                IProductService productService,
+                ICacheService cacheService
             )
         {
             _productService = productService;
+            _cacheService = cacheService;
         }
         #endregion Constructor
 
@@ -31,7 +35,16 @@ namespace FarmFresh.Api.Controllers.Products
         [ProducesResponseType(typeof(PaginationResponse<ProductResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetPaginatedProducts([FromQuery]ProductPaginationRequest productPaginationRequest)
         {
-            var response = await _productService.GetPaginatedProductsAsync(productPaginationRequest);
+            var cacheKey = productPaginationRequest.GetCacheKey();
+
+            var response = await _cacheService.GetDataAsync<PaginationResponse<ProductResponse>>(cacheKey);
+
+            if (response == null)
+            {
+                response = await _productService.GetPaginatedProductsAsync(productPaginationRequest);
+                await _cacheService.SetDataAsync(cacheKey, response, TimeSpan.FromDays(1));
+            }
+
             return Ok(response);
         }
 
@@ -51,6 +64,7 @@ namespace FarmFresh.Api.Controllers.Products
         public async Task<IActionResult> AddProduct([FromBody] ProductRequest productRequest)
         {
             var response = await _productService.AddAsync(productRequest, UserId);
+            await _cacheService.RemoveByPrefixAsync(ProductPaginationRequestExtensions.PrefixKey);
             return Ok(response);
         }
         #endregion Save

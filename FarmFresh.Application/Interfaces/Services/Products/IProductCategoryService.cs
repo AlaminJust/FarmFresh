@@ -11,6 +11,7 @@ namespace FarmFresh.Application.Interfaces.Services.Products
 
         #region Get
         Task<IEnumerable<ProductCategoryResponse>> GetCategoriesTree();
+        string ProductCategoryKey { get; }
         #endregion Get
     }
 }

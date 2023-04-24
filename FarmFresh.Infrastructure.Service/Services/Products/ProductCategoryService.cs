@@ -12,6 +12,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
         #region Properties
         private readonly IProductCategoryRepository _productCategoryRepository;
         private readonly IMapper _mapper;
+        public string ProductCategoryKey => "ProductCategoryKey";
         #endregion Properties
 
         #region Constructor
@@ -23,6 +24,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             _productCategoryRepository = productCategoryRepository;
             _mapper = mapper;
         }
+
         #endregion Constructor
 
         #region Save

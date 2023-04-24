@@ -46,7 +46,9 @@ namespace FarmFresh.Infrastructure.Repo.Repositories.Products
                                   Discount = oi.Discount,
                                   Product = oi.Product
                               }).ToList()
-                          }).OrderByDescending(x => x.OrderDate).ToList();
+                          })
+                          .Take(5)
+                          .OrderByDescending(x => x.OrderDate).ToList();
 
             return Task.FromResult(orders);
         }
@@ -69,7 +71,19 @@ namespace FarmFresh.Infrastructure.Repo.Repositories.Products
                               PaymentStatus = o.PaymentStatus.ToString(),
                               PhoneNumber = u.PhoneNumber,
                               UserName = u.UserName,
-                          }).OrderByDescending(x => x.OrderDate).ToList();
+                              OrderItemResponse = o.OrderItems.Select(oi => new OrderItem
+                              {
+                                  Id = oi.Id,
+                                  OrderId = oi.OrderId,
+                                  ProductId = oi.ProductId,
+                                  Quantity = oi.Quantity,
+                                  Price = oi.Price,
+                                  Total = oi.Total,
+                                  Discount = oi.Discount,
+                                  Product = oi.Product
+                              }).ToList()
+                          })
+                          .OrderByDescending(x => x.OrderDate).ToList();
 
             return Task.FromResult(orders);
         }
