@@ -25,6 +25,7 @@ namespace FarmFresh.Application.Interfaces.Services.Products
 
         #region Update
         Task UpdateProductStockAsync(int productId, int quantity);
+        Task<ProductResponse> UpdateProductAsync(ProductUpdateRequest productUpdateRequest, int id, int updatedBy);
         #endregion Update
     }
 }

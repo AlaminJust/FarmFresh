@@ -9,16 +9,21 @@ namespace FarmFresh.Application.Interfaces.Services.Products
         #region Properties
         string FolderPathUrl { get; }
         string ProductCategoryKey { get; }
-        
+
         #endregion Properties
 
+        #region Get
+        Task<IEnumerable<ProductCategoryResponse>> GetCategoriesTree();
+        #endregion Get
+        
         #region Save
         Task<ProductCategoryResponse> AddAsync(ProductCategoryRequest productCategoryRequest);
         Task<ProductCategoryResponse> UpdateCategoryIconAsync(IFormFile file, int id);
         #endregion Save
 
-        #region Get
-        Task<IEnumerable<ProductCategoryResponse>> GetCategoriesTree();
-        #endregion Get
+        #region Update
+        Task<ProductCategoryResponse> UpdateAsync(ProductCategoryUpdateRequest productCategoryRequest, int id, int userId);
+
+        #endregion Update
     }
 }

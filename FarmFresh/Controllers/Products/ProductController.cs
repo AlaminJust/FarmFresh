@@ -66,7 +66,10 @@ namespace FarmFresh.Api.Controllers.Products
             await _cacheService.RemoveByPrefixAsync(ProductPaginationRequestExtensions.PrefixKey);
             return Ok(response);
         }
-        
+        #endregion Save
+
+        #region Update
+
         [Authorize(Roles = "Admin")]
         [HttpPut("product/image/{id}")]
         [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
@@ -76,6 +79,16 @@ namespace FarmFresh.Api.Controllers.Products
             await _cacheService.RemoveByPrefixAsync(ProductPaginationRequestExtensions.PrefixKey);
             return Ok(productCategory);
         }
-        #endregion Save
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut("product/{id}")]
+        [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateProduct([FromBody] ProductUpdateRequest productUpdateRequest, [FromRoute] int id)
+        {
+            var productCategory = await _productService.UpdateProductAsync(productUpdateRequest, id, UserId);
+            await _cacheService.RemoveByPrefixAsync(ProductPaginationRequestExtensions.PrefixKey);
+            return Ok(productCategory);
+        }
+        #endregion Update
     }
 }

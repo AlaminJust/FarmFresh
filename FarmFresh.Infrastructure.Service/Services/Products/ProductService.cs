@@ -98,6 +98,32 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             await _productRepository.SaveChangesAsync();
             return _mapper.Map<ProductResponse>(product);
         }
+
+        public async Task<ProductResponse> UpdateProductAsync(ProductUpdateRequest productUpdateRequest, int id, int updatedBy)
+        {
+            var product = await _productRepository.GetByIdAsync(id);
+
+            if (product is null)
+            {
+                throw new NullReferenceException("Product not found.");
+            }
+
+            product.Name = productUpdateRequest.Name ?? product.Name;
+            product.Description = productUpdateRequest.Description ?? product.Description;
+            product.Price = productUpdateRequest.Price ?? product.Price;
+            product.Quantity = productUpdateRequest.Quantity ?? product.Quantity;
+            product.VendorId = productUpdateRequest.VendorId ?? product.VendorId;
+            product.CategoryId = productUpdateRequest.CategoryId ?? product.CategoryId;
+            product.DiscountId = productUpdateRequest.DiscountId ?? product.DiscountId;
+            product.BrandId = productUpdateRequest.BrandId ?? product.BrandId;
+            product.OldPrice = productUpdateRequest.OldPrice ?? product.OldPrice;
+            product.UpdatedBy = updatedBy;
+            product.UpdatedOn = DateTime.UtcNow;
+
+            await _productRepository.UpdateAsync(product);
+            await _productRepository.SaveChangesAsync();
+            return _mapper.Map<ProductResponse>(product);
+        }
         #endregion Update
     }
 }

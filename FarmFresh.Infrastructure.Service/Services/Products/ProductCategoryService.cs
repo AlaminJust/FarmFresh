@@ -35,6 +35,16 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
 
         #endregion Constructor
 
+        #region Get
+        public async Task<IEnumerable<ProductCategoryResponse>> GetCategoriesTree()
+        {
+            var productCategories = await _productCategoryRepository.GetCategoryList();
+
+            return _mapper.Map<IEnumerable<ProductCategoryResponse>>(productCategories);
+        }
+
+        #endregion Get
+
         #region Save
         public async Task<ProductCategoryResponse> AddAsync(ProductCategoryRequest productCategoryRequest)
         {
@@ -48,21 +58,24 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             return _mapper.Map<ProductCategoryResponse>(productCategory);
         }
 
+        #endregion Save
+
+        #region Update
         public async Task<ProductCategoryResponse> UpdateCategoryIconAsync(IFormFile file, int id)
         {
             var productCategory = await _productCategoryRepository.GetByIdAsync(id);
-            
+
             if (productCategory == null)
             {
                 throw new NullReferenceException("Product category not found");
             }
 
-            if(file == null)
+            if (file == null)
             {
                 throw new NullReferenceException("File is required");
             }
 
-            if(file.Length > 500000) // 500KB
+            if (file.Length > 500000) // 500KB
             {
                 throw new Exception("The image upload failed because the image was too big(max 0.5MB)");
             }
@@ -74,16 +87,27 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
 
             return _mapper.Map<ProductCategoryResponse>(productCategory);
         }
-        #endregion Save
 
-        #region Get
-        public async Task<IEnumerable<ProductCategoryResponse>> GetCategoriesTree()
+        public async Task<ProductCategoryResponse> UpdateAsync(ProductCategoryUpdateRequest productCategoryRequest, int id, int userId)
         {
-            var productCategories = await _productCategoryRepository.GetCategoryList();
+            var productCategory = await _productCategoryRepository.GetByIdAsync(id);
 
-            return _mapper.Map<IEnumerable<ProductCategoryResponse>>(productCategories);
+            if (productCategory == null)
+            {
+                throw new NullReferenceException("Product category not found");
+            }
+
+            productCategory.CategoryName = productCategoryRequest.CategoryName ?? productCategory.CategoryName;
+            productCategory.CategoryDescription = productCategoryRequest.CategoryDescription;
+            productCategory.ParentCategoryId = productCategoryRequest.ParentCategoryId ?? productCategory.ParentCategoryId;
+            productCategory.UpdatedOn = DateTime.UtcNow;
+
+            await _productCategoryRepository.UpdateAsync(productCategory);
+            await _productCategoryRepository.SaveChangesAsync();
+
+            return _mapper.Map<ProductCategoryResponse>(productCategory);
         }
+        #endregion Update
 
-        #endregion Get
     }
 }
