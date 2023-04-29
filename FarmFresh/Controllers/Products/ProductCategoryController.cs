@@ -50,6 +50,7 @@ namespace FarmFresh.Api.Controllers.Products
         public async Task<IActionResult> UpdateCategoryIcon(IFormFile file, [FromRoute] int id)
         {
             var productCategory = await _productCategoryService.UpdateCategoryIconAsync(file, id);
+            await _cacheService.RemoveByPrefixAsync(_productCategoryService.ProductCategoryKey);
             return Ok(productCategory);
         }
 
