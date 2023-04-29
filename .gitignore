@@ -362,3 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /FarmFresh/.config/dotnet-tools.json
+/FarmFresh/wwwroot/images/products
+/FarmFresh/wwwroot/images/product-category

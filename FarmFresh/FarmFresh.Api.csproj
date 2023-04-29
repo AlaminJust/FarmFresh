@@ -36,4 +36,9 @@
     <ProjectReference Include="..\FarmFresh.Infrastructure.Service\FarmFresh.Infrastructure.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\products\" />
+    <Folder Include="wwwroot\images\product-category\" />
+  </ItemGroup>
+
 </Project>

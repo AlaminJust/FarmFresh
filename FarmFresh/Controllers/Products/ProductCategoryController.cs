@@ -1,12 +1,10 @@
 ﻿using FarmFresh.Application.Dto.Request.Products;
 using FarmFresh.Application.Dto.Response.Products;
 using FarmFresh.Application.Interfaces.Services.Caches;
+using FarmFresh.Application.Interfaces.Services.Images;
 using FarmFresh.Application.Interfaces.Services.Products;
-using FarmFresh.Application.Models.Paginations.Products;
-using FarmFresh.Application.Models.Paginations;
-using FarmFresh.Infrastructure.Service.Services.Products;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace FarmFresh.Api.Controllers.Products
 {
@@ -17,18 +15,21 @@ namespace FarmFresh.Api.Controllers.Products
         #region Properties
         private readonly IProductCategoryService _productCategoryService;
         private readonly ICacheService _cacheService;
+        private readonly IWebHostEnvironment _environment;
         #endregion Properties
 
         #region Constructor
 
         public ProductCategoryController(
                 IProductCategoryService productCategoryService,
-                ICacheService cacheService
-            )
+                ICacheService cacheService,
+                IWebHostEnvironment environment)
         {
             _productCategoryService = productCategoryService;
             _cacheService = cacheService;
+            _environment = environment;
         }
+        
         #endregion Constructor
 
         #region Save
@@ -41,6 +42,14 @@ namespace FarmFresh.Api.Controllers.Products
             return Ok(response);
         }
         #endregion Save
+
+        [HttpPut("category/icon/{id}")]
+        [ProducesResponseType(typeof(ProductCategoryResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateCategoryIcon(IFormFile file, [FromRoute] int id)
+        {
+            var productCategory = await _productCategoryService.UpdateCategoryIconAsync(file, id);
+            return Ok(productCategory);
+        }
 
         #region Get
         [HttpGet("categories")]

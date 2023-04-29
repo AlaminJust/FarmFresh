@@ -28,6 +28,8 @@ using HangfireBasicAuthenticationFilter;
 using FarmFresh.Application.Interfaces.Services.Caches;
 using FarmFresh.Infrastructure.Service.Services.Caches;
 using FarmFresh.Application.Models.Caches;
+using FarmFresh.Application.Interfaces.Services.Images;
+using FarmFresh.Infrastructure.Service.Services.Images;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,7 +52,6 @@ builder.Services.AddControllers()
     });
 
 #endregion Add controller
-
 
 #region Settings
 
@@ -213,6 +214,7 @@ builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IOrderItemService, OrderItemService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IImageService, ImageService>();
 #endregion Dependency Injection for service
 
 #region Automapper
