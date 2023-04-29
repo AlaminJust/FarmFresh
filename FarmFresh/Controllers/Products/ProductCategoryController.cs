@@ -3,6 +3,7 @@ using FarmFresh.Application.Dto.Response.Products;
 using FarmFresh.Application.Interfaces.Services.Caches;
 using FarmFresh.Application.Interfaces.Services.Images;
 using FarmFresh.Application.Interfaces.Services.Products;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -33,6 +34,7 @@ namespace FarmFresh.Api.Controllers.Products
         #endregion Constructor
 
         #region Save
+        [Authorize(Roles = "Admin")]
         [HttpPost("category")]
         [ProducesResponseType(typeof(ProductCategoryResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> AddProductCategory([FromBody] ProductCategoryRequest productCategoryRequest)
@@ -42,7 +44,7 @@ namespace FarmFresh.Api.Controllers.Products
             return Ok(response);
         }
         #endregion Save
-
+        [Authorize(Roles = "Admin")]
         [HttpPut("category/icon/{id}")]
         [ProducesResponseType(typeof(ProductCategoryResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> UpdateCategoryIcon(IFormFile file, [FromRoute] int id)

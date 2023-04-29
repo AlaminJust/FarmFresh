@@ -66,7 +66,7 @@ namespace FarmFresh.Api.Controllers.Products
             await _cacheService.RemoveByPrefixAsync(ProductPaginationRequestExtensions.PrefixKey);
             return Ok(response);
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPut("product/image/{id}")]
         [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> UpdateProductImage(IFormFile file, [FromRoute] int id)
