@@ -18,6 +18,7 @@ namespace FarmFresh.Domain.Entities.Users
             CartItems = new HashSet<CartItem>();
             Vouchers = new HashSet<Voucher>();
             Orders = new HashSet<Order>();
+            RefreshTokens = new HashSet<RefreshToken>();
         }
         
         [Key]
@@ -69,5 +70,6 @@ namespace FarmFresh.Domain.Entities.Users
         public virtual ICollection<CartItem> CartItems { get; set; }
         public virtual ICollection<Voucher> Vouchers { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<RefreshToken> RefreshTokens { get; set; }
     }
 }

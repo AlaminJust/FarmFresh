@@ -25,6 +25,7 @@ namespace FarmFresh.Domain.Contexts
         DbSet<PaymentDetail> PaymentDetails { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Cart> Carts { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         #endregion DbSets
 

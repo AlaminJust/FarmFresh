@@ -1,10 +1,5 @@
 ﻿using FarmFresh.Application.Interfaces.Services.Users;
 using FarmFresh.Domain.RepoInterfaces.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FarmFresh.Infrastructure.Service.Services.Users
 {
