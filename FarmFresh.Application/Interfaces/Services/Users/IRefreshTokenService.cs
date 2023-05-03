@@ -10,7 +10,7 @@ namespace FarmFresh.Application.Interfaces.Services.Users
         #endregion Save
 
         #region Get
-        Task<LoginResponse> GetUserByRefreshTokenAsync(RefreshTokenRequest refreshTokenRequest);
+        Task<LoginResponse> VerifyRefreshTokenAsync(RefreshTokenRequest refreshTokenRequest);
         #endregion Get
     }
 }

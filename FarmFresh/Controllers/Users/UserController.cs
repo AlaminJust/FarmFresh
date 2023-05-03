@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 
 using FarmFresh.Application.Dto.Request.Users;
@@ -27,6 +21,8 @@ namespace FarmFresh.Controllers.Users
         private readonly IRoleService _roleService;
         private readonly ILogger<UserController> _logger;
         private readonly IRefreshTokenService _refreshTokenService;
+
+        private const int TokenExpiryInMinutes = 1; //60 * 24 * 7;
         #endregion Properties
 
         #region Ctor
@@ -53,7 +49,7 @@ namespace FarmFresh.Controllers.Users
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddHours(12),
+                Expires = DateTime.UtcNow.AddMinutes(TokenExpiryInMinutes),
                 SigningCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256Signature)
             };
 
@@ -123,7 +119,8 @@ namespace FarmFresh.Controllers.Users
         [ProducesResponseType(typeof(LoginResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> RefreshTokenAsync([FromQuery] RefreshTokenRequest refreshTokenRequest)
         {
-            var loginResponse = await _refreshTokenService.GetUserByRefreshTokenAsync(refreshTokenRequest);
+            var loginResponse = await _refreshTokenService.VerifyRefreshTokenAsync(refreshTokenRequest);
+            
             if (loginResponse == null)
             {
                 _logger.LogInformation("Invalid refresh token for user: {0}", refreshTokenRequest.RefreshToken);

@@ -6,8 +6,8 @@ using FarmFresh.Domain.Entities.Users;
 using FarmFresh.Domain.RepoInterfaces.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System.Formats.Asn1;
 using System.Security.Cryptography;
+using BC = BCrypt.Net.BCrypt;
 
 namespace FarmFresh.Infrastructure.Service.Services.Users
 {
@@ -18,6 +18,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Users
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
+        private const int RefreshTokenExpiryInDays = 10;
         #endregion Properties
 
         #region Ctor
@@ -48,14 +49,19 @@ namespace FarmFresh.Infrastructure.Service.Services.Users
         #endregion Private Method
 
         #region Get
-        public async Task<LoginResponse> GetUserByRefreshTokenAsync(RefreshTokenRequest refreshTokenRequest)
+        public async Task<LoginResponse> VerifyRefreshTokenAsync(RefreshTokenRequest refreshTokenRequest)
         {
             var refreshToken = await _refreshTokenRepository
-                           .GetByCondition(r => r.Token == refreshTokenRequest.RefreshToken)
+                           .GetByCondition(r => r.UserId == refreshTokenRequest.UserId)
                            .Include(r => r.User)
                            .SingleOrDefaultAsync();
 
             if (refreshToken is null || !refreshToken.IsActive)
+            {
+                return null;
+            }
+
+            if(!BC.Verify(refreshTokenRequest.RefreshToken, refreshToken.Token))
             {
                 return null;
             }
@@ -82,40 +88,42 @@ namespace FarmFresh.Infrastructure.Service.Services.Users
 
         private async Task<string> AddAsync(int userId)
         {
+            string actutalToken = GenerateRefreshToken();
+            
             var refreshToken = new RefreshToken
             {
                 UserId = userId,
                 RevokedOn = DateTime.UtcNow,
-                Token = GenerateRefreshToken(),
-                Expires = DateTime.UtcNow.AddDays(7),
+                Token = BC.HashPassword(actutalToken),
+                Expires = DateTime.UtcNow.AddDays(RefreshTokenExpiryInDays),
                 CreatedByIp = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString(),
                 CreatedOn = DateTime.UtcNow
             };
 
             await _refreshTokenRepository.AddAsync(refreshToken);
             await _refreshTokenRepository.SaveChangesAsync();
-            return refreshToken.Token;
+            return actutalToken;
         }
 
         #endregion Save
 
         #region Update
-
         private async Task<string> UpdateAsync(int userId)
         {
             var refreshToken = await _refreshTokenRepository.GetByCondition(x => x.UserId == userId).FirstOrDefaultAsync();
+            string actutalToken = GenerateRefreshToken();
 
             refreshToken.RevokedOn = DateTime.UtcNow;
             refreshToken.ReplacedByToken = refreshToken.Token;
             refreshToken.UpdatedOn = DateTime.UtcNow;
             refreshToken.RevokedByIp = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString();
-            refreshToken.Expires = DateTime.UtcNow.AddDays(7);
-            refreshToken.Token = GenerateRefreshToken();
+            refreshToken.Expires = DateTime.UtcNow.AddDays(RefreshTokenExpiryInDays);
+            refreshToken.Token = BC.HashPassword(actutalToken);
 
             await _refreshTokenRepository.UpdateAsync(refreshToken);
             await _refreshTokenRepository.SaveChangesAsync();
 
-            return refreshToken.Token;
+            return actutalToken;
         }
         #endregion Update
     }
