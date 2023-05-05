@@ -3,7 +3,6 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-
 using FarmFresh.Application.Dto.Request.Users;
 using FarmFresh.Application.Dto.Response.Users;
 using FarmFresh.Application.Interfaces.Services.Users;
