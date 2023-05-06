@@ -1,4 +1,5 @@
 ﻿using FarmFresh.Application.Enums;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -17,10 +18,10 @@ namespace FarmFresh.Domain.Entities.Users
         [Column("Name"), StringLength(255)]
         public string Name { get; set; }
 
-        [Column("Latitude")]
+        [Column("Latitude", TypeName = "decimal(18, 8)")]
         public decimal? Latitude { get; set; }
 
-        [Column("Longitude")]
+        [Column("Longitude", TypeName = "decimal(18, 8)")]
         public decimal? Longitude { get; set; }
 
         [Column("Speed")]

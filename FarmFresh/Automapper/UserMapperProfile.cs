@@ -13,6 +13,7 @@ namespace FarmFresh.Api.Automapper
             CreateMap<UserRequest, User>();
             CreateMap<User, LoginResponse>();
             CreateMap<User, UserResponse>();
+            CreateMap<Location, LocationResponse>();
             #endregion Users
         }
     }

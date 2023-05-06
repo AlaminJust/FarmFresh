@@ -21,7 +21,7 @@ namespace FarmFresh.Controllers.Users
         private readonly ILogger<UserController> _logger;
         private readonly IRefreshTokenService _refreshTokenService;
 
-        private const int TokenExpiryInMinutes = 1; //60 * 24 * 7;
+        private const int TokenExpiryInMinutes = 60 * 24;
         #endregion Properties
 
         #region Ctor

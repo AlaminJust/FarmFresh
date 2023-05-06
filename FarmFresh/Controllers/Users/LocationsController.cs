@@ -1,5 +1,7 @@
 ﻿using FarmFresh.Application.Dto.Request.Users;
+using FarmFresh.Application.Dto.Response.Users;
 using FarmFresh.Application.Interfaces.Services.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FarmFresh.Api.Controllers.Users
@@ -21,8 +23,21 @@ namespace FarmFresh.Api.Controllers.Users
         }
         #endregion Ctor
 
+        #region Get
+        [HttpGet("location")]
+        [Authorize]
+        [ProducesResponseType(typeof(LocationResponse), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAsync()
+        {
+            var location = await _locationService.GetAsync(UserId);
+            return Ok(location);
+        }
+        
+        #endregion Get
+
         #region Save
-        [HttpPost("save")]
+        [HttpPost("location")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> SaveAsync([FromBody] LocationRequest locationRequest)
         {
