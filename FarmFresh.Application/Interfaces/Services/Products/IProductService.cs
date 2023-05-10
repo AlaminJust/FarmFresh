@@ -15,6 +15,7 @@ namespace FarmFresh.Application.Interfaces.Services.Products
         #region Get
         Task<PaginationResponse<ProductResponse>> GetPaginatedProductsAsync(ProductPaginationRequest productPaginationRequest);
         Task<Boolean> IsAvailableInStockAsync(int productId, int quantity);
+        Task<IEnumerable<AutoCompleteTrieSearchProductResponse>> AutoCompleteTrieSearchProductsAsync();
         #endregion Get
 
         #region Save

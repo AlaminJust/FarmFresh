@@ -72,7 +72,16 @@ namespace FarmFresh.Domain.Entities.Products
         [Column("UpdatedBy")]
         [ForeignKey("User")]
         public int UpdatedBy { get; set; }
-        
+
+        [Column("TotalSold")]
+        public int TotalSold { get; set; }
+
+        [Column("TotalViewed")]
+        public int TotalViewed { get; set; }
+
+        [Column("TotalSearched")]
+        public int TotalSearched { get; set; }
+
         [InverseProperty("ProductsCreated")]
         public virtual User? UserCreatedBy { get; set; }
         

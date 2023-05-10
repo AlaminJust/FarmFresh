@@ -54,6 +54,12 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             return _productRepository.IsAvailableInStockAsync(productId, quantity);
         }
 
+        public async Task<IEnumerable<AutoCompleteTrieSearchProductResponse>> AutoCompleteTrieSearchProductsAsync()
+        {
+            var products = await _productRepository.AutoCompleteTrieSearchProductsAsync();
+            return _mapper.Map<IEnumerable<AutoCompleteTrieSearchProductResponse>>(products);
+        }
+
         #endregion Get
 
         #region Save

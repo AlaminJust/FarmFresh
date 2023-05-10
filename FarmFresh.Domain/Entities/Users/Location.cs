@@ -1,5 +1,4 @@
 ﻿using FarmFresh.Application.Enums;
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

@@ -16,16 +16,19 @@ namespace FarmFresh.Api.Controllers.Products
         #region Properties
         private readonly IProductService _productService;
         private readonly ICacheService _cacheService;
+        private readonly ISuggesionService _suggesionService;
         #endregion Properties
 
         #region Constructor
         public ProductController(
                 IProductService productService,
-                ICacheService cacheService
+                ICacheService cacheService,
+                ISuggesionService suggesionService
             )
         {
             _productService = productService;
             _cacheService = cacheService;
+            _suggesionService = suggesionService;
         }
         #endregion Constructor
 
@@ -54,6 +57,15 @@ namespace FarmFresh.Api.Controllers.Products
             var response = await _productService.GetProductDetailsByIdAsync(Id);
             return Ok(response);
         }
+
+        [HttpGet("product/suggesion")]
+        [ProducesResponseType(typeof(List<AutoCompleteTrieSearchProductResponse>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetProductSuggesion([FromQuery] string text)
+        {
+            var response = await _suggesionService.AutoCompleteTrieSearchProductResponse(text);
+            return Ok(response);
+        }
+
         #endregion Get
 
         #region Save

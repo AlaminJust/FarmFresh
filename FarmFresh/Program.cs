@@ -31,6 +31,7 @@ using FarmFresh.Infrastructure.Service.Services.Caches;
 using FarmFresh.Application.Models.Caches;
 using FarmFresh.Application.Interfaces.Services.Images;
 using FarmFresh.Infrastructure.Service.Services.Images;
+using FarmFresh.Application.AutoComplete;
 #endregion Import
 
 var builder = WebApplication.CreateBuilder(args);
@@ -222,6 +223,8 @@ builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 builder.Services.AddScoped<ILocationService, LocationService>();
+builder.Services.AddSingleton<AutoCompleteSuggesionMaker>();
+builder.Services.AddScoped<ISuggesionService, SuggesionService>();
 #endregion Dependency Injection for service
 
 #region Automapper
@@ -236,6 +239,7 @@ builder.Services.AddHttpsRedirection(options =>
 
 var app = builder.Build();
 
+    
 #region Middleware pipeline
 
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
@@ -272,8 +276,13 @@ app.UseHangfireDashboard("/jobs", new DashboardOptions
 
 });
 
-#endregion Hangfire Dashboard
+app.UseHangfireServer();
 
+BackgroundJob.Schedule<ISuggesionService>(x => x.Init(), DateTime.Now.AddMinutes(1));
+RecurringJob.AddOrUpdate<ISuggesionService>(x => x.Init(), Cron.Daily());
+
+#endregion Hangfire Dashboard
+    
 app.UseRouting();
 
 app.UseCors("CorsPolicy");

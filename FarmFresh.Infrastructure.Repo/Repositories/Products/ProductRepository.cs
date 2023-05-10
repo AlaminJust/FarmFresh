@@ -117,6 +117,20 @@ namespace FarmFresh.Infrastructure.Repo.Repositories.Products
             return product.Quantity >= quantity;
         }
 
+        public Task<IEnumerable<AutoCompleteTrieSearchProduct>> AutoCompleteTrieSearchProductsAsync()
+        {
+            var products = GetProducts().Select(x => new AutoCompleteTrieSearchProduct
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Price = x.Price,
+                ImageUrls = x.ImageUrls,
+                Quantity = x.Quantity,
+                Weight = x.TotalSold * 2 + x.TotalSearched * 1 + x.TotalViewed * 1
+            });
+
+            return Task.FromResult(products.AsEnumerable());
+        }
 
         #endregion Get
 
@@ -141,6 +155,7 @@ namespace FarmFresh.Infrastructure.Repo.Repositories.Products
 
             await _context.SaveChangesAsync();
         }
+
         #endregion Update
     }
 }

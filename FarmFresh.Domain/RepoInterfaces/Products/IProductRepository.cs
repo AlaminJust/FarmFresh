@@ -2,11 +2,6 @@
 using FarmFresh.Application.Models.Paginations.Products;
 using FarmFresh.Domain.Entities.Products;
 using FarmFresh.Domain.ResponseEntities.Products;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FarmFresh.Domain.RepoInterfaces.Products
 {
@@ -16,6 +11,7 @@ namespace FarmFresh.Domain.RepoInterfaces.Products
         Task<PaginationResponse<Product>> GetPaginatedProductsAsync(ProductPaginationRequest productPaginationRequest);
         Task<ProductDetails> GetProductDetailsByIdAsync(int id);
         Task<bool> IsAvailableInStockAsync(int productId, int quantity);
+        Task<IEnumerable<AutoCompleteTrieSearchProduct>> AutoCompleteTrieSearchProductsAsync();
         #endregion Get
 
         #region Update

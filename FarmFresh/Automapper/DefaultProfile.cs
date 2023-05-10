@@ -29,6 +29,7 @@ namespace FarmFresh.Api.Automapper
              .ForMember(dest => dest.OrderItemResponse, opt => opt.MapFrom(src => src.OrderItemResponse));
             CreateMap<ProductCategory, ProductCategoryResponse>();
             CreateMap<ProductCategoryRequest, ProductCategory>();
+            CreateMap<AutoCompleteTrieSearchProduct, AutoCompleteTrieSearchProductResponse>();
             #endregion Products
         }
     }
