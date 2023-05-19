@@ -1,6 +1,4 @@
-﻿using FarmFresh.Application.Dto.Response.Products;
-using FarmFresh.Domain.Entities.Products;
-using FarmFresh.Domain.Entities.Users;
+﻿using FarmFresh.Domain.Entities.Products;
 using FarmFresh.Domain.RepoInterfaces.Products;
 using FarmFresh.Domain.ResponseEntities.Products;
 using FarmFresh.Infrastructure.Data.DbContexts;
@@ -11,7 +9,7 @@ namespace FarmFresh.Infrastructure.Repo.Repositories.Products
     public class OrderRepository : BaseRepository<Order>, IOrderRepository
     {
         private readonly EFDbContext _context;
-
+        private const int ORDER_MAX_LIMIT = 10;
         public OrderRepository(EFDbContext context) : base(context)
         {
             _context = context;
@@ -47,8 +45,8 @@ namespace FarmFresh.Infrastructure.Repo.Repositories.Products
                                   Product = oi.Product
                               }).ToList()
                           })
-                          .Take(5)
-                          .OrderByDescending(x => x.OrderDate).ToList();
+                          .OrderByDescending(x => x.OrderDate)
+                          .Take(ORDER_MAX_LIMIT).ToList();
 
             return Task.FromResult(orders);
         }

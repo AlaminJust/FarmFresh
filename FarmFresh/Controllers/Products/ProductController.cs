@@ -58,7 +58,7 @@ namespace FarmFresh.Api.Controllers.Products
             return Ok(response);
         }
 
-        [HttpGet("product/suggesion")]
+        [HttpGet("product/suggestion")]
         [ProducesResponseType(typeof(List<AutoCompleteTrieSearchProductResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetProductSuggesion([FromQuery] string text)
         {
