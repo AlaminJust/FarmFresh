@@ -75,7 +75,7 @@ namespace FarmFresh.Api.Controllers.Products
 
         [HttpPost]
         [Route("order/{orderId}/status")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public async Task<IActionResult> SaveStatus([FromRoute]int orderId, [FromBody] OrderStatus request)
         {
             try
