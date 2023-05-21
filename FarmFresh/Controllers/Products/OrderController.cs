@@ -2,6 +2,7 @@
 using FarmFresh.Application.Dto.Request.Users;
 using FarmFresh.Application.Dto.Response.Products;
 using FarmFresh.Application.Enums;
+using FarmFresh.Application.Extensions;
 using FarmFresh.Application.Interfaces.Services.Products;
 using FarmFresh.Application.Interfaces.Services.Users;
 using Microsoft.AspNetCore.Authorization;
@@ -80,7 +81,7 @@ namespace FarmFresh.Api.Controllers.Products
             try
             {
                 await _orderService.SaveStatusAsync(orderId, request);
-                return Ok();
+                return Ok($"Your order status has been changed successfully to ${request.GetDescription()}");
             }
             catch (Exception ex)
             {
