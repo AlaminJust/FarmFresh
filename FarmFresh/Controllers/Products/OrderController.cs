@@ -81,7 +81,13 @@ namespace FarmFresh.Api.Controllers.Products
             try
             {
                 await _orderService.SaveStatusAsync(orderId, request);
-                return Ok($"Your order status has been changed successfully to ${request.GetDescription()}");
+
+                var status = new
+                {
+                    message = $"Your order status has been changed successfully to {request.GetDescription()}"
+                };
+                
+                return Ok(status);
             }
             catch (Exception ex)
             {

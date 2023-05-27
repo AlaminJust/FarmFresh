@@ -1,4 +1,5 @@
-﻿using FarmFresh.Domain.Entities.Products;
+﻿using FarmFresh.Application.Extensions;
+using FarmFresh.Domain.Entities.Products;
 using FarmFresh.Domain.RepoInterfaces.Products;
 using FarmFresh.Infrastructure.Data.DbContexts;
 using Microsoft.EntityFrameworkCore;
@@ -52,7 +53,7 @@ namespace FarmFresh.Infrastructure.Repo.Repositories.Products
 
                 currentCartItem.Quantity += cartItem.Quantity;
                 
-                if(currentCartItem.Quantity <= 0)
+                if(currentCartItem.Quantity.IsNonNegative())
                 {
                     await this.DeleteAsync(currentCartItem);
                 }
@@ -67,7 +68,7 @@ namespace FarmFresh.Infrastructure.Repo.Repositories.Products
             }
             else
             {
-                if(cartItem.Quantity > 0)
+                if(cartItem.Quantity.IsPositive())
                 {
                     await AddAsync(cartItem);
                     await SaveChangesAsync();
@@ -80,5 +81,53 @@ namespace FarmFresh.Infrastructure.Repo.Repositories.Products
             }
         }
         #endregion Save
+
+        #region Update
+        public async Task<CartItem> UpdateCartItemAsync(CartItem cartItem)
+        {
+            var currentCartItem = await CartItems().Where(x => x.CartId == cartItem.CartId && x.ProductId == cartItem.ProductId).FirstOrDefaultAsync();
+
+            if (currentCartItem is not null)
+            {
+                if (!await _productRepository.IsAvailableInStockAsync(cartItem.ProductId, cartItem.Quantity))
+                {
+                    throw new Exception("Product is not available in stock");
+                }
+
+                if(currentCartItem.Quantity == cartItem.Quantity)
+                {
+                    return currentCartItem;
+                }
+                
+                currentCartItem.Quantity = cartItem.Quantity;
+
+                if (currentCartItem.Quantity.IsNonNegative())
+                {
+                    await this.DeleteAsync(currentCartItem);
+                }
+                else
+                {
+                    await UpdateAsync(currentCartItem);
+                }
+
+                await SaveChangesAsync();
+
+                return currentCartItem;
+            }
+            else
+            {
+                if (cartItem.Quantity.IsPositive())
+                {
+                    await AddAsync(cartItem);
+                    await SaveChangesAsync();
+                    return cartItem;
+                }
+                else
+                {
+                    throw new Exception("Quantity can't be negative.");
+                }
+            }
+        }
+        #endregion Update
     }
 }

@@ -191,6 +191,41 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
 
         #endregion Get
 
+        #region Update
+        public async Task<CartResponse> UpdateCartItemAsync(CartItemRequest cartItemRequest, int userId)
+        {
+            if (!await _productService.IsAvailableInStockAsync(cartItemRequest.ProductId, cartItemRequest.Quantity))
+            {
+                throw new Exception("Product is not available in stock");
+            }
+
+            Cart cart = new();
+
+            await _transactionUtil.BeginAsync();
+
+            try
+            {
+                cart = await _cartRepository.CreateCartAsync(userId);
+                CartItem cartItem = _mapper.Map<CartItem>(cartItemRequest);
+                cartItem.CartId = cart.Id;
+                cartItem.CreatedOn = DateTime.Now;
+
+                await _cartItemRepository.UpdateCartItemAsync(cartItem);
+
+                await UpdateCartPriceAsync(cart);
+
+                await _transactionUtil.CommitAsync();
+            }
+            catch (Exception)
+            {
+                await _transactionUtil.RollBackAsync();
+                throw;
+            }
+
+            return await GetCartByIdAsync(cart.Id);
+        }
+        #endregion Update
+
         #region Delete
         public async Task ClearCartAsync(int userId)
         {
@@ -198,6 +233,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             await _cartRepository.DeleteAsync(cart);
             await _cartRepository.SaveChangesAsync();
         }
+        
         #endregion Delete
     }
 }

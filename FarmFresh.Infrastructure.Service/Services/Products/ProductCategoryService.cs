@@ -40,7 +40,14 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
         {
             var productCategories = await _productCategoryRepository.GetCategoryList();
 
-            return _mapper.Map<IEnumerable<ProductCategoryResponse>>(productCategories);
+            var response = _mapper.Map<IEnumerable<ProductCategoryResponse>>(productCategories);
+            
+            foreach(var item in response)
+            {
+                item.UpdateParentCategoryName("Category");
+            }
+
+            return response;
         }
 
         #endregion Get

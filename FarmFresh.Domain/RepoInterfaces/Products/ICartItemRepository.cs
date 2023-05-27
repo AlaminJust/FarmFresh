@@ -12,5 +12,8 @@ namespace FarmFresh.Domain.RepoInterfaces.Products
         Task<CartItem> AddCartItemAsync(CartItem cartItem);
         #endregion Save
 
+        #region Update
+        Task<CartItem> UpdateCartItemAsync(CartItem cartItem);
+        #endregion Update
     }
 }
