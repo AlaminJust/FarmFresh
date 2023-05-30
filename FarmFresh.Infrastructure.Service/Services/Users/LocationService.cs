@@ -11,9 +11,8 @@ namespace FarmFresh.Infrastructure.Service.Services.Users
     public class LocationService : ILocationService
     {
         #region Properties
-        private ILocationRepository _locationRepository;
-        private IMapper _mapper;
-        private readonly IMapper mapper;
+        private readonly ILocationRepository _locationRepository;
+        private readonly IMapper _mapper;
         #endregion Properties
 
         #region Ctor

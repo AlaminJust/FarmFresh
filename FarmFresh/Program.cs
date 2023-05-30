@@ -205,6 +205,7 @@ builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
+builder.Services.AddScoped<IPriceHistoryRepository, PriceHistoryRepository>();
 #endregion Dependency Injection for repository
 
 #region Dependency Injection for service
@@ -225,6 +226,7 @@ builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddSingleton<AutoCompleteSuggesionMaker>();
 builder.Services.AddScoped<ISuggesionService, SuggesionService>();
+builder.Services.AddScoped<IPriceHistoryService, PriceHistoryService>();
 #endregion Dependency Injection for service
 
 #region Automapper

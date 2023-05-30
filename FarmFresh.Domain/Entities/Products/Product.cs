@@ -1,13 +1,8 @@
 ﻿using FarmFresh.Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FarmFresh.Domain.Entities.Products
 {
@@ -18,6 +13,7 @@ namespace FarmFresh.Domain.Entities.Products
         {
             CartItems = new HashSet<CartItem>();
             OrderItems = new HashSet<OrderItem>();
+            PriceHistories = new HashSet<PriceHistory>();
         }
         
         [Key]
@@ -93,5 +89,6 @@ namespace FarmFresh.Domain.Entities.Products
         public virtual Discount? Discount { get; set; }
         public virtual ICollection<CartItem> CartItems { get; set; } = null!;
         public virtual ICollection<OrderItem> OrderItems { get; set; } = null!;
+        public virtual ICollection<PriceHistory> PriceHistories { get; set; } = null!;
     }
 }
