@@ -5,7 +5,6 @@ using FarmFresh.Application.Enums;
 using FarmFresh.Application.Interfaces.Services.Products;
 using FarmFresh.Domain.Entities.Products;
 using FarmFresh.Domain.RepoInterfaces.Products;
-using Microsoft.EntityFrameworkCore;
 
 namespace FarmFresh.Infrastructure.Service.Services.Products;
 
