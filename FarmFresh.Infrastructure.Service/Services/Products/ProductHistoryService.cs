@@ -25,15 +25,16 @@ public class ProductHistoryService: IProductHistoryService
 
     #region Get
   
-    public async Task<ProductHistoryResponse> GetHistoryByDateRange(int productId, int dateRange, int column = 30)
+    public Task<ProductHistoryResponse> GetHistoryByDateRange(int productId, int dateRange, int column = 30)
     {
         var response = new ProductHistoryResponse();
         var startDate = DateTime.Today.AddDays(-dateRange * column);
         var endDate = DateTime.Today;
 
-        var productHistory = await _productHistoryRepository.GetByConditionAsync(x =>
+        var productHistory = _productHistoryRepository.GetByCondition(x =>
                 x.ProductId == productId && x.CreatedOn >= startDate && x.CreatedOn <= endDate)
-               .ConfigureAwait(false);
+                .AsEnumerable();
+
 
         var columnHeaders = Enumerable.Range(0, column)
             .Select(offset => new DateRange(startDate.AddDays(offset * dateRange), startDate.AddDays((offset + 1) * dateRange)))
@@ -59,7 +60,7 @@ public class ProductHistoryService: IProductHistoryService
                         break;
 
                     case ProductHistoryType.PriceChange:
-                        var priceAvg = historiesForDate.Average(h => h.Point);
+                        var priceAvg = historiesForDate.Any() ? historiesForDate.Average(h => h.Point) : 0;
                         response.PriceHistory.Add(new ProductHistoryResult(columnHeader.StartDate, priceAvg));
                         break;
 
@@ -74,7 +75,7 @@ public class ProductHistoryService: IProductHistoryService
             }
         }
 
-        return response;
+        return Task.FromResult(response);
     }
     
     #endregion Get
