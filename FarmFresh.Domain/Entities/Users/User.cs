@@ -21,7 +21,7 @@ namespace FarmFresh.Domain.Entities.Users
             Orders = new HashSet<Order>();
             RefreshTokens = new HashSet<RefreshToken>();
             Locations = new HashSet<Location>();
-            PriceHistories = new HashSet<PriceHistory>();
+            PriceHistories = new HashSet<ProductHistory>();
         }
         
         [Key]
@@ -75,6 +75,6 @@ namespace FarmFresh.Domain.Entities.Users
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<RefreshToken> RefreshTokens { get; set; }
         public virtual ICollection<Location> Locations { get; set; }
-        public virtual ICollection<PriceHistory> PriceHistories { get; set; }
+        public virtual ICollection<ProductHistory> PriceHistories { get; set; }
     }
 }

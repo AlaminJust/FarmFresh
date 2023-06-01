@@ -30,6 +30,8 @@ namespace FarmFresh.Api.Automapper
             CreateMap<ProductCategory, ProductCategoryResponse>();
             CreateMap<ProductCategoryRequest, ProductCategory>();
             CreateMap<AutoCompleteTrieSearchProduct, AutoCompleteTrieSearchProductResponse>();
+            CreateMap<ProductHistoryRequest, ProductHistory>();
+
             #endregion Products
         }
     }

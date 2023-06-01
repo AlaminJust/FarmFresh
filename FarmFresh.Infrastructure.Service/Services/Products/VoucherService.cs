@@ -31,7 +31,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             Voucher voucher = _mapper.Map<Voucher>(voucherRequest);
 
             voucher.CreatedBy = userId;
-            voucher.CreatedOn = DateTime.Now;
+            voucher.CreatedOn = DateTime.UtcNow;
 
             await _voucherRepository.AddAsync(voucher);
             await _voucherRepository.SaveChangesAsync();

@@ -39,6 +39,12 @@ namespace FarmFresh.Infrastructure.Repo.Repositories
             return _context.Set<T>().Where(expression).AsNoTracking();
         }
 
+        public Task<IQueryable<T>> GetByConditionAsync(Expression<Func<T, bool>> expression)
+        {
+            var query = _context.Set<T>().Where(expression).AsNoTracking();
+            return Task.FromResult(query);
+        }
+
         public Task<IQueryable<T>> GetAllAsync()
         {
             return Task.FromResult(_context.Set<T>().AsNoTracking());

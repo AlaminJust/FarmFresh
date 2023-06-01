@@ -37,7 +37,7 @@ namespace FarmFresh.Infrastructure.Data.DbContexts
         public DbSet<Cart> Carts { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get;set; }
         public DbSet<Location> Locations { get; set; }
-        public DbSet<PriceHistory> PriceHistories { get; set; }
+        public DbSet<ProductHistory> PriceHistories { get; set; }
         #endregion DbSet
 
         #region Model builder

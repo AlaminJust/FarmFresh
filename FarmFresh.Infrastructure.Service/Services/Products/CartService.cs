@@ -91,7 +91,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
 
             cart.TotalPrice = totalPrice;
             cart.DiscountPrice = (discountPrice + voucherDiscount);
-            cart.UpdatedOn = DateTime.Now;
+            cart.UpdatedOn = DateTime.UtcNow;
             
             await _cartRepository.UpdateAsync(cart);
             await _cartItemRepository.SaveChangesAsync();
@@ -153,7 +153,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                 cart = await _cartRepository.CreateCartAsync(userId);
                 CartItem cartItem = _mapper.Map<CartItem>(cartItemRequest);
                 cartItem.CartId = cart.Id;
-                cartItem.CreatedOn = DateTime.Now;
+                cartItem.CreatedOn = DateTime.UtcNow;
 
                 await _cartItemRepository.AddCartItemAsync(cartItem);
 
@@ -208,7 +208,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                 cart = await _cartRepository.CreateCartAsync(userId);
                 CartItem cartItem = _mapper.Map<CartItem>(cartItemRequest);
                 cartItem.CartId = cart.Id;
-                cartItem.CreatedOn = DateTime.Now;
+                cartItem.CreatedOn = DateTime.UtcNow;
 
                 await _cartItemRepository.UpdateCartItemAsync(cartItem);
 

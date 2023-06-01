@@ -27,7 +27,7 @@ namespace FarmFresh.Infrastructure.Repo.Repositories.Products
             {
                 isValid = false;
             }
-            else if (voucher.ExpiryDate < DateTime.Now || voucher.StartDate > DateTime.Now)
+            else if (voucher.ExpiryDate < DateTime.UtcNow || voucher.StartDate > DateTime.UtcNow)
             {
                 isValid = false;
             }

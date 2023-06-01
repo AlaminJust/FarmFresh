@@ -4,9 +4,9 @@ using FarmFresh.Infrastructure.Data.DbContexts;
 
 namespace FarmFresh.Infrastructure.Repo.Repositories.Products;
 
-public class PriceHistoryRepository: BaseRepository<PriceHistory>, IPriceHistoryRepository
+public class ProductHistoryRepository: BaseRepository<ProductHistory>, IProductHistoryRepository
 {
-    public PriceHistoryRepository(EFDbContext context) : base(context)
+    public ProductHistoryRepository(EFDbContext context) : base(context)
     {
     }
 }

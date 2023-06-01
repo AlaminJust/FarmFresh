@@ -40,7 +40,7 @@ namespace FarmFresh.Infrastructure.Repo.Repositories.Products
                 {
                     UserId = userId,
                     TotalPrice = 0,
-                    CreatedOn = DateTime.Now
+                    CreatedOn = DateTime.UtcNow
                 };
                 await AddAsync(cart);
                 await SaveChangesAsync();

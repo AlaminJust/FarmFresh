@@ -9,6 +9,8 @@ namespace FarmFresh.Domain.RepoInterfaces
         Task<IQueryable<T>> GetAllAsync();
         public IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression);
 
+        public Task<IQueryable<T>> GetByConditionAsync(Expression<Func<T, bool>> expression);
+
         #endregion Get
         
         #region Save

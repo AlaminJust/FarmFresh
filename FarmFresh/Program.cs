@@ -205,7 +205,7 @@ builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
-builder.Services.AddScoped<IPriceHistoryRepository, PriceHistoryRepository>();
+builder.Services.AddScoped<IProductHistoryRepository, ProductHistoryRepository>();
 #endregion Dependency Injection for repository
 
 #region Dependency Injection for service
@@ -226,7 +226,7 @@ builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddSingleton<AutoCompleteSuggesionMaker>();
 builder.Services.AddScoped<ISuggesionService, SuggesionService>();
-builder.Services.AddScoped<IPriceHistoryService, PriceHistoryService>();
+builder.Services.AddScoped<IProductHistoryService, ProductHistoryService>();
 #endregion Dependency Injection for service
 
 #region Automapper
@@ -280,7 +280,7 @@ app.UseHangfireDashboard("/jobs", new DashboardOptions
 
 app.UseHangfireServer();
 
-BackgroundJob.Schedule<ISuggesionService>(x => x.Init(), DateTime.Now.AddMinutes(1));
+BackgroundJob.Schedule<ISuggesionService>(x => x.Init(), DateTime.UtcNow.AddMinutes(1));
 RecurringJob.AddOrUpdate<ISuggesionService>(x => x.Init(), Cron.Daily());
 
 #endregion Hangfire Dashboard

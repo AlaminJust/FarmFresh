@@ -74,7 +74,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                 var order = new Order
                 {
                     UserId = userId,
-                    OrderDate = DateTime.Now,
+                    OrderDate = DateTime.UtcNow,
                     TotalAmount = cart.TotalPrice,
                     DiscountAmount = cart.DiscountPrice,
                     NetAmount = cart.FinalPrice,
@@ -93,7 +93,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                     OrderId = order.Id,
                     TransactionId = orderRequest.transactionId,
                     PaymentMethod = orderRequest.paymentMethod,
-                    PaymentDate = DateTime.Now,
+                    PaymentDate = DateTime.UtcNow,
                     Amount = cart.FinalPrice,
                     VoucherId = cart.Voucher?.Id,
                     VoucherDiscount = cart.Voucher?.Discount
@@ -115,7 +115,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                         Price = item.productResponse.Price,
                         Discount = item.productResponse.Discount,
                         Quantity = item.Quantity,
-                        CreatedOn = DateTime.Now,
+                        CreatedOn = DateTime.UtcNow,
                         Product = null,
                         Total = item.productResponse.CalculatePriceWithDiscount(discount)
                     };

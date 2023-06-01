@@ -13,7 +13,7 @@ namespace FarmFresh.Domain.Entities.Products
         {
             CartItems = new HashSet<CartItem>();
             OrderItems = new HashSet<OrderItem>();
-            PriceHistories = new HashSet<PriceHistory>();
+            PriceHistories = new HashSet<ProductHistory>();
         }
         
         [Key]
@@ -89,6 +89,6 @@ namespace FarmFresh.Domain.Entities.Products
         public virtual Discount? Discount { get; set; }
         public virtual ICollection<CartItem> CartItems { get; set; } = null!;
         public virtual ICollection<OrderItem> OrderItems { get; set; } = null!;
-        public virtual ICollection<PriceHistory> PriceHistories { get; set; } = null!;
+        public virtual ICollection<ProductHistory> PriceHistories { get; set; } = null!;
     }
 }
