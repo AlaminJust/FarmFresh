@@ -73,15 +73,36 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
         public async Task<ProductResponse> AddAsync(ProductRequest productRequest, int userId)
         {
             var product = _mapper.Map<Product>(productRequest);
+            await _transactionUtil.BeginAsync();
             
-            product.CreatedOn = DateTime.UtcNow;
-            product.CreatedBy = userId;
-            product.UpdatedBy = userId;
-            product.UpdatedOn = DateTime.UtcNow;
+            try
+            {
+                product.CreatedOn = DateTime.UtcNow;
+                product.CreatedBy = userId;
+                product.UpdatedBy = userId;
+                product.UpdatedOn = DateTime.UtcNow;
 
-            await _productRepository.AddAsync(product);
-            await _productRepository.SaveChangesAsync();
-            
+                await _productRepository.AddAsync(product);
+                await _productRepository.SaveChangesAsync();
+
+                var productHistory = new ProductHistoryRequest
+                {
+                    ProductId = product.Id,
+                    UpdateBy = userId,
+                    HistoryType = Application.Enums.ProductHistoryType.PriceChange,
+                    Point = (float)product.Price
+                };
+
+                await _productHistoryService.AddAsync(productHistory);
+
+                await _transactionUtil.CommitAsync();
+            }
+            catch (Exception)
+            {
+                await _transactionUtil.RollBackAsync();
+                throw;
+            }
+         
             return _mapper.Map<ProductResponse>(product);
         }
         #endregion Save
