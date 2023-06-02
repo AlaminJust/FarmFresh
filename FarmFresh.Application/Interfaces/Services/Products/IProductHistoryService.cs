@@ -10,7 +10,7 @@ public interface IProductHistoryService
     #endregion Get
     
     #region Save
-    Task AddAsync(ProductHistoryRequest request, int updatedBy);
+    Task AddAsync(ProductHistoryRequest request);
 
     #endregion Save
 }

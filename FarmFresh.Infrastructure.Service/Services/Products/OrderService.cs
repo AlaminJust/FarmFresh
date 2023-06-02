@@ -20,6 +20,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
         private readonly IOrderItemRepository _orderItemRepository;
         private readonly IProductService _productService;
         private readonly ICartItemService _cartItemService;
+        private readonly IProductHistoryService _productHistoryService;
         private readonly IMapper _mapper;
 
         public OrderService(
@@ -31,6 +32,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                 IOrderItemRepository orderItemRepository,
                 IProductService productService,
                 ICartItemService cartItemService,
+                IProductHistoryService productHistoryService,
                 IMapper mapper
             )
         {
@@ -42,6 +44,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             _orderItemRepository = orderItemRepository;
             _productService = productService;
             _cartItemService = cartItemService;
+            _productHistoryService = productHistoryService;
             _mapper = mapper;
         }
         #region Save
@@ -123,6 +126,17 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                     // Add the order item to the repository and save changes
                     await _orderItemRepository.AddAsync(orderItem);
                     await _orderItemRepository.SaveChangesAsync();
+
+                    // Update product history to keep track the specific product data
+                    var productHistory = new ProductHistoryRequest
+                    {
+                        ProductId = item.ProductId,
+                        Point = item.Quantity,
+                        UpdateBy = userId,
+                        HistoryType = ProductHistoryType.Buy
+                    };
+
+                    await _productHistoryService.AddAsync(productHistory);
 
                     // Update the product stock
                     await _productService.UpdateProductStockAsync(item.ProductId, -item.Quantity);

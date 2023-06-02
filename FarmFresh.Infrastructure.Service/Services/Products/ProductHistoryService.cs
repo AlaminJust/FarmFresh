@@ -27,12 +27,10 @@ public class ProductHistoryService: IProductHistoryService
     public Task<ProductHistoryResponse> GetHistoryByDateRange(int productId, int dateRange, int column = 30)
     {
         var response = new ProductHistoryResponse();
-        var startDate = DateTime.Today.AddDays(-dateRange * column);
+        var startDate = DateTime.Today.AddDays((-dateRange * column)+1);
         var endDate = DateTime.Today;
 
-        var productHistory = _productHistoryRepository.GetByCondition(x =>
-                x.ProductId == productId && x.CreatedOn >= startDate && x.CreatedOn <= endDate)
-                .AsEnumerable();
+        var productHistory = _productHistoryRepository.GetByCondition(x =>x.ProductId == productId && x.CreatedOn >= startDate && x.CreatedOn <= endDate).AsEnumerable();
 
 
         var columnHeaders = Enumerable.Range(0, column)
@@ -59,8 +57,10 @@ public class ProductHistoryService: IProductHistoryService
                         break;
 
                     case ProductHistoryType.PriceChange:
-                        var priceAvg = historiesForDate.Any() ? historiesForDate.Average(h => h.Point) : 0;
-                        response.PriceHistory.Add(new ProductHistoryResult(columnHeader.StartDate, priceAvg));
+                        var previousPrice = response.PriceHistory.LastOrDefault()?.Point ?? 0;
+                        var priceAvg = historiesForDate.Any() ? historiesForDate.Average(h => h.Point) : previousPrice;
+                        var priceResult = new ProductHistoryResult(columnHeader.StartDate, priceAvg);
+                        response.PriceHistory.Add(priceResult);
                         break;
 
                     case ProductHistoryType.Review:
@@ -80,11 +80,10 @@ public class ProductHistoryService: IProductHistoryService
     #endregion Get
 
     #region Save
-    public async Task AddAsync(ProductHistoryRequest request, int updatedBy)
+    public async Task AddAsync(ProductHistoryRequest request)
     {
         var productHistory = _mapper.Map<ProductHistory>(request);
         productHistory.CreatedOn = DateTime.UtcNow;
-        productHistory.UpdateBy = updatedBy;
 
         await _productHistoryRepository.AddAsync(productHistory);
         await _productHistoryRepository.SaveChangesAsync();
