@@ -58,7 +58,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
 
         #region Private Method
 
-        private async Task BackItemQuantityWhenOrderCacelledAsync(Order order)
+        private async Task BackItemQuantityWhenOrderCacelledOrRefundAsync(Order order)
         {
             var orderItem = order.OrderItems;
 
@@ -203,6 +203,10 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             {
                 throw new UnauthorizedAccessException();
             }
+            else if(order.UserId == userId && !isAdmin && order.OrderStatus != OrderStatus.Processing)
+            {
+                throw new Exception("Sorry your order is already verified, You can't able to change the status now. Please contact to our customer care.");
+            }
 
             await _transactionUtil.BeginAsync();
 
@@ -210,9 +214,9 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             {
                 if(order.OrderStatus != request)
                 {
-                    if (OrderStatus.Cancelled == request)
+                    if (OrderStatus.Cancelled == request || OrderStatus.Returned == request)
                     {
-                        await BackItemQuantityWhenOrderCacelledAsync(order);
+                        await BackItemQuantityWhenOrderCacelledOrRefundAsync(order);
                     }
 
                     order.OrderStatus = request;
