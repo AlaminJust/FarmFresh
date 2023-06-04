@@ -9,7 +9,7 @@ namespace FarmFresh.Application.Interfaces.Services.Products
     {
         #region Save
         Task<Int32> OrderAsync(OrderRequest orderRequest, int userId);
-        Task SaveStatusAsync(int orderId, OrderStatus request);
+        Task SaveStatusAsync(int orderId, OrderStatus request, int userId);
         Task SavePaymentStatusAsync(int orderId, PaymentStatus request);
 
         #endregion Save

@@ -73,6 +73,7 @@ namespace FarmFresh.Api.Controllers.Products
             }
         }
 
+        [Authorize]
         [HttpPost]
         [Route("order/{orderId}/status")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
@@ -80,7 +81,7 @@ namespace FarmFresh.Api.Controllers.Products
         {
             try
             {
-                await _orderService.SaveStatusAsync(orderId, request);
+                await _orderService.SaveStatusAsync(orderId, request, UserId);
 
                 var status = new
                 {

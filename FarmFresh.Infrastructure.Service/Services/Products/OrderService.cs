@@ -4,9 +4,11 @@ using FarmFresh.Application.Dto.Response.Products;
 using FarmFresh.Application.Enums;
 using FarmFresh.Application.Extensions;
 using FarmFresh.Application.Interfaces.Services.Products;
+using FarmFresh.Application.Interfaces.Services.Users;
 using FarmFresh.Domain.Entities.Products;
 using FarmFresh.Domain.RepoInterfaces;
 using FarmFresh.Domain.RepoInterfaces.Products;
+using System.Linq;
 
 namespace FarmFresh.Infrastructure.Service.Services.Products
 {
@@ -21,6 +23,8 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
         private readonly IProductService _productService;
         private readonly ICartItemService _cartItemService;
         private readonly IProductHistoryService _productHistoryService;
+        private readonly IProductRepository _productRepository;
+        private readonly IRoleService _roleService;
         private readonly IMapper _mapper;
 
         public OrderService(
@@ -33,6 +37,8 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                 IProductService productService,
                 ICartItemService cartItemService,
                 IProductHistoryService productHistoryService,
+                IProductRepository productRepository,
+                IRoleService roleService,
                 IMapper mapper
             )
         {
@@ -45,8 +51,28 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
             _productService = productService;
             _cartItemService = cartItemService;
             _productHistoryService = productHistoryService;
+            this._productRepository = productRepository;
+            this._roleService = roleService;
             _mapper = mapper;
         }
+
+        #region Private Method
+
+        private async Task BackItemQuantityWhenOrderCacelledAsync(Order order)
+        {
+            var orderItem = order.OrderItems;
+
+            foreach(var item in orderItem)
+            {
+                var product = await _productRepository.GetByIdAsync(item.ProductId);
+                product.Quantity += item.Quantity;
+                await _productRepository.UpdateAsync(product);
+                await _productRepository.SaveChangesAsync();
+            }
+        }
+
+        #endregion Private Method
+
         #region Save
         public async Task<int> OrderAsync(OrderRequest orderRequest, int userId)
         {
@@ -158,17 +184,48 @@ namespace FarmFresh.Infrastructure.Service.Services.Products
                 throw;
             }
         }
-        public async Task SaveStatusAsync(int orderId, OrderStatus request)
+        public async Task SaveStatusAsync(int orderId, OrderStatus request, int userId)
         {
+            var userRole = await _roleService.GetRoleNamesByUserIdAsync(userId);
+            bool isAdmin = userRole.Any(role => string.Equals(role, "admin", StringComparison.InvariantCultureIgnoreCase));
+
             var order = await _orderRepository.GetByIdAsync(orderId);
-            
+
             if (order == null)
             {
-                throw new Exception("Order not found!");
+                throw new Exception("Your order has not found!");
+            }
+            if (order.OrderStatus == OrderStatus.Cancelled)
+            {
+                throw new Exception("Your order already has been cancelled.");
+            }
+            else if (order.UserId != userId && !isAdmin)
+            {
+                throw new UnauthorizedAccessException();
             }
 
-            order.OrderStatus = request;
-            await _orderRepository.SaveChangesAsync();
+            await _transactionUtil.BeginAsync();
+
+            try
+            {
+                if(order.OrderStatus != request)
+                {
+                    if (OrderStatus.Cancelled == request)
+                    {
+                        await BackItemQuantityWhenOrderCacelledAsync(order);
+                    }
+
+                    order.OrderStatus = request;
+                    await _orderRepository.SaveChangesAsync();
+                }
+
+                await _transactionUtil.CommitAsync();
+            }
+            catch (Exception)
+            {
+                await _transactionUtil.RollBackAsync();
+                throw;
+            }
         }
 
         public async Task SavePaymentStatusAsync(int orderId, PaymentStatus request)
