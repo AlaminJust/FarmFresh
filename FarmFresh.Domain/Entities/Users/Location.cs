@@ -17,10 +17,10 @@ namespace FarmFresh.Domain.Entities.Users
         [Column("Name"), StringLength(255)]
         public string Name { get; set; }
 
-        [Column("Latitude", TypeName = "decimal(18, 8)")]
+        [Column("Latitude", TypeName = "decimal(18, 15)")]
         public decimal? Latitude { get; set; }
 
-        [Column("Longitude", TypeName = "decimal(18, 8)")]
+        [Column("Longitude", TypeName = "decimal(18, 15)")]
         public decimal? Longitude { get; set; }
 
         [Column("Speed")]

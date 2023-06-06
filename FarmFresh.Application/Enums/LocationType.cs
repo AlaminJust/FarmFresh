@@ -8,7 +8,9 @@ namespace FarmFresh.Application.Enums
         Home = 1,
         [Description("Work")]
         Work = 2,
+        [Description("Current")]
+        Current = 3,
         [Description("Other")]
-        Other = 3
+        Other = 4
     }
 }
