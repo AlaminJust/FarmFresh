@@ -8,4 +8,9 @@ namespace FarmFresh.Application.Dto.Request.Users
         public decimal Longitude { get; set; }
         public LocationType LocationType { get; set; }
     }
+
+    public class LocationQueueRequest : LocationRequest
+    {
+        public int UserId { get; set; } 
+    }
 }

@@ -32,6 +32,7 @@ using FarmFresh.Application.Models.Caches;
 using FarmFresh.Application.Interfaces.Services.Images;
 using FarmFresh.Infrastructure.Service.Services.Images;
 using FarmFresh.Application.AutoComplete;
+using FarmFresh.Application.Helpers;
 #endregion Import
 
 var builder = WebApplication.CreateBuilder(args);
@@ -228,6 +229,19 @@ builder.Services.AddSingleton<AutoCompleteSuggesionMaker>();
 builder.Services.AddScoped<ISuggesionService, SuggesionService>();
 builder.Services.AddScoped<IProductHistoryService, ProductHistoryService>();
 #endregion Dependency Injection for service
+
+#region Dependency Injection for singleton service
+builder.Services.AddSingleton<LocationQueueHelper>(serviceProvider =>
+{
+    var locationQueueHelper = new LocationQueueHelper();
+
+    var remoteLocationHandler = new RemoteLocationHandler(locationQueueHelper, serviceProvider);
+    locationQueueHelper.StartProcessing += remoteLocationHandler.HandleStartProcessing;
+
+    return locationQueueHelper;
+});
+
+#endregion Dependency Injection for singleton service
 
 #region Automapper
 builder.Services.AddAutoMapper(typeof(DefaultProfile), typeof(UserMapperProfile));

@@ -42,7 +42,6 @@ namespace FarmFresh.Infrastructure.Service.Services.Users
 
         #endregion Get
 
-
         #region Save
         public async Task UpsertAsync(LocationRequest locationRequest, int userId)
         {
