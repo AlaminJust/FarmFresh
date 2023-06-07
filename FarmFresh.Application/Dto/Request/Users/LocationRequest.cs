@@ -6,6 +6,7 @@ namespace FarmFresh.Application.Dto.Request.Users
     {
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
+        public string Address { get; set; }
         public LocationType LocationType { get; set; }
     }
 

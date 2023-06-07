@@ -1,5 +1,6 @@
 ﻿using FarmFresh.Application.Dto.Request.Users;
 using FarmFresh.Application.Dto.Response.Users;
+using FarmFresh.Application.Enums;
 using FarmFresh.Application.Helpers;
 using FarmFresh.Application.Interfaces.Handlers;
 using FarmFresh.Application.Interfaces.Services.Users;
@@ -29,12 +30,12 @@ namespace FarmFresh.Api.Controllers.Users
         #endregion Ctor
 
         #region Get
-        [HttpGet("location")]
+        [HttpGet("location/{type=1}")]
         [Authorize]
         [ProducesResponseType(typeof(LocationResponse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAsync()
+        public async Task<IActionResult> GetAsync([FromRoute] LocationType type)
         {
-            var location = await _locationService.GetAsync(UserId);
+            var location = await _locationService.GetAsync(UserId, type);
             return Ok(location);
         }
         
@@ -44,7 +45,7 @@ namespace FarmFresh.Api.Controllers.Users
         [HttpPost("location")]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> SaveAsync([FromBody] LocationRequest locationRequest)
+        public IActionResult SaveAsync([FromBody] LocationRequest locationRequest)
         {
             var location = new LocationQueueRequest
             {

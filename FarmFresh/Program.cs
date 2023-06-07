@@ -243,6 +243,15 @@ builder.Services.AddSingleton<LocationQueueHelper>(serviceProvider =>
 
 #endregion Dependency Injection for singleton service
 
+#region Dependency Injection for HttpClient
+
+builder.Services.AddHttpClient<ILocationService, LocationService>(cliient =>
+{
+    cliient.BaseAddress = new Uri(builder.Configuration["GeoCoding:BaseUrl"]);
+});
+
+#endregion Dependency Injection for HttpClient
+
 #region Automapper
 builder.Services.AddAutoMapper(typeof(DefaultProfile), typeof(UserMapperProfile));
 #endregion Automapper
@@ -289,7 +298,6 @@ app.UseHangfireDashboard("/jobs", new DashboardOptions
             Pass = app.Configuration.GetSection("HangfireSettings:Password").Value
         }
     }
-
 });
 
 app.UseHangfireServer();

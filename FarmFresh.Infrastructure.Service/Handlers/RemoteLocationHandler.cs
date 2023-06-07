@@ -2,7 +2,6 @@
 using FarmFresh.Application.Helpers;
 using FarmFresh.Application.Interfaces.Handlers;
 using FarmFresh.Application.Interfaces.Services.Users;
-using FarmFresh.Infrastructure.Service.Services.Users;
 using Microsoft.Extensions.DependencyInjection;
 
 public class RemoteLocationHandler : IRemoteLocationHandler, IDisposable
