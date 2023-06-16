@@ -104,7 +104,12 @@ namespace FarmFresh.Infrastructure.Service.Services.Users
         #endregion Private method
 
         #region Get
+        public async Task<List<Application.Dto.Response.Users.LocationResponse>> GetAllLocationByUserIdAsync(int userId)
+        {
+            var location = await _locationRepository.GetByCondition(x => x.UserId == userId).ToListAsync();
+            return _mapper.Map<List<Application.Dto.Response.Users.LocationResponse>>(location);
 
+        }
         public async Task<Application.Dto.Response.Users.LocationResponse> GetAsync(int userId, LocationType locationType = LocationType.Home)
         {
             var location = await _locationRepository.GetByCondition(x => x.UserId == userId && x.LocationType == locationType).FirstOrDefaultAsync();
@@ -127,7 +132,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Users
                 await SaveOrUpdateLocationAsync(location, locationRequest);
             }
         }
-        
+
         #endregion Update
     }
 

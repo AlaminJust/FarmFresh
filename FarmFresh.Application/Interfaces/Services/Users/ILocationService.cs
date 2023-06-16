@@ -6,6 +6,9 @@ namespace FarmFresh.Application.Interfaces.Services.Users
 {
     public interface ILocationService
     {
+        #region Get
+        Task<List<LocationResponse>> GetAllLocationByUserIdAsync(int userId);
+        #endregion Get
         Task<LocationResponse> GetAsync(int userId, LocationType locationType);
         #region Save
         Task UpsertAsync(LocationRequest locationRequest, int userId);

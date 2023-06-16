@@ -38,7 +38,16 @@ namespace FarmFresh.Api.Controllers.Users
             var location = await _locationService.GetAsync(UserId, type);
             return Ok(location);
         }
-        
+
+        [HttpGet("location")]
+        [Authorize]
+        [ProducesResponseType(typeof(List<LocationResponse>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllLocationByUserIdAsync()
+        {
+            var locations = await _locationService.GetAllLocationByUserIdAsync(UserId);
+            return Ok(locations);
+        }
+
         #endregion Get
 
         #region Save
@@ -56,8 +65,7 @@ namespace FarmFresh.Api.Controllers.Users
             };
 
             _ = _locationQueueHelper.Enqueue(location);
-
-           // await _locationService.UpsertAsync(locationRequest, UserId);
+            
             return Ok();
         }
         #endregion Save
