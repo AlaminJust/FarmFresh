@@ -7,12 +7,13 @@ using FarmFresh.Application.Dto.Request.Users;
 using FarmFresh.Application.Dto.Response.Users;
 using FarmFresh.Application.Interfaces.Services.Users;
 using FarmFresh.Domain.Dto.Request.Users;
+using FarmFresh.Api.Controllers;
 
 namespace FarmFresh.Controllers.Users
 {
     [Route("api/user-management")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : ApiControllerBase
     {
         #region Properties
         private readonly IUserService _userService;
@@ -135,6 +136,23 @@ namespace FarmFresh.Controllers.Users
             return Ok(loginResponse);
         }
         #endregion Refresh Token
+
+        #region Delete
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeleteAsync()
+        {
+            if(UserId > 0)
+            {
+                await _userService.DeleteAsync(UserId);
+            }
+            else
+            {
+                return BadRequest("You are not logged in user");
+            }
+            
+            return Ok();
+        }
+        #endregion Delete
     }
 }
 

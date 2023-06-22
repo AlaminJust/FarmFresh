@@ -115,7 +115,24 @@ namespace FarmFresh.Infrastructure.Service.Services.Users
             await _userRepository.UpdateAsync(user);
             await _userRepository.SaveChangesAsync();
         }
-
         #endregion Update
+
+        #region Delete
+        public async Task DeleteAsync(int userId)
+        {
+            var user = await _userRepository.GetByIdAsync(userId);
+            
+            if (user is null)
+            {
+                throw new Exception("User not found");
+            }
+            
+            user.IsDeleted = true;
+            user.UpdatedOn = DateTime.UtcNow;
+            
+            await _userRepository.UpdateAsync(user);
+            await _userRepository.SaveChangesAsync();
+        }
+        #endregion Delete
     }
 }

@@ -17,6 +17,7 @@ namespace FarmFresh.Application.Interfaces.Services.Users
 
         #region Update
         Task UpdateAsync(int userId, UserAddressRequest userRequest);
+        Task DeleteAsync(int userId);
         #endregion Update
     }
 }

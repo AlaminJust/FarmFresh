@@ -21,7 +21,7 @@ namespace FarmFresh.Infrastructure.Repo.Repositories.Users
         #region Get
         public async Task<User> GetByUserNameAsync(string userName)
         {
-            var user = await _context.Users.Where(x => x.UserName == userName).FirstOrDefaultAsync();
+            var user = await _context.Users.Where(x => x.UserName == userName && !x.IsDeleted).FirstOrDefaultAsync();
             return user;
         }
         #endregion Get
