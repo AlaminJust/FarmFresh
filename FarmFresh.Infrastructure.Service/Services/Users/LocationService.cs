@@ -92,7 +92,7 @@ namespace FarmFresh.Infrastructure.Service.Services.Users
         {
             if (locationResponse is not null)
             {
-                location.Address = string.IsNullOrWhiteSpace(location.Address) ? locationResponse.DisplayName : location.Address;
+                location.Address = string.IsNullOrWhiteSpace(location.Address) ? locationResponse.DisplayName : location.Address + ", " + locationResponse.DisplayName;
                 location.City = locationResponse.Address.City;
                 location.State = locationResponse.Address.State;
                 location.ZipCode = locationResponse.Address.PostalCode;

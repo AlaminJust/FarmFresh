@@ -61,7 +61,8 @@ namespace FarmFresh.Api.Controllers.Users
                 UserId = UserId,
                 Latitude = locationRequest.Latitude,
                 Longitude = locationRequest.Longitude,
-                LocationType = locationRequest.LocationType
+                LocationType = locationRequest.LocationType,
+                Address = locationRequest.Address
             };
 
             _ = _locationQueueHelper.Enqueue(location);
