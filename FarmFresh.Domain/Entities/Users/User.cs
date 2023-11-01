@@ -64,6 +64,10 @@ namespace FarmFresh.Domain.Entities.Users
         [Column("BillingAddress")]
         [StringLength(150)]
         public string? BillingAddress { get; set; }
+
+        [Column("RefreshTokenId")]
+        public int RefreshTokenId { get; set; }
+        public virtual RefreshToken RefreshToken { get; set; } = null!;
         public virtual ICollection<UserRole> UserRoles { get; set; }
         
         [InverseProperty("UserCreatedBy")]

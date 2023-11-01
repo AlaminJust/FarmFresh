@@ -36,6 +36,8 @@ namespace FarmFresh.Domain.Entities.Users
         [Column("UserId"), Required]
         [ForeignKey("User")]
         public int UserId { get; set; }
+
+        [InverseProperty("RefreshToken")]
         public virtual User User { get; set; }
     }
 }
